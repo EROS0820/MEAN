@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>Please edit product.</h1>
+<div mat-dialog-content>
+  <mat-label>Product Preview</mat-label>
+  <img src="{{upload_url + data.image}}" style="width: 200px" />
+  <input  type="hidden" [(ngModel)]="data.image">
+  <mat-form-field>
+    <mat-label>Product Name</mat-label>
+    <input matInput [(ngModel)]="data.product_name">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Price</mat-label>
+    <input matInput [(ngModel)]="data.market_price" disabled>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Seller price</mat-label>
+    <input matInput [(ngModel)]="data.seller_price">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Seller ID #:</mat-label>
+    <input matInput [(ngModel)]="data.userid" disabled>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Availability:</mat-label>
+    <input matInput [(ngModel)]="data.availability">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Date Updated: </mat-label>
+    <input matInput [(ngModel)]="data.upload_date">
+  </mat-form-field>
+  <input type="hidden" [(ngModel)]="data._id">
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial >Ok</button>
+</div>

@@ -1,0 +1,7 @@
+table {
+    width: 100%
+}
+::ng-deep .mat-dialog-content {
+    margin: 0px;
+    padding: 5px 24px;
+}

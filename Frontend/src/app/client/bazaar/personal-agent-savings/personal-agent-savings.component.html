@@ -1,0 +1,73 @@
+<div class="animated fadeIn">
+    <div class="row  mb-20">
+        <div class="col-md-7 col-sm-7 mb-3">
+            <button class="btn btn-block btn-success" (click)="personal_agent(flag)">
+              <strong>{{ !flag ? 'Persanal Savings' : 'Agent Savings' }} View</strong>
+            </button>
+        </div>
+        <div class="col-md-5 col-sm-5 mb-3">
+            <button class="btn btn-block btn-primary" disabled>
+                <strong>{{ flag ? 'Personal Savings' : 'Agent Savings' }}  {{ (tps_tas_sum | number:'0.4-4') }} LC</strong>
+              </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="card">
+            <div class="card-header">
+                <a (click)="goToBazaarHome()" style="cursor: pointer;">
+                    <strong>Bazaar / </strong>
+                </a>
+                <a class="active text-primary">
+                    <strong>{{ flag ? 'Personal' : 'Agent' }} & Savings</strong>
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <table class="table table-striped table-bordered row-border table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Image</th>
+                                    <th>Product Name</th>
+                                    <th>Sold @ LC Price</th>
+                                    <th>Initial LC Price</th>
+                                    <th>Sold @ CC Price</th>
+                                    <th>Initial CC Price</th>
+                                    <th>Number Itme Sold</th>
+                                    <th>Total LC Amount</th>
+                                    <th>{{ flag ? 'Personal' : 'Agent' }} Savings</th>
+                                    <th>{{ flag ? 'TPS' : 'TAS' }}</th>
+                                    <th>Date & Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="!savings.length; else display_data">
+                                    <td class="text-center" colspan="12">* no data</td>
+                                </tr>
+                                <ng-template #display_data>
+                                    <tr *ngFor="let bazaar of savings | keyvalue; let i = index">
+                                        <td>{{ i + 1 }}</td>
+                                        <td>
+                                            <img src="assets/{{ bazaar.value.Bzp_Info[0].bzp_photo }}" style="max-width:100px; max-height:70px;" alt="" />
+                                        </td>
+                                        <td>{{ bazaar.value.Bzp_Info[0].bp_name }}</td>
+                                        <td>{{ bazaar.value.buy_controlled_lc_price | number:'0.4-4' }}LC</td>
+                                        <td>{{ bazaar.value.Bzp_Info[0].initial_lc_price | number:'0.4-4' }}LC</td>
+                                        <td>{{ bazaar.value.buy_controlled_cc_price }}{{ curCode }}</td>
+                                        <td>{{ bazaar.value.Bzp_Info[0].initial_cc_price }}{{ curCode }}</td>
+                                        <td>{{ bazaar.value.quantity }}</td>
+                                        <td>{{ bazaar.value.lcamount | number:'0.4-4' }}LC</td>
+                                        <td>{{ bazaar.value.Bzp_Info[0].personal_savings }} %</td>
+                                        <td>{{ bazaar.value.tps | number:'0.4-4' }}LC</td>
+                                        <td>{{ bazaar.value.update_time | date : 'short' }}</td>
+                                    </tr>
+                                </ng-template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

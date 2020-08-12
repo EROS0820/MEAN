@@ -1,0 +1,63 @@
+<div class="container">
+  <div>
+    
+  </div>
+<form 
+  name='form' 
+  (ngSubmit)="f.form.valid && submit()" 
+  #f="ngForm" 
+  class='d-flex flex-wrap flex-column m-auto pt-4' novalidate>
+  <div class='col-lg-4 col-6 m-auto'>
+    <h1 class="text-center"><span ><img style="height: 40px; margin-right: 30px;" src="../../../assets/logo.png"/></span>Admin Login</h1>
+  </div>
+
+  <div class='input-wrap col-12 col-lg-7 m-auto'>
+      <div 
+      class='form-group m-auto '>
+      <label for="email">Email</label>
+      <input 
+      class='form-control' 
+      required
+      type="email" id="email" name = "email" [(ngModel)] = 'user.email' #email="ngModel">
+    </div>
+  <!--validate Email-->
+    <div  *ngIf=' f.submitted && email.invalid' class="alert alert-danger mt-2" role="alert">
+      <div *ngIf="email.errors.required">
+        <small>Email is required.</small>
+      </div>
+    </div>
+  </div>
+
+  <div class='input-wrap m-auto col-12 col-lg-7 m-auto'>
+    <div class='form-group  m-auto'>
+      <label for="password">Password</label>
+      <input 
+        class='form-control' 
+        type="password" 
+        id="password" 
+        name = "password" 
+        required
+        [(ngModel)] = 'user.password'
+        #password = 'ngModel'>
+    </div>
+
+      <!--validate Password-->
+      <div  *ngIf=' f.submitted && password.invalid' class="alert alert-danger mt-2" role="alert">
+        <div *ngIf="password.errors.required">
+          <small>password is required.</small>
+        </div>
+      </div>
+  </div>
+  <div  *ngIf='loading'class='loading'>
+    <img  class='img-fluid'src= 'assets/loading.gif' /> 
+  </div>
+  <div class='input-wrap m-auto col-12 col-lg-7 m-auto'>
+    <div  *ngIf='showError' class="alert alert-danger error-message" role="alert">
+      <small>{{error.message}}</small>
+    </div>
+  </div>
+  <div class=' m-auto'> 
+    <button  class='btn btn-success mt-2 '  type='submit'>Submit</button>
+  </div>
+</form>
+</div>

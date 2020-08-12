@@ -1,0 +1,112 @@
+<div class = "pre-order">
+  <div class = "pre-order-container">
+    <div class="title-lg"><b>Seller</b></div>
+    <div class = "btn-group btn-claim">
+      <button mat-button class = "title-lg" (click)="unClaimedProduct()">Unclaimed Products</button>
+      <button mat-button class = "title-lg" (click)="claimedProduct()">Claimed Products</button>
+    </div>
+    <div class="search-claim">
+      <div class="title-md"><b>Search: </b></div>
+<!--      <input matInput  type="text" class="title-md" placeholder="Search claim code here..." (keyup)="getClaimedProducts($event)" />-->
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="getClaimedProducts($event)" placeholder="Ex. ium">
+      </mat-form-field>
+    </div>
+    <div class="container text-center tbl_pre_order">
+
+      <table mat-table [dataSource]="dataSource" #tbl_preorder class="my-table mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Product Name Column -->
+        <ng-container matColumnDef="product_name">
+          <th mat-header-cell *matHeaderCellDef> Product Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.product_name}} </td>
+        </ng-container>
+
+        <!-- Price Column -->
+        <ng-container matColumnDef="market_price">
+          <th mat-header-cell *matHeaderCellDef> Price </th>
+          <td mat-cell *matCellDef="let element"> {{element.market_price}} </td>
+        </ng-container>
+
+        <!-- Price Column -->
+        <ng-container matColumnDef="seller_price">
+          <th mat-header-cell *matHeaderCellDef> Seller Price </th>
+          <td mat-cell *matCellDef="let element"> {{element.seller_price}} </td>
+        </ng-container>
+        <!-- Price Column -->
+        <ng-container matColumnDef="userid">
+          <th mat-header-cell *matHeaderCellDef> Buyer ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.userid}} </td>
+        </ng-container>
+
+        <!-- Price Column -->
+        <ng-container matColumnDef="availability">
+          <th mat-header-cell *matHeaderCellDef> Availability </th>
+          <td mat-cell *matCellDef="let element"> {{element.availability}} </td>
+        </ng-container>
+        <!-- Price Column -->
+        <ng-container matColumnDef="qty">
+          <th mat-header-cell *matHeaderCellDef> Quantity </th>
+          <td mat-cell *matCellDef="let element"> {{element.qty}} </td>
+        </ng-container>
+
+        <!-- Price Column -->
+        <ng-container matColumnDef="total_amount">
+          <th mat-header-cell *matHeaderCellDef> Total Amount </th>
+          <td mat-cell *matCellDef="let element"> {{element['market_price']*element['qty']}}  </td>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container  matColumnDef="action">
+          <ng-container *ngIf="flg_release">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let element" class="action-link">
+              <ng-container *ngIf="flg_code == element.code">
+                <button mat-raised-button (click)="openDialog('Release',element)">Release Product</button>
+              </ng-container>
+              <ng-container *ngIf="flg_code != element.code">
+                <button mat-raised-button disabled>Release Product</button>
+              </ng-container>
+            </td>
+          </ng-container>
+          <ng-container *ngIf="!flg_release">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let element" class="action-link">
+              <div class = 'title-md'>Released</div>
+            </td>
+          </ng-container>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <ng-container *ngIf="!dataSource">
+        <div class = "msg_status title-md">
+          {{this.msg_order_status}}
+        </div>
+      </ng-container>
+    </div>
+    <div class = "total-result title-lg">
+      <div align="right">
+        <div class = "result">
+          <div class = "col-6">Total ITA</div>
+          <div class = "col-6">{{total_ita}} {{curCode}}</div>
+        </div>
+
+        <div class = "result">
+          <div class = "col-6">Total LC Value</div>
+          <div class = "col-6">{{total_ita*socket.btc_usd * socket.lc_btc *currencyValue| number:'0.4-4' }} {{lcCode}}</div>
+        </div>
+
+        <div class = "result">
+          <div class = "col-6">Total Product Cost</div>
+          <div class = "col-6">{{(total_ita*socket.btc_usd * socket.lc_btc *currencyValue)/2.19| number:'0.4-4'}} {{lcCode}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

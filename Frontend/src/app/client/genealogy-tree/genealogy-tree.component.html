@@ -1,0 +1,690 @@
+<div class="genealogy">
+  <ng-container *ngIf="share.user">
+    <div class="title-lg"><b>Genealogy</b></div>
+    <div class="row section-1">
+      <div class="col-md-6 col-sm-12 genealogy-list">
+        <div class="img-wrap-xs">
+          <img src="../../../assets/image/genealogy/points.png">
+        </div>
+        <div class="genealogy-item">
+          <div>
+            <span class="title-md"><b>Left Points: </b></span>
+            <span class="title-md">{{left_points}}</span>
+          </div>
+          <div>
+            <span class="title-md"><b>Right Points:</b></span>
+            <span class="title-md">{{right_points}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12 genealogy-list">
+        <div class="img-wrap-xs">
+          <img src="../../../assets/image/genealogy/requested_repeat.png">
+        </div>
+        <div class="genealogy-item">
+          <div>
+            <span class="title-md"><b>Requested Repeat Order: </b></span>
+            <span class="title-md">{{requested_order}}</span>
+          </div>
+          <div>
+            <span class="title-md"><b>Requested Withdrawal: </b></span>
+            <span class="title-md">{{requested_withdrawal}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12 genealogy-list">
+        <div class="img-wrap-xs">
+          <img src="../../../assets/image/genealogy/total_consumer.png">
+        </div>
+        <div class="genealogy-item">
+          <div>
+            <span class="title-md"><b>Total Left Consumers: </b></span>
+            <span class="title-md">{{total_left_consumers}}</span>
+          </div>
+          <div>
+            <span class="title-md"><b>Total Right Consumers:</b></span>
+            <span class="title-md">{{total_right_consumers}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12 genealogy-list">
+        <div class="img-wrap-xs">
+          <img src="../../../assets/image/genealogy/cart.png">
+        </div>
+        <div class="genealogy-item">
+          <div>
+            <span class="title-md"><b>Available Repeat Order: </b></span>
+            <span class="title-md">{{available_order}}</span>
+          </div>
+          <div>
+            <span class="title-md"><b>Available Withdrawal: </b></span>
+            <span class="title-md">{{available_withdrawal}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12 genealogy-list">
+        <div class="img-wrap-xs">
+          <img src="../../../assets/image/genealogy/lc_balance.png">
+        </div>
+        <div class="genealogy-item">
+          <div>
+            <span class="title-md"><b>LC Balance: </b></span>
+            <span class="title-md">{{total_lc_balance}}</span>
+          </div>
+          <div>
+            <span class="title-md"><b>LC To PHP Value:</b></span>
+            <span
+              class="title-md">{{total_lc_balance/(socket.btc_usd * socket.lc_btc *currencyValue| number:'0.4-4' )}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12 genealogy-list">
+        <div class="img-wrap-xs">
+          <img src="../../../assets/image/genealogy/current_balance.png">
+        </div>
+        <div class="genealogy-item">
+          <div>
+            <span class="title-md"><b>Current Balance: </b></span>
+            <span class="title-md">{{current_balance}}</span>
+          </div>
+          <div>
+            <span class="title-md"><b>LC To PHP Value: </b></span>
+            <span
+              class="title-md">{{current_balance/(socket.btc_usd * socket.lc_btc *currencyValue| number:'0.4-4' )}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12 genealogy-list">
+        <div class="img-wrap-xs">
+          <img src="../../../assets/2.png">
+        </div>
+        <div class="genealogy-item">
+          <div>
+            <span class="title-md"><b>Sold Product Balance: </b></span>
+            <span class="title-md">0</span>
+          </div>
+          <div>
+            <span class="title-md"><b>Receivabel LC (SPB): </b></span>
+            <span
+              class="title-md">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12 title-md  p-l-100 p-t-15">
+        <div>
+          <span class="title-md"><b>Total Earnings: </b></span>
+          <span class="title-md"><b>{{total_earning}} PHP</b></span>
+        </div>
+        <div>
+          <span class="title-md"><b>Total Products Sold: </b></span>
+          <span class="title-md"><b>0 PHP</b></span>
+        </div>
+      </div>
+      <div class="col-md-12 col-sm-12 title-md text-center p-t-15">
+        <button 
+            mat-raised-button 
+            style="background-color: black; color: white"
+            (click)="signupBtn()" >
+            Genealogy Free Sign Up!
+        </button>
+      </div>
+      <div class="col-md-12 col-sm-12 title-md text-center p-t-15">
+        <button 
+            mat-raised-button 
+            [style.background-color]="total_ita > 2400 ? '' : 'black'" 
+            [style.color]="total_ita > 2400 ? '' : 'white'" 
+            [disabled]="total_ita > 2400 ? 'true' : 'false'" 
+            (click)="upgradBtn()" >
+            Account Upgrading!
+        </button>
+      </div>
+      <div class="col-md-4 offset-md-8 col-sm-12 title-md text-center p-t-15">
+        <input type="number" placeholder="User ID filter" [(ngModel)]="userFilterId" (keyup.enter)="userFilter()" />
+      </div>
+    </div>
+    <div class="row section-2 w-100" [style.overflow-x]="isMobileMenu() ? 'scroll' : ''">
+      <div class="genealogy-tree" [style.width]="isMobileMenu() ? '1062px' : '100%'"
+        [style.white-space]="isMobileMenu() ? 'nowrap' : 'inherit'">
+        <ng-container *ngIf="binary_user">
+          <div class="starter">
+            <div class="align-center">
+              <div class="binary_users">
+                <ng-container *ngIf="flg_tree">
+                  <p class="first_name">
+                    <b>
+                      {{binary_user[0]['starter']['first_name']}}
+                    </b>
+                  </p>
+                  <span *ngIf="binary_user[0]['starter']['id']">{{binary_user[0]['starter']['id']}}</span>
+                  <span *ngIf="binary_user[0]['starter']['userid']">{{binary_user[0]['starter']['userid']}}</span>
+                </ng-container>
+              </div>
+              <img src="../../../assets/image/genealogy/starter.png" />
+              <ng-container *ngIf="binary_depth">
+                <div class="btn-back">
+                  <mat-icon (click)="goPrevious()">replay</mat-icon>
+                </div>
+              </ng-container>
+            </div>
+            <div class="align-center line">
+              <img src="../../../assets/image/genealogy/line.JPG" />
+            </div>
+          </div>
+          <div class="layer-1">
+            <div class="layer-1-left col-6">
+              <div class="align-center">
+                <div class="binary_users">
+                  <ng-container *ngIf="binary_user[1]['layer1_left']">
+                    <p class="first_name">
+                      <b>
+                        {{binary_user[1]['layer1_left']['first_name']}}
+                      </b>
+                    </p>
+                    <span>{{binary_user[1]['layer1_left']['userid']}}</span>
+                  </ng-container>
+                </div>
+                <div (click)="getUpperUser('starter', 'Left', 'Left', 'layer1_left')">
+                  <img src="../../../assets/image/genealogy/paper.png" class="cursor" />
+                </div>
+                <ng-container *ngIf="binary_user[1]['layer1_left'] && binary_user[1]['layer1_left']['userid']">
+                  <div class="btn-back">
+                    <mat-icon (click)="showKidsTree(binary_user[1]['layer1_left'], 'Left')">details</mat-icon>
+                  </div>
+                </ng-container>
+              </div>
+              <div class="align-center line">
+                <img src="../../../assets/image/genealogy/line.JPG" />
+              </div>
+            </div>
+            <div class="layer-1-right col-6">
+              <div class="align-center">
+                <div class="binary_users">
+                  <ng-container *ngIf="binary_user[2]['layer1_right']">
+                    <p class="first_name">
+                      <b>
+                        {{binary_user[2]['layer1_right']['first_name']}}
+                      </b>
+                    </p>
+                    <span>{{binary_user[2]['layer1_right']['userid']}}</span>
+                  </ng-container>
+                </div>
+                <div (click)="getUpperUser('starter', 'Right', 'Right', 'layer1_right')">
+                  <img src="../../../assets/image/genealogy/paper.png" class="cursor" />
+                </div>
+                <ng-container *ngIf="binary_user[2]['layer1_right'] && binary_user[2]['layer1_right']['userid']">
+                  <div class="btn-back">
+                    <mat-icon (click)="showKidsTree(binary_user[2]['layer1_right'], 'Right')">details</mat-icon>
+                  </div>
+                </ng-container>
+              </div>
+              <div class="align-center line">
+                <img src="../../../assets/image/genealogy/line.JPG" />
+              </div>
+            </div>
+          </div>
+          <div class="layer-2">
+            <div class="layer-2-left col-6">
+              <div class="layer-left col-6">
+                <div class="align-center">
+                  <div class="binary_users">
+                    <ng-container *ngIf="binary_user[3]['layer2_left_1']">
+                      <p class="first_name">
+                        <b>
+                          {{binary_user[3]['layer2_left_1']['first_name']}}
+                        </b>
+                      </p>
+                      <span>{{binary_user[3]['layer2_left_1']['userid']}}</span>
+                    </ng-container>
+                  </div>
+                  <div (click)="getUpperUser('layer1_left', 'Left', 'Left', 'layer2_left_1')">
+                    <img src="../../../assets/image/genealogy/paper.png" class="cursor" />
+                  </div>
+                  <ng-container *ngIf="binary_user[3]['layer2_left_1'] && binary_user[3]['layer2_left_1']['userid']">
+                    <div class="btn-back">
+                      <mat-icon (click)="showKidsTree(binary_user[3]['layer2_left_1'], 'Left')">details</mat-icon>
+                    </div>
+                  </ng-container>
+                </div>
+                <div class="align-center line">
+                  <img src="../../../assets/image/genealogy/line.JPG" />
+                </div>
+              </div>
+              <div class="layer-right col-6">
+                <div class="align-center">
+                  <div class="binary_users">
+                    <ng-container *ngIf="binary_user[4]['layer2_left_2']">
+                      <p class="first_name">
+                        <b>
+                          {{binary_user[4]['layer2_left_2']['first_name']}}
+                        </b>
+                      </p>
+                      <span>{{binary_user[4]['layer2_left_2']['userid']}}</span>
+                    </ng-container>
+                  </div>
+                  <div (click)="getUpperUser('layer1_left', 'Left', 'Right', 'layer2_left_2')">
+                    <img src="../../../assets/image/genealogy/paper.png" class="cursor" />
+                  </div>
+                  <ng-container *ngIf="binary_user[4]['layer2_left_2'] && binary_user[4]['layer2_left_2']['userid']">
+                    <div class="btn-back">
+                      <mat-icon (click)="showKidsTree(binary_user[4]['layer2_left_2'], 'Right')">details</mat-icon>
+                    </div>
+                  </ng-container>
+                </div>
+                <div class="align-center line">
+                  <img src="../../../assets/image/genealogy/line.JPG" />
+                </div>
+              </div>
+            </div>
+            <div class="layer-2-right col-6">
+              <div class="layer-left col-6">
+                <div class="align-center">
+                  <div class="binary_users">
+                    <ng-container *ngIf="binary_user[5]['layer2_right_1']">
+                      <p class="first_name">
+                        <b>
+                          {{binary_user[5]['layer2_right_1']['first_name']}}
+                        </b>
+                      </p>
+                      <span>{{binary_user[5]['layer2_right_1']['userid']}}</span>
+                    </ng-container>
+                  </div>
+                  <div (click)="getUpperUser('layer1_right', 'Right','Left', 'layer2_right_1')">
+                    <img src="../../../assets/image/genealogy/paper.png" class="cursor" />
+                  </div>
+                  <ng-container *ngIf="binary_user[5]['layer2_right_1'] && binary_user[5]['layer2_right_1']['userid']">
+                    <div class="btn-back">
+                      <mat-icon (click)="showKidsTree(binary_user[5]['layer2_right_1'], 'Left')">details</mat-icon>
+                    </div>
+                  </ng-container>
+                </div>
+                <div class="align-center line">
+                  <img src="../../../assets/image/genealogy/line.JPG" />
+                </div>
+              </div>
+              <div class="layer-right col-6">
+                <div class="align-center">
+                  <div class="binary_users">
+                    <ng-container *ngIf="binary_user[6]['layer2_right_2']">
+                      <p class="first_name">
+                        <b>
+                          {{binary_user[6]['layer2_right_2']['first_name']}}
+                        </b>
+                      </p>
+                      <span>{{binary_user[6]['layer2_right_2']['userid']}}</span>
+                    </ng-container>
+                  </div>
+                  <div (click)="getUpperUser('layer1_right', 'Right', 'Right', 'layer2_right_2')">
+                    <img src="../../../assets/image/genealogy/paper.png" class="cursor" />
+                  </div>
+                  <ng-container *ngIf="binary_user[6]['layer2_right_2'] && binary_user[6]['layer2_right_2']['userid']">
+                    <div class="btn-back">
+                      <mat-icon (click)="showKidsTree(binary_user[6]['layer2_right_2'], 'Right')">details</mat-icon>
+                    </div>
+                  </ng-container>
+                </div>
+                <div class="align-center line">
+                  <img src="../../../assets/image/genealogy/line.JPG" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="layer-3">
+            <div class="layer-3-left col-6">
+              <div class="layer-left-left col-6">
+                <div class="align-center col-6">
+                  <div class="binary_users">
+                    <ng-container *ngIf="binary_user[7]['layer3_left_1']">
+                      <p class="first_name">
+                        <b>
+                          {{binary_user[7]['layer3_left_1']['first_name']}}
+                        </b>
+                      </p>
+                      <span>{{binary_user[7]['layer3_left_1']['userid']}}</span>
+                    </ng-container>
+                  </div>
+                  <div (click)="getUpperUser('layer2_left_1', 'Left', 'Left', 'layer3_left_1')">
+                    <img src="../../../assets/image/genealogy/paper.png" class="cursor" />
+                  </div>
+                  <ng-container *ngIf="binary_user[7]['layer3_left_1'] && binary_user[7]['layer3_left_1']['userid']">
+                    <div class="btn-back">
+                      <mat-icon (click)="showKidsTree(binary_user[7]['layer3_left_1'], 'Left')">details</mat-icon>
+                    </div>
+                  </ng-container>
+                </div>
+                <div class="align-center col-6">
+                  <div class="binary_users">
+                    <ng-container *ngIf="binary_user[8]['layer3_left_2']">
+                      <p class="first_name">
+                        <b>
+                          {{binary_user[8]['layer3_left_2']['first_name']}}
+                        </b>
+                      </p>
+                      <span>{{binary_user[8]['layer3_left_2']['userid']}}</span>
+                    </ng-container>
+                  </div>
+                  <div (click)="getUpperUser('layer2_left_1', 'Left', 'Right', 'layer3_left_2')">
+                    <img src="../../../assets/image/genealogy/paper.png" class="cursor" />
+                  </div>
+                  <ng-container *ngIf="binary_user[8]['layer3_left_2']['userid']">
+                    <div class="btn-back">
+                      <mat-icon (click)="showKidsTree(binary_user[8]['layer3_left_2'], 'Right')">details</mat-icon>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+              <div class="layer-left-right col-6">
+                <div class="align-center col-6">
+                  <div class="binary_users">
+                    <ng-container *ngIf="binary_user[9]['layer3_left_3']">
+                      <p class="first_name">
+                        <b>
+                          {{binary_user[9]['layer3_left_3']['first_name']}}
+                        </b>
+                      </p>
+                      <span>{{binary_user[9]['layer3_left_3']['userid']}}</span>
+                    </ng-container>
+                  </div>
+                  <div (click)="getUpperUser('layer2_left_2', 'Left', 'Left', 'layer3_left_3')">
+                    <img src="../../../assets/image/genealogy/paper.png" class="cursor" />
+                  </div>
+                  <ng-container *ngIf="binary_user[9]['layer3_left_3'] && binary_user[9]['layer3_left_3']['userid']">
+                    <div class="btn-back">
+                      <mat-icon (click)="showKidsTree(binary_user[9]['layer3_left_3'], 'Left')">details</mat-icon>
+                    </div>
+                  </ng-container>
+                </div>
+                <div class="align-center col-6">
+                  <div class="binary_users">
+                    <ng-container *ngIf="binary_user[10]['layer3_left_4']">
+                      <p class="first_name">
+                        <b>
+                          {{binary_user[10]['layer3_left_4']['first_name']}}
+                        </b>
+                      </p>
+                      <span>{{binary_user[10]['layer3_left_4']['userid']}}</span>
+                    </ng-container>
+                  </div>
+                  <div (click)="getUpperUser('layer2_left_2', 'Left', 'Right', 'layer3_left_4')">
+                    <img src="../../../assets/image/genealogy/paper.png" class="cursor" />
+                  </div>
+                  <ng-container *ngIf="binary_user[10]['layer3_left_4'] && binary_user[10]['layer3_left_4']['userid']">
+                    <div class="btn-back">
+                      <mat-icon (click)="showKidsTree(binary_user[10]['layer3_left_4'], 'Right')">details</mat-icon>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+            <div class="layer-3-right col-6">
+              <div class="layer-right-left col-6">
+                <div class="align-center col-6">
+                  <div class="binary_users">
+                    <ng-container *ngIf="binary_user[11]['layer3_right_1']">
+                      <p class="first_name">
+                        <b>
+                          {{binary_user[11]['layer3_right_1']['first_name']}}
+                        </b>
+                      </p>
+                      <span>{{binary_user[11]['layer3_right_1']['userid']}}</span>
+                    </ng-container>
+                  </div>
+                  <div (click)="getUpperUser('layer2_right_1', 'Right', 'Left', 'layer3_right_1')">
+                    <img src="../../../assets/image/genealogy/paper.png" class="cursor" />
+                  </div>
+                  <ng-container
+                    *ngIf="binary_user[11]['layer3_right_1'] && binary_user[11]['layer3_right_1']['userid']">
+                    <div class="btn-back">
+                      <mat-icon (click)="showKidsTree(binary_user[11]['layer3_right_1'], 'Left')">details</mat-icon>
+                    </div>
+                  </ng-container>
+                </div>
+                <div class="align-center col-6">
+                  <div class="binary_users">
+                    <ng-container *ngIf="binary_user[12]['layer3_right_2']">
+                      <p class="first_name">
+                        <b>
+                          {{binary_user[12]['layer3_right_2']['first_name']}}
+                        </b>
+                      </p>
+                      <span>{{binary_user[12]['layer3_right_2']['userid']}}</span>
+                    </ng-container>
+                  </div>
+                  <div (click)="getUpperUser('layer2_right_1', 'Right', 'Right', 'layer3_right_2')">
+                    <img src="../../../assets/image/genealogy/paper.png" class="cursor" />
+                  </div>
+                  <ng-container
+                    *ngIf="binary_user[12]['layer3_right_2'] && binary_user[12]['layer3_right_2']['userid']">
+                    <div class="btn-back">
+                      <mat-icon (click)="showKidsTree(binary_user[12]['layer3_right_2'], 'Right')">details</mat-icon>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+              <div class="layer-right-right col-6">
+                <div class="align-center col-6">
+                  <div class="binary_users">
+                    <ng-container *ngIf="binary_user[13]['layer3_right_3']">
+                      <p class="first_name">
+                        <b>
+                          {{binary_user[13]['layer3_right_3']['first_name']}}
+                        </b>
+                      </p>
+                      <span>{{binary_user[13]['layer3_right_3']['userid']}}</span>
+                    </ng-container>
+                  </div>
+                  <div (click)="getUpperUser('layer2_right_2', 'Right', 'Left', 'layer3_right_3')">
+                    <img src="../../../assets/image/genealogy/paper.png" class="cursor" />
+                  </div>
+                  <ng-container
+                    *ngIf="binary_user[13]['layer3_right_3'] && binary_user[13]['layer3_right_3']['userid']">
+                    <div class="btn-back">
+                      <mat-icon (click)="showKidsTree(binary_user[13]['layer3_right_3'], 'Left')">details</mat-icon>
+                    </div>
+                  </ng-container>
+                </div>
+                <div class="align-center col-6">
+                  <div class="binary_users">
+                    <ng-container *ngIf="binary_user[14]['layer3_right_4']">
+                      <p class="first_name">
+                        <b>
+                          {{binary_user[14]['layer3_right_4']['first_name']}}
+                        </b>
+                      </p>
+                      <span>{{binary_user[14]['layer3_right_4']['userid']}}</span>
+                    </ng-container>
+                  </div>
+                  <div (click)="getUpperUser('layer2_right_2', 'Right', 'Right', 'layer3_right_4')">
+                    <img src="../../../assets/image/genealogy/paper.png" class="cursor" />
+                  </div>
+                  <ng-container
+                    *ngIf="binary_user[14]['layer3_right_4'] && binary_user[14]['layer3_right_4']['userid']">
+                    <div class="btn-back">
+                      <mat-icon (click)="showKidsTree(binary_user[14]['layer3_right_4'], 'Right')">details</mat-icon>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="row section-3">
+      <div class="col-md-9">
+        <div class="seller-info" *ngIf="!upgradeFlag">
+          <div class="col-md-6">
+            <span class="title-md">Placement ID Number: </span>
+            <span class="title-md">{{placement_id}}</span>
+          </div>
+          <div class="col-md-6">
+            <span class="title-md">Position: </span>
+            <span class="title-md">{{absolute_position}}</span>
+          </div>
+        </div>
+        <div class="col-md-12 available_consumer align-center"  *ngIf="!upgradeFlag">
+          <div class="col-md-4"><span class="title-md">Customer ID Number: </span></div>
+          <div class="col-md-4 col-sm-12">
+            <ng-container *ngIf="flg_tree">
+              <input type="number" name="id_consumer" (keyup)="checkBinaryAvailable($event)" style="padding: 8px; font-size: 1.2rem;"
+                placeholder="Enter consumer Id number here...">
+            </ng-container>
+            <ng-container *ngIf="!flg_tree">
+              <input type="number" name="id_consumer" class="col-4" disabled placeholder="Enter consumer Id number here..." style="padding: 8px; font-size: 1.2rem;">
+            </ng-container>
+          </div>
+          <div class="col-md-4">
+            <span class="customer_status">{{msg_consumer_status}}</span>
+          </div>
+        </div>
+        <div class="available_products" style="margin: 0px 15px">
+          <span class="col-md-2 title-md" style="padding-left: 0px;"><b>Search: </b></span>
+          <ng-container *ngIf="!searchFlag && !upgradeFlag">
+            <div class="col-md-8 title-md" style="padding-left: 0px;">To search products, Please first select upper member and position.</div>
+          </ng-container>
+          <ng-container *ngIf="flg_tree && placement_id && searchFlag || upgradeFlag">
+            <input type="number" name="id_seller" placeholder="Search binary seller ID number here..." style="width: 100%"
+              (keyup)="searchProductBySellerId($event)" />
+          </ng-container>
+          <ng-container *ngIf="!flg_tree">
+            <input type="number" name="id_seller" disabled style="width: 100%"
+              placeholder="Search binary seller ID number here..." />
+          </ng-container>
+        </div>
+        <div class="row product-container">
+          <ng-container
+            *ngIf="productBySellerId.length&&((this.selected_seller_id != this.selected_consumer_id)||(this.selected_consumer_id == 0)&&(this.selected_seller_id == 0))">
+            <ng-container *ngFor="let product of productBySellerId">
+              <div class="col-lg-4 p-t-15">
+                <mat-card>
+                  <div class="product-item">
+                    <div class="align-center">
+                      <img src="{{upload_url+product.image}}" />
+                    </div>
+                    <div class="item">
+                      <div class="col-6">Product Name:</div>
+                      <div class="col-6">{{product.product_name}}</div>
+                    </div>
+                    <div class="item">
+                      <div class="col-6">Price:</div>
+                      <div class="col-6">{{product.market_price}}</div>
+                    </div>
+                    <div class="item">
+                      <div class="col-6">Seller Price:</div>
+                      <div class="col-6">{{product.seller_price}}</div>
+                    </div>
+                    <div class="item">
+                      <div class="col-6">Seller ID#:</div>
+                      <div class="col-6">{{product.userid}}</div>
+                    </div>
+                    <div class="item">
+                      <div class="col-6">Availability:</div>
+                      <div class="col-6">100</div>
+                    </div>
+                    <div class="item">
+                      <div class="col-6">Total Sold:</div>
+                      <div class="col-6">29</div>
+                    </div>
+                    <div class="item">
+                      <div class="col-6">Date Updated:</div>
+                      <div class="col-6">
+                        <p>{{product.upload_date}}</p>
+                      </div>
+                    </div>
+                    <div class="item align-center">
+                      <ng-container *ngIf="qty[product._id]">
+                        <button mat-raised-button class="btn btn-add" (click)="addToCart(product._id, product)">
+                          ADD TO CART
+                        </button>
+                      </ng-container>
+                      <ng-container *ngIf="!qty[product._id]">
+                        <button mat-raised-button class="btn btn-add" disabled>
+                          ADD TO CART
+                        </button>
+                      </ng-container>
+                    </div>
+                    <div class="item btn-plus-minus">
+                      <button mat-icon-button class="btn  btn-minus bg-white" (click)="subtractFromCart(product._id)">
+                        <b class="title-md">-</b>
+                      </button>
+                      <div class="order_count bg-black align-center">
+                        <p class="title-md">
+                          <ng-container *ngIf="this.qty[product._id]">
+                            {{this.qty[product._id]}}
+                          </ng-container>
+                          <ng-container *ngIf="!this.qty[product._id]">
+                            0
+                          </ng-container>
+                        </p>
+                      </div>
+                      <ng-container *ngIf="selected_seller_id && (selected_seller_id || upgradeFlag)">
+                        <button mat-icon-button class="btn  btn-plus bg-white" (click)="plusToCart(product._id)">
+                          <b class="title-md">+</b>
+                        </button>
+                      </ng-container>
+                      <ng-container *ngIf="!selected_seller_id || (!selected_consumer_id && !upgradeFlag)">
+                        <button mat-icon-button class="btn  btn-plus bg-white" disabled>
+                          <b class="title-md">+</b>
+                        </button>
+                      </ng-container>
+                    </div>
+                  </div>
+                </mat-card>
+              </div>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngIf="!productBySellerId.length">
+            <div class="title-lg">There are no available seller or products.</div>
+          </ng-container>
+          <ng-container
+            *ngIf="(this.selected_seller_id)&& (this.selected_consumer_id) && (this.selected_seller_id == this.selected_consumer_id)">
+            <div class="title-md">It is impossible for one user to be customer and seller at the same time.</div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="p-t-15">
+          <div class="align-center"><b>{{ total_ordered_count}}</b></div>
+          <div class="align-center"><img src="../../../assets/image/genealogy/cart.png" /></div>
+        </div>
+        <div class="p-t-15">
+          <span class="title-md"><b>Item Total Amount: </b></span>
+          <span class="title-md"><b>{{total_item_amount}} PHP</b></span>
+        </div>
+        <div class="p-t-15">
+          <span class="title-md"><b>Total LC Value: </b></span>
+          <!-- <span class="title-md"><b>{{total_item_amount/(socket.btc_usd * socket.lc_btc *currencyValue| number:'0.4-4' )}} LC</b></span> // -->
+          <span class="title-md"><b>{{total_item_amount/(socket.btc_usd * socket.lc_btc *currencyValue)}} LC</b></span>
+        </div>
+        <div class="p-t-15">
+          <span class="title-md"><b>Actual Product Cost: </b></span>
+          <!-- <span class="title-md"><b>{{total_item_amount/(2.19*(socket.btc_usd * socket.lc_btc *currencyValue| number:'0.4-4' ))}} LC</b></span> -->
+          <span class="title-md"><b>{{total_item_amount/(2.19*(socket.btc_usd * socket.lc_btc *currencyValue))}}
+              LC</b></span>
+        </div>
+        <div class="p-t-15">
+          <span class="title-md"><b>Product To Order: </b></span>
+          <span class="title-md"><b>{{product_to_order}} PHP</b></span>
+        </div>
+        <div class="btn-pay align-center p-t-15">
+          <ng-container *ngIf="check_pay_button">
+            <button mat-raised-button style="background-color: black;" (click)="payNow()">Pay Now</button>
+          </ng-container>
+          <ng-container *ngIf="!check_pay_button">
+            <button mat-raised-button color="default" disabled>Pay Now</button>
+          </ng-container>
+        </div>
+        <ng-container *ngIf="msg">
+          {{this.msg}}
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!share.user">
+    <div class="title-lg">
+      You are not allowed to access to this page.
+    </div>
+  </ng-container>
+</div>

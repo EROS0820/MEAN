@@ -1,0 +1,67 @@
+.pre-order{
+  padding-left: 15px;
+  margin-right: -60px;
+}
+.pre-order-container {
+  padding: 8px;
+  margin-top: 20px;
+}
+.btn-claim {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+.btn-claim button {
+  background: black;
+  color: white;
+  padding: 8px;
+}
+.search-claim {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin-top: 50px;
+}
+.search-claim div {
+  width: 100px;
+}
+.search-claim input {
+  width: 60%;
+  padding: 8px;
+}
+.title-lg {
+  font-size: 2rem;
+}
+.title-md {
+  font-size: 1.2rem;
+}
+.tbl_pre_order {
+  display: block;
+  justify-content: center;
+  padding-top: 30px;
+}
+.tbl_pre_order table {
+  width: 100%;
+}
+th.mat-header-cell {
+  text-align: center;
+  padding: 6px;
+  font-size: 18px;
+}
+.msg_status {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.result {
+  width: 60%;
+  padding-top: 30px;
+  display: flex;
+  justify-content: flex-end;
+}
+.result div {
+  text-align: left;
+}

@@ -1,0 +1,35 @@
+<div class="align-items-center my-4">
+
+    <div class="d-flex justify-content-between flex-column flex-sm-row">
+      <a [routerLink]="['/convert-btc-to-lc']" class="btn mb-1" [ngClass]="{ 
+        'btn-primary': action == 'convert-btc-to-lc', 
+        'btn-outline-primary': action != 'convert-btc-to-lc'
+      }">
+        BTC To LC
+      </a>
+      <a [routerLink]="['/convert-lc-to-btc']" class="btn mb-1" [ngClass]="{ 
+        'btn-primary': action == 'convert-lc-to-btc', 
+        'btn-outline-primary': action != 'convert-lc-to-btc'
+      }">
+        LC To BTC
+      </a>
+      <a [routerLink]="['/successful-order']" class="btn mb-1" [ngClass]="{ 
+        'btn-primary': action == 'successful-order', 
+        'btn-outline-primary': action != 'successful-order'
+      }">
+        Successful Orders
+      </a>
+      <a [routerLink]="['/open-order']" class="btn mb-1" [ngClass]="{ 
+        'btn-primary': action == 'open-order', 
+        'btn-outline-primary': action != 'open-order'
+      }">
+        Open Orders
+      </a>
+      <a [routerLink]="['/php-btc']" class="btn mb-1" [ngClass]="{ 
+        'btn-primary': action == 'php-btc', 
+        'btn-outline-primary': action != 'php-btc'
+      }">
+        PHP To BTC
+      </a>
+    </div>
+</div>

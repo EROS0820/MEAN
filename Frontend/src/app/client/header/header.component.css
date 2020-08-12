@@ -1,0 +1,113 @@
+.spacer {
+  flex: 1 1 auto;
+}
+.no-outline {
+  outline: none;
+}
+.container {
+  width: 100%;
+  height: calc(100vh - 105px);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+mat-sidenav {
+  width: 100%;
+  min-width: 200px;
+  margin-left: -15px;
+  background-color: #fddd8e;
+}
+mat-sidenav .navbar-container{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+mat-sidenav a {
+  text-decoration: none;
+  border: transparent;
+}
+.sidebar-group {
+  display: flex;
+  padding-left: 25px;
+  padding-top: 10px;
+}
+.sidebar-item {
+  display: flex;
+  align-items: center;
+}
+.sidebar-item img{
+  width: 30px;
+  height: 30px;
+}
+.sidebar-title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  padding: 5px;
+}
+@media screen and (max-width: 1420px) {
+  .sidebar-title {
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 960px) {
+  mat-sidenav {
+    background: #fddd8e;
+    color: white;
+  }
+
+  .sidebar-title {
+    font-size: 12px;
+  }
+  .mat-drawer-container {
+    background: transparent;
+  }
+}
+.circle {
+  border-radius: 50%;
+}
+
+.with-bg {
+  background: url('../../../assets/office.jpg') no-repeat center;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  max-height: 130px;
+}
+
+.no-shadow {
+  box-shadow: none !important;
+}
+
+::ng-deep .mat-expansion-panel-body {
+  padding: 0px !important;
+  padding-left: 10px !important;
+}
+
+.header-box-shadow {
+  box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+}
+
+.bottom-to-top {
+  border: 0px;
+  border-right: 1px;
+  border-style: solid;
+  border-image:
+    linear-gradient(to top, #c1c1c1, rgba(0, 0, 0, 0)) 1 100%
+}
+
+#navbarSupportedContent > ul {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}

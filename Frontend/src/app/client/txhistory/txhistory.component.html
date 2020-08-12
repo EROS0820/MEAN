@@ -1,0 +1,114 @@
+	<div class="row">
+
+		<div class="col-12 col-md-6">
+			<div class="alert alert-success">
+				Overall BTC Received: {{ overall_received | btc }}BTC
+			</div>
+		</div>
+		<div class="col-12 col-md-6">
+			<div class="alert alert-success">
+				Overall BTC Sent: {{ overall_sent | btc }}BTC
+			</div>
+		</div>
+		<div class="col-12 col-md-6">
+			<div class="alert alert-success">
+				Overall Reward Received: {{ overall_reward | btc }}BTC
+			</div>
+		</div>
+		<div class="col-12 col-md-6">
+			<div class="alert alert-success">
+				Referred Traders: {{ referred_count }}
+			</div>
+		</div>
+	</div>
+	<div class="row">
+
+		<div class="btn-group col-12 mb-3 d-block" role="group" aria-label="Basic example">
+		  <button type="button" class="btn " [ngClass]="{'btn-primary': type=='all'}" (click)="show('all')">All Transaction</button>
+		  <button type="button" class="btn " [ngClass]="{'btn-primary': type=='reward'}" (click)="show('reward')">Reward Received Only</button>
+		  <button type="button" class="btn " [ngClass]="{'btn-primary': type=='received'}" (click)="show('received')">BTC Received Only</button>
+		  <button type="button" class="btn " [ngClass]="{'btn-primary': type=='sent'}" (click)="show('sent')">BTC Sent Only</button>
+		  <button type="button" class="btn " [ngClass]="{'btn-primary': crypto_check==true}" (click)="crypto()">Crypto Cheque Tx</button>
+		</div>
+  </div>
+  <div class="form-group row" *ngIf="crypto_check">
+    <div class="col-md-9">
+        <input class="form-control" type="text" [(ngModel)]="search" (keyup)="searchcheque()"  placeholder="Search By Cheque No.">
+    </div>
+</div>
+	<table class="table table-responsive-xl" *ngIf="type!='received' && !crypto_check">
+		<thead>
+			<th>ID</th>
+			<th>Date</th>
+			<th style="width: 14%">Amount</th>
+			<th style="width: 14%">Previous Amount</th>
+			<th style="width: 14%">New Amount</th>
+			<th>Type</th>
+		</thead>
+		<tbody>
+			<tr *ngFor='let transaction of display'>
+				<td>{{ transaction._id }}</td>
+				<td>{{ transaction.date | date:'yyyy/MM/dd hh:mm:ss' }}</td>
+				<td>{{ transaction.amount | btc }}</td>
+				<td>{{ transaction.old | btc}}</td>
+				<td>{{ transaction.new | btc }}</td>
+				<td class="first">{{ transaction.type }}</td>
+
+			</tr>
+		</tbody>
+
+	</table>
+	<table class="table table-responsive-xl" *ngIf="type=='received' && !crypto_check">
+		<thead>
+			<th>ID</th>
+			<th>Date</th>
+			<th>Amount</th>
+			<th>Network Fee</th>
+			<th>Receivable Amount</th>
+			<th>Previous Amount</th>
+			<th>New Amount</th>
+			<th>Type</th>
+		</thead>
+		<tbody>
+			<tr *ngFor='let transaction of display'>
+				<td>{{ transaction._id }}</td>
+				<td>{{ transaction.date | date:'yyyy/MM/dd hh:mm:ss' }}</td>
+				<td>{{ transaction.amount | btc }}</td>
+				<td>{{ transaction.fee | btc }}</td>
+				<td>{{ transaction.amount - transaction.fee | btc }}</td>
+				<td>{{ transaction.old | btc}}</td>
+				<td>{{ transaction.new | btc }}</td>
+				<td class="first">{{ transaction.type }}</td>
+
+			</tr>
+		</tbody>
+
+  </table>
+
+  <table class="table table-responsive-xl" *ngIf="crypto_check">
+    <tr>
+      <th>Cheque NO.</th>
+      <th>Pay To</th>
+      <th>My BTC Balance</th>
+      <th>Borrower BTC Balance</th>
+      <th>Amount</th>
+      <th>Agent Profit</th>
+      <th>Paid From</th>
+      <th>Created Date</th>
+      <th>Due Date</th>
+      <th>Status</th>
+    </tr>
+    <tr *ngFor="let data of tabledata;">
+      <td>{{data.cheque_code| slice:0:6}}</td>
+      <td>{{data.payto}}</td>
+      <td>{{btc_balance}}</td>
+      <td>{{data.btc_balance}}</td>
+      <td>{{data.amount}}</td>
+      <td>{{data.agent_profit}}</td>
+      <td>{{data.from}}</td>
+      <td>{{data.create_time | date:'yyyy/MM/dd hh:mm:ss'}}</td>
+      <td> {{data.releasing_time | date:'yyyy/MM/dd hh:mm:ss'}} </td>
+      <td>{{data.statuss}}</td>
+    </tr>
+  </table>
+

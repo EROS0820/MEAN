@@ -1,0 +1,58 @@
+<form class="pt-3 " (ngSubmit)="send()">
+    <div class="form-group text-center">
+        <label for="exampleInputEmail1">Set Desired LC Price To Convert</label>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon1" style="width: 50px" (click)="addRate(-1)">-</button>
+            </div>
+            <input type="text" class="form-control text-center" placeholder="" aria-label="Example text with button addon" maxlength="17" aria-describedby="button-addon1" (keyup)="validInput()" name="rate" [(ngModel)]="rate">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon1" style="width: 50px" (click)="addRate(1)">+</button>
+            </div>
+        </div>
+    </div>
+    <div class="form-group text-center">
+        <label for="amount_lc">Desired LC Amount To Receive</label>
+        <input type="text" class="form-control text-center" id="amount_lc" name="amount_lc" [(ngModel)]="amount_lc">
+    </div>
+    <div class="form-group text-center">
+        <label for="amount_btc">Total BTC Price To Pay</label>
+        <input type="text" class="form-control text-center" id="amount_btc" value="{{(amount_lc * rate) | number:'0.0-12'}}" disabled="">
+    </div>
+    <div class="form-group">
+        <label>BTC Balance: {{ btc_balance | number:'0.8-8' }} BTC</label>
+    </div>
+    <div class="form-group">
+        <label>LC Balance: {{ lc_balance | number:'0.0-4' }} LC</label>
+    </div>
+    <div class="form-group">
+        <label>1 LC: {{ lc_btc | number:'0.0-15' }} BTC</label>
+    </div>
+    <div class="form-group">
+        <div *ngIf='showError' class=" alert alert-danger mt-2" role="alert">
+            {{error.message}}
+        </div>
+        <div *ngIf='showResult' class=" alert alert-success mt-2" role="alert">
+            {{result.message}}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="alert alert-info mt-2" role="alert" *ngIf="0.0001 > amount_lc * rate">
+            Minimum Conversion BTC value is 0.0001.
+        </div>
+        <div class="alert alert-info mt-2" role="alert" *ngIf="amount_lc * rate > btc_balance">
+            Insufficient Fund.
+        </div>
+        <div class="alert alert-info mt-2" role="alert" *ngIf="buttonlock==true">
+            System is busy.
+        </div>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-success" type="submit" [disabled]="0.0001 > amount_lc * rate || amount_lc * rate > btc_balance || buttonlock==true">
+			Proceed To Conversion
+		</button>
+    </div>
+    <div class="form-group">
+        <p class="text-muted">Important: LC amount to receive will multiply to {{ socket.multiplier.CF }} the answer will be your "Conversion Fee" deducted to LC balance.</p>
+    </div>
+</form>

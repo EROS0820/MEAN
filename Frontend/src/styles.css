@@ -1,0 +1,89 @@
+@import '../node_modules/ngx-toastr/toastr.css';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+.loading {
+    max-width: 100px;
+    margin: 0 auto;
+}
+
+.error-message {
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+}
+
+.alert-danger {
+    color: #ffffff;
+    background-color: #f55858;
+    border-color: #ffffff;
+}
+
+.alert-success {
+    color: #ffffff;
+    background-color: #4dbd74;
+    border-color: #ffffff;
+}
+
+.ml-10 {
+    margin-left: 10px;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.ml-2 {
+    margin-left: 2px;
+}
+
+.mt-30 {
+    margin-top: 30px;
+}
+
+.table-primary,
+.table-primary>th,
+.table-primary>td {
+    background-color: #2cbef1;
+}
+
+.table-success,
+.table-success>th,
+.table-success>td {
+    background-color: #79ffa7;
+}
+
+.container-fluid {
+    padding-right: 50px;
+    padding-left: 50px;
+}
+
+.flex-layout {
+  display: flex;
+}
+.content {
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: -25px;
+}
+@media screen and (max-width: 960px) {
+  .flex-layout {
+    display: block;
+  }
+  .content {
+    max-width: 100%;
+  }
+}
+
+.bg-white{
+  background: white;
+}
+.bg-black{
+  background: #000;
+}
+.align-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.p-t-15 {
+  padding-top: 15px;
+}

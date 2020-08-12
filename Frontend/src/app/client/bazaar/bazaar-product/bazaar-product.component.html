@@ -1,0 +1,127 @@
+<div class="row">
+    <div class="search-hero col-md-11 col-sm-11">
+        <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Search product name or product description here...">
+    </div>
+    <div class="col-md-1 col-sm-1 bz_cart_icon">
+        <a [routerLink]="['precheckout']">
+            <em class="icon-basket"></em>
+            <span class='badge badge-warning' id="cart_count" name="cart_count">{{ cart_count }}</span>
+        </a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card border-dark">
+            <div class="card-body">
+                <p>
+                    <strong>Important : </strong> Buy product to the bazaar owner which you know. The transaction of buying and selling is between buyer and seller. We are not liable to any undeliveried products or any product related issue.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-3 col-md-3">
+        <div class="card text-white bg-primary text-center">
+            <div class="card-body">
+                <strong>LC Maintaining Balance : {{ socket.LcMaintainingBalance }} LC</strong>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 col-md-3">
+        <div class="card text-white bg-danger text-center">
+            <div class="card-body">
+                <strong>1 LC : {{ socket.lc_btc | number:'0.0-15' }} BTC</strong>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 col-md-3">
+        <div class="card text-white bg-success text-center">
+            <div class="card-body">
+                <strong>1 LC : {{ socket.btc_usd * socket.lc_btc * currencyValue | number:'0.4-4' }} {{ curCode }}</strong>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3 col-md-3">
+        <div class="card text-white bg-dark text-center">
+            <div class="card-body">
+                <strong>LC Balance : {{ socket.lc_balance }} LC</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="socket.LcMaintainingBalance >= socket.lc_balance">
+    <div class="col-md-12 col-sm-12 text-center text-danger">
+        <p>
+            * insufficient LC Balance. If your LC Balance is greater than LC Manitaining Balance, you can add product to cart.
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <h4 class="shop_title">
+            <strong>
+              {{ bz_shop_name }}
+          </strong>
+        </h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 text-center" *ngIf="!bazaar_products.length; else display_products">
+        <p>
+            * No products in this bazaar shop.
+        </p>
+    </div>
+    <ng-template #display_products>
+        <div class="col-md-3" *ngFor="let bzp of bazaar_products | keyvalue | filter:searchText; let i = index">
+            <div class="card mb-4 text-white bg-dark">
+                <img class="card-img-top" src="assets/{{ bzp.value.bzp_photo }}" alt="bzp.value.bp_name">
+                <div class="card-body">
+                    <h5 class="card-title">Product Name : {{ bzp.value.bp_name }}</h5>
+                    <h5 class="card-title">Initial LC Price : {{ bzp.value.initial_lc_price }} LC</h5>
+                    <h5 class="card-title">Controlled LC Price : {{ (bzp.value.initial_cc_price / (socket.btc_usd * socket.lc_btc * currencyValue)) | number:'0.4-4' }} LC</h5>
+                    <h5 class="card-title">Initial CC Price : {{ bzp.value.initial_cc_price }} {{ curCode }}</h5>
+                    <h5 class="card-title">Controlled CC Price : {{ (bzp.value.initial_cc_price / (socket.btc_usd * socket.lc_btc * currencyValue) * bzp.value.lc_cc) | number:'0.4-4' }} {{ curCode }}</h5>
+                    <h5 class="card-title">Consumtion Compounding Savings : {{ bzp.value.personal_savings }} %</h5>
+                    <h5 class="card-title">Consumption Agent Savings : {{ bzp.value.agent_savings }} %</h5>
+                    <h5 class="card-title">Availability : {{ bzp.value.availability }}</h5>
+                    <h5 class="card-title">1 LC To CC @ Post Priced : {{ bzp.value.lc_cc }} {{ curCode }}</h5>
+                    <h5 class="card-title">Present 1 LC to CC : {{ socket.btc_usd * socket.lc_btc * currencyValue | number:'0.4-4' }} {{ curCode }}</h5>
+                    <h5 class="card-title">Present 1 LC to BTC : {{ socket.lc_btc | number:'0.0-15' }} BTC</h5>
+                    <h5 class="card-title">Product Description : {{ bzp.value.product_description | slice:0:20 }} ...</h5>
+                    <button class="btn btn-block btn-primary" [routerLink]="['product/edit/', bzp.value.bz_pro_id]" *ngIf="owner_flag">Edit</button>
+                    <button class="btn btn-block btn-danger" *ngIf="owner_flag" data-toggle="modal" attr.data-target="#confirmModal{{i}}">Delete</button>
+                    <button class="btn btn-outline-light btn-block" *ngIf="!owner_flag" [disabled]="socket.LcMaintainingBalance >= socket.lc_balance" (click)="addToCart(bzp.value.bz_pro_id)">Add To Cart</button>
+
+                    <div class="modal fade" id="confirmModal{{i}}" tabindex="-1" role="dialog" aria-labelledby="BazaarConfirmModal" aria-hidden="true">
+                        <div class="modal-dialog modal-primary" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Confirmation</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="text-center text-dark">
+                                        <strong>Do you want to delete this product?</strong>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="close" data-dismiss="modal" type="button" (click)="product_delete(bzp.value.bz_pro_id)">
+                                        <a class="btn btn-danger">Delete</a>
+                                    </button>
+                                    <button type="button" class="close" data-dismiss="modal">
+                                        <a class="btn btn-secondary">Cancel</a>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>

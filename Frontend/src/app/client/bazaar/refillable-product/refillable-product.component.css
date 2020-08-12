@@ -1,0 +1,23 @@
+img {
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 3px;
+    min-height: 188px;
+    max-height: 188px;
+}
+
+.card-body {
+    padding: 0.75rem;
+}
+
+.search-hero {
+    padding-bottom: 30px;
+}
+
+h5 {
+    font-size: 0.75rem;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}

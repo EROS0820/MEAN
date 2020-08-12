@@ -1,0 +1,28 @@
+.checkout_title {
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.card-body {
+    padding: 0.75rem;
+}
+
+img {
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 3px;
+    min-height: 150px;
+    max-height: 150px;
+}
+
+h5 {
+    font-size: 0.75rem;
+}
+
+.mb-15 {
+    margin-bottom: 15px;
+}
+
+.ml-10 {
+    margin-left: 10px;
+}

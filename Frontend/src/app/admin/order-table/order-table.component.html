@@ -1,0 +1,31 @@
+<table class="table table-responsive-xl">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th style="min-width: 160px;">Date</th>
+			<th>Rate</th>
+			<th style="min-width: 100px;">LC Amount</th>
+			<th style="min-width: 150px;">BTC Amount Paid</th>
+			<th style="min-width: 200px;">Total BTC Price To Receive</th>
+			<th style="min-width: 90px;">Type</th>
+			<th>Status</th>
+			<th *ngIf="display == 'btc-to-lc-success' || display == 'lc-to-btc-success'" style="min-width: 130px;">Conversion Fee</th>
+			<th *ngIf="display == 'btc-to-lc-success'">Adder</th>
+			<th *ngIf="display == 'lc-to-btc-success'">Subtracter</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let order of orders">
+			<td>{{ order.orderid }}</td>
+			<td>{{ order.date | date:'yyyy/MM/dd hh:mm:ss'}}</td>
+			<td>{{ order.rate | number:'0.8-8' }}</td>
+			<td>{{ order.lcamount }}</td>
+			<td>{{ order.btc_paid ? order.btc_paid : "---" }}</td>
+			<td>{{ order.btc_receive ? order.btc_receive : "---" }}</td>
+			<td>{{ order.type == 'ltob' ? 'LC To BTC' : 'BTC To LC' }}</td>
+			<td class="firstLetter">{{ order.status }}</td>
+			<td *ngIf="display == 'btc-to-lc-success' || display == 'lc-to-btc-success'">{{ order.fee }}</td>
+			<td *ngIf="display == 'btc-to-lc-success' || display == 'lc-to-btc-success'">{{ order.adder }}</td>
+		</tr>
+	</tbody>
+</table>

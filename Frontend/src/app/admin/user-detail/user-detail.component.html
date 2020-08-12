@@ -1,0 +1,80 @@
+<div *ngIf="userid > 0">
+<h3 class="mt-4 mb-4">User {{userid}} Details</h3>
+<div class="row" >
+			<div class="col-6">
+				<div class="alert alert-success">
+					Overall BTC Received: {{ userDetails.received_btc }} BTC
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="alert alert-success">
+					Overall BTC Sent: {{ userDetails.sent_btc }} BTC
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="alert alert-info">
+					BTC Balance: {{ userDetails.btc_balance }} BTC
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="alert alert-info">
+					BTC Balance & Sent: {{ userDetails.sent_btc + userDetails.btc_balance }} BTC
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="alert alert-info">
+					BTC Gap: {{ userDetails.adder - userDetails.subtracter }} BTC
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="alert alert-secondary">
+					Overall Converted BTC To LC: {{ userDetails.converted_btol }} BTC
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="alert alert-secondary">
+					Overall Converted LC To BTC: {{ userDetails.converted_ltob }} LC
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="alert alert-info">
+					LC Balance: {{ userDetails.lc_balance }} LC
+				</div>
+			</div>
+			<div class="col-12">
+				<div class="alert alert-warning">
+					Overall Converted BTC To LC & Overall Referral Commission: {{ userDetails.converted_btol + userDetails.reward_btc }} BTC
+				</div>
+			</div>
+			<div class="col-12">
+				<div class="alert alert-danger">
+					Overall Converted BTC To LC & Overall Referral Commission - Overall BTC Received: {{ userDetails.converted_btol + userDetails.reward_btc - userDetails.received_btc }} BTC
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="alert alert-info">
+					Overall BTC To LC Fee: {{ userDetails.fee_btol }} LC
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="alert alert-info">
+					Overall LC To BTC Fee: {{ userDetails.fee_ltob }} LC
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="alert alert-info">
+					Overall Conversion Fee: {{ userDetails.fee_btol + userDetails.fee_ltob }} LC
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="alert alert-info">
+					Overall Referral Commission: {{ userDetails.reward_btc }} BTC
+				</div>
+			</div>
+			<div class="col-12">
+				<div class="alert alert-danger">
+					Overall Referral Commission & Overall BTC Received: {{ userDetails.reward_btc + userDetails.received_btc }} BTC
+				</div>
+			</div>
+		</div>
+</div>

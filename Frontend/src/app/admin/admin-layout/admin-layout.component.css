@@ -1,0 +1,7 @@
+.app-header{
+	background-color: #2f353a;
+	border-bottom: none;
+}
+.dropdown-item:hover{
+	color: black;
+}

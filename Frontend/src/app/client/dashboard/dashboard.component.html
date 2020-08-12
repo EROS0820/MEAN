@@ -1,0 +1,36 @@
+<div class='row'>
+    <div class="col-lg-4 col-md-6 col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class='qr row'>
+                    <img class='img-fluid m-auto' src="{{'https://chart.googleapis.com/chart?cht=qr&chl=bitcoin:' + user.wallet + '&choe=UTF-8&chs=200x200'}}" alt="" />
+                </div>
+                <p class='addr text-center'>{{user.wallet}}</p>
+                <p class="text-center"><span class="btn btn-outline-dark" (click)="copyToClipboard(user.wallet)">Copy Wallet Address</span></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8 col-md-6 col-12">
+        <div class="card">
+            <div class="card-body">
+                <p class="card-text">Balance: {{socket.btc_balance | number:'0.8-8'}} BTC</p>
+                <p class="card-text">Balance: {{socket.lc_balance}} LC</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body" *ngIf="socket.last_transaction">
+                <p class="card-text">Last Tx: {{socket.last_transaction.type | txtype}}</p>
+                <p class="card-text">Amount: {{socket.last_transaction.amount | number:'0.8-8'}} BTC</p>
+                <p class="card-text">Tx Date: {{socket.last_transaction.date | date:'yyyy/MM/dd hh:mm:ss'}}</p>
+                <p class="card-text" *ngIf="socket.last_transaction.wallet">{{socket.last_transaction.type == 'receive' ? "Sender" : "Receiver"}} Address: {{socket.last_transaction.wallet}}</p>
+            </div>
+            <div class="card-body" *ngIf="!socket.last_transaction">
+                <p class="card-text">No transaction</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="alert alert-info">
+    <p>Your referal link: <span>{{ frontendUrl + "/register/" +  user.id}} </span></p>
+</div>

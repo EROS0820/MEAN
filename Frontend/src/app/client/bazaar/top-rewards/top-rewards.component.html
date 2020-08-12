@@ -1,0 +1,90 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <a (click)="goToBazaarHome()" style="cursor: pointer;">
+                        <strong>Bazaar / </strong>
+                    </a>
+                    <a class="active text-primary">
+                        <strong>Rewards Qualifiers</strong>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="row ">
+                        <div class="col">
+                            <div class="card text-white bg-danger text-center">
+                                <div class="card-body">
+                                    <strong>Time Left: {{ timeStr }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card text-white bg-info text-center">
+                                <div class="card-body">
+                                    <strong>Cycle BTC Conversion Target: {{ socket.CycleBtcConversionTarget }} BTC</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card text-white bg-success text-center">
+                                <div class="card-body">
+                                    <strong>All Qualifiers LC Balance: {{ totallc }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card text-white bg-success text-center">
+                                <div class="card-body">
+                                    <strong>Total Qualifiers: {{ len }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card text-white bg-dark text-center">
+                                <div class="card-body">
+                                    <strong>Per Stock Share: {{ totallc == 0 ? 0 : (share.qualifier_bonus / totallc).toFixed(8) }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card text-white bg-dark text-center">
+                                <div class="card-body">
+                                    <strong>Qualifiers Bonus: {{ share.qualifier_bonus }} LC</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-10">
+                        <div class="search-hero col-md-12 col-sm-12">
+                            <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Search ID Number & Converted Target Value...">
+                        </div>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead class="text-center">
+                            <tr>
+                                <th>ID Number</th>
+                                <th>Qualifiers LC Balance</th>
+                                <th>Stock Profit Shares</th>
+                                <th>Converted BTC</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <tr *ngIf="!len || share.qualifier_bonus == 0; else display_member">
+                                <td colspan="4">no reward member data!</td>
+                            </tr>
+                            <ng-template #display_member>
+                                <tr *ngFor="let rewardData of rewardDatas | keyvalue | filter:searchText;">
+                                    <td>{{ rewardData.value.userid }}</td>
+                                    <td>{{ rewardData.value.lc }}</td>
+                                    <td>{{ (rewardData.value.lc * share.qualifier_bonus / totallc).toFixed(8) }}</td>
+                                    <td>{{ rewardData.value.btcpaid }} BTC</td>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

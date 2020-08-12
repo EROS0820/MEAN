@@ -1,0 +1,181 @@
+<div class="genealogy">
+    <ng-container *ngIf="share.user">
+      <div class="title-lg"><b>Product Purchasing</b></div>
+      <div class="row section-1">
+
+        <div class="col-md-6 col-sm-12 genealogy-list">
+          <div class="img-wrap-xs">
+            <img src="../../../assets/image/genealogy/cart.png">
+          </div>
+          <div class="genealogy-item">
+            <div>
+              <span class="title-md"><b>Available Repeat Order: </b></span>
+              <span class="title-md">{{available_order}}</span>
+            </div>
+            <div>
+              <span class="title-md"><b>Available Withdrawal: </b></span>
+              <span class="title-md">{{available_withdrawal}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12 genealogy-list">
+          <div class="img-wrap-xs">
+            <img src="../../../assets/image/genealogy/current_balance.png">
+          </div>
+          <div class="genealogy-item">
+            <div>
+              <span class="title-md"><b>Current Balance: </b></span>
+              <span class="title-md">{{current_balance}}</span>
+            </div>
+            <div>
+              <span class="title-md"><b>LC To PHP Value: </b></span>
+              <span
+                class="title-md">{{current_balance/(socket.btc_usd * socket.lc_btc *currencyValue| number:'0.4-4' )}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row section-3">
+        <div class="col-md-9">
+          <div class="available_products">
+            <span class="col-md-2 title-md"><b>Search: </b></span>
+            <ng-container>
+              <input type="number" name="id_seller" class="col-8" placeholder="Search binary seller ID number here..."
+                (keyup)="searchProductBySellerId($event)" />
+            </ng-container>
+          </div>
+          <div class="row product-container">
+            <ng-container
+              *ngIf="productBySellerId.length&&((this.selected_seller_id != this.selected_consumer_id)||(this.selected_consumer_id == 0)&&(this.selected_seller_id == 0))">
+              <ng-container *ngFor="let product of productBySellerId">
+                <div class="col-lg-4 p-t-15">
+                  <mat-card>
+                    <div class="product-item">
+                      <div class="align-center">
+                        <img src="{{upload_url+product.image}}" />
+                      </div>
+                      <div class="item">
+                        <div class="col-6">Product Name:</div>
+                        <div class="col-6">{{product.product_name}}</div>
+                      </div>
+                      <div class="item">
+                        <div class="col-6">Price:</div>
+                        <div class="col-6">{{product.market_price}}</div>
+                      </div>
+                      <div class="item">
+                        <div class="col-6">Seller Price:</div>
+                        <div class="col-6">{{product.seller_price}}</div>
+                      </div>
+                      <div class="item">
+                        <div class="col-6">Seller ID#:</div>
+                        <div class="col-6">{{product.userid}}</div>
+                      </div>
+                      <div class="item">
+                        <div class="col-6">Availability:</div>
+                        <div class="col-6">100</div>
+                      </div>
+                      <div class="item">
+                        <div class="col-6">Total Sold:</div>
+                        <div class="col-6">29</div>
+                      </div>
+                      <div class="item">
+                        <div class="col-6">Date Updated:</div>
+                        <div class="col-6">
+                          <p>{{product.upload_date}}</p>
+                        </div>
+                      </div>
+                      <div class="item align-center">
+                        <ng-container *ngIf="qty[product._id]">
+                          <button mat-raised-button class="btn btn-add" (click)="addToCart(product._id, product)">
+                            ADD TO CART
+                          </button>
+                        </ng-container>
+                        <ng-container *ngIf="!qty[product._id]">
+                          <button mat-raised-button class="btn btn-add" disabled>
+                            ADD TO CART
+                          </button>
+                        </ng-container>
+                      </div>
+                      <div class="item btn-plus-minus">
+                        <button mat-icon-button class="btn  btn-minus bg-white" (click)="subtractFromCart(product._id)">
+                          <b class="title-md">-</b>
+                        </button>
+                        <div class="order_count bg-black align-center">
+                          <p class="title-md">
+                            <ng-container *ngIf="this.qty[product._id]">
+                              {{this.qty[product._id]}}
+                            </ng-container>
+                            <ng-container *ngIf="!this.qty[product._id]">
+                              0
+                            </ng-container>
+                          </p>
+                        </div>
+                        <ng-container *ngIf="selected_seller_id">
+                          <button mat-icon-button class="btn  btn-plus bg-white" (click)="plusToCart(product._id)">
+                            <b class="title-md">+</b>
+                          </button>
+                        </ng-container>
+                        <ng-container *ngIf="!selected_seller_id">
+                          <button mat-icon-button class="btn  btn-plus bg-white" disabled>
+                            <b class="title-md">+</b>
+                          </button>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </mat-card>
+                </div>
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="!productBySellerId.length">
+              <div class="title-lg">There are no available seller or products.</div>
+            </ng-container>
+            <ng-container
+              *ngIf="(this.selected_seller_id)&& (this.selected_consumer_id) && (this.selected_seller_id == this.selected_consumer_id)">
+              <div class="title-md">It is impossible for one user to be customer and seller at the same time.</div>
+            </ng-container>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="p-t-15">
+            <div class="align-center"><b>{{ total_ordered_count}}</b></div>
+            <div class="align-center"><img src="../../../assets/image/genealogy/cart.png" /></div>
+          </div>
+          <div class="p-t-15">
+            <span class="title-md"><b>Item Total Amount: </b></span>
+            <span class="title-md"><b>{{total_item_amount}} PHP</b></span>
+          </div>
+          <div class="p-t-15">
+            <span class="title-md"><b>Total LC Value: </b></span>
+            <!-- <span class="title-md"><b>{{total_item_amount/(socket.btc_usd * socket.lc_btc *currencyValue| number:'0.4-4' )}} LC</b></span> // -->
+            <span class="title-md"><b>{{total_item_amount/(socket.btc_usd * socket.lc_btc *currencyValue)}} LC</b></span>
+          </div>
+          <div class="p-t-15">
+            <span class="title-md"><b>Actual Product Cost: </b></span>
+            <!-- <span class="title-md"><b>{{total_item_amount/(2.19*(socket.btc_usd * socket.lc_btc *currencyValue| number:'0.4-4' ))}} LC</b></span> -->
+            <span class="title-md"><b>{{total_item_amount/(2.19*(socket.btc_usd * socket.lc_btc *currencyValue))}}
+                LC</b></span>
+          </div>
+          <div class="p-t-15">
+            <span class="title-md"><b>Product To Order: </b></span>
+            <span class="title-md"><b>{{product_to_order}} PHP</b></span>
+          </div>
+          <div class="btn-pay align-center p-t-15" *ngIf="available_order == 1">
+            <ng-container *ngIf="check_pay_button">
+              <button mat-raised-button style="background-color: black;" (click)="payNow()">Pay Now</button>
+            </ng-container>
+            <ng-container *ngIf="!check_pay_button">
+              <button mat-raised-button color="default" disabled>Pay Now</button>
+            </ng-container>
+          </div>
+          <ng-container *ngIf="msg">
+            {{this.msg}}
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!share.user">
+      <div class="title-lg">
+        You are not allowed to access to this page.
+      </div>
+    </ng-container>
+</div>

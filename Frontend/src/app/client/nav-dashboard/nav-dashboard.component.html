@@ -1,0 +1,271 @@
+<div class="dashboard">
+  <ng-container *ngIf="share.user">
+    <div class="title-lg"><b>Dashboard</b></div>
+    <div class="row section-1">
+      <div class="col-md-6 col-sm-12 dashboard-list">
+        <div class="img-wrap-xs">
+          <img src="../../../assets/image/genealogy/points.png">
+        </div>
+        <div class="dashboard-item">
+          <div>
+            <span class="title-md"><b>Left Points: </b></span>
+            <span class="title-md">{{left_points}}</span>
+          </div>
+          <div>
+            <span class="title-md"><b>Right Points:</b></span>
+            <span class="title-md">{{right_points}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12 dashboard-list">
+        <div class="img-wrap-xs">
+          <img src="../../../assets/image/genealogy/requested_repeat.png">
+        </div>
+        <div class="dashboard-item">
+          <div>
+            <span class="title-md"><b>Requested Repeat Order: </b></span>
+            <span class="title-md">{{requested_order}}</span>
+          </div>
+          <div>
+            <span class="title-md"><b>Requested Withdrawal: </b></span>
+            <span class="title-md">{{requested_withdrawal}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12 dashboard-list">
+        <div class="img-wrap-xs">
+          <img src="../../../assets/image/genealogy/total_consumer.png">
+        </div>
+        <div class="dashboard-item">
+          <div>
+            <span class="title-md"><b>Total Left Consumers: </b></span>
+            <span class="title-md">{{total_left_consumers}}</span>
+          </div>
+          <div>
+            <span class="title-md"><b>Total Right Consumers:</b></span>
+            <span class="title-md">{{total_right_consumers}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12 dashboard-list">
+        <div class="img-wrap-xs">
+          <img src="../../../assets/image/genealogy/cart.png">
+        </div>
+        <div class="dashboard-item">
+          <div>
+            <span class="title-md"><b>Available Repeat Order: </b></span>
+            <span class="title-md">{{available_order}}</span>
+          </div>
+          <div>
+            <span class="title-md"><b>Available Withdrawal: </b></span>
+            <span class="title-md">{{available_withdrawal}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-sm-12 dashboard-list">
+        <div class="img-wrap-xs">
+          <img src="../../../assets/image/genealogy/lc_balance.png">
+        </div>
+        <div class="dashboard-item">
+          <div>
+            <span class="title-md"><b>LC Balance: </b></span>
+            <span class="title-md">{{total_lc_balance}}</span>
+          </div>
+          <div>
+            <span class="title-md"><b>LC To PHP Value:</b></span>
+            <span
+              class="title-md">{{total_lc_balance/(socket.btc_usd * socket.lc_btc *currencyValue| number:'0.4-4' )}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12 dashboard-list">
+        <div class="img-wrap-xs">
+          <img src="../../../assets/image/genealogy/current_balance.png">
+        </div>
+        <div class="dashboard-item">
+          <div>
+            <span class="title-md"><b>Current Balance: </b></span>
+            <span class="title-md">{{current_balance}}</span>
+          </div>
+          <div>
+            <span class="title-md"><b>LC To PHP Value: </b></span>
+            <span
+              class="title-md">{{current_balance/(socket.btc_usd * socket.lc_btc *currencyValue| number:'0.4-4' )}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12 dashboard-list">
+        <div class="img-wrap-xs">
+          <img src="../../../assets/2.png">
+        </div>
+        <div class="dashboard-item">
+          <div>
+            <span class="title-md"><b>Sold Product Balance: </b></span>
+            <span class="title-md">0</span>
+          </div>
+          <div>
+            <span class="title-md"><b>Receivabel LC (SPB): </b></span>
+            <span
+              class="title-md">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12 dashboard-list">
+        <div class="img-wrap-xs">
+          <img src="../../../assets/3.png">
+        </div>
+        <div class="dashboard-item">
+          <div>
+            <span class="title-md"><b>Unilevel Product Balance: </b></span>
+            <span class="title-md">0</span>
+          </div>
+          <div>
+            <span class="title-md"><b>Receivabel LC (UPB): </b></span>
+            <span
+              class="title-md">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12 dashboard-list">
+        <div class="img-wrap-xs">
+          <img src="../../../assets/1.png">
+        </div>
+        <div class="dashboard-item">
+          <div>
+            <span class="title-md"><b>Referral Product Balance: </b></span>
+            <span class="title-md">0</span>
+          </div>
+          <div>
+            <span class="title-md"><b>Receivabel LC (RPB): </b></span>
+            <span
+              class="title-md">0</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12 dashboard-list">
+        <div class="img-wrap-xs">
+          <img src="../../../assets/4.png">
+        </div>
+        <div class="dashboard-item">
+          <div>
+            <span class="title-md"><b>Total Referral Earnings: </b></span>
+            <span class="title-md">0</span>
+          </div>
+          <div>
+            <span class="title-md"><b>Total Binary Earnings: </b></span>
+            <span
+              class="title-md">0</span>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="col-md-6 col-sm-6 title-md  p-l-100 p-t-15">
+        <div>
+          <span class="title-md"><b>Total Earnings: </b></span>
+          <span class="title-md"><b>{{total_earning}} PHP</b></span>
+        </div>
+        <div>
+          <span class="title-md"><b>Total Products Sold: </b></span>
+          <span class="title-md"><b>0 PHP</b></span>
+        </div>
+      </div> -->
+      <div class="col-md-12 col-sm-12 dashboard-list" style="display: flex; justify-content: center;">
+        <div class="dashboard-span">
+            <span class="title-md"><b>Total Products Sold: </b></span>
+            <span class="title-md"><b>0</b></span>
+        </div>
+      </div>
+      <div class="col-md-12 col-sm-12 dashboard-list" style="display: flex; justify-content: center;">
+        <div class="dashboard-span">
+            <span class="title-md"><b>Total Unilevel Earnings: </b></span>
+            <span class="title-md"><b>0</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="row section-2">
+      <div class="col-md-2 col-sm-12">
+        <div style="display: flex; flex-direction: column;">
+          <div>
+            <span class="title-md"><b>Name: </b></span>
+            <span class="title-md">Mark Ulgasan</span>
+          </div>
+          <div>
+            <span class="title-md"><b>Consumer ID: </b></span>
+            <span class="title-md">1</span>
+          </div>
+          <div>
+            <span class="title-md"><b>Sponsor ID: </b></span>
+            <span class="title-md">1</span>
+          </div>
+          <div>
+            <span class="title-md"><b>Placement: </b></span>
+            <span class="title-md">Left</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-10 col-sm-12">
+        <div class="available_products">
+          <span class="col-md-2 title-md"><b>Search: </b></span>
+          <ng-container>
+            <input type="text" name="id_seller" class="col-8" (keyup)="applyFilter($event)" placeholder="Search Date here(yyyy-mm-dd)..." />
+          </ng-container>
+        </div>
+        <div class="mat-elevation-z8" style="overflow: auto; background-color: white;">
+          <!-- <mat-form-field>
+              <mat-label>Filter</mat-label>
+              <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium">
+          </mat-form-field> -->
+          <table mat-table [dataSource]="dataSource">
+          
+              <!-- Position Column -->
+              <!-- <ng-container matColumnDef="position" sticky>
+              <th mat-header-cell *matHeaderCellDef> Sequence# </th>
+              <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+              </ng-container> -->
+          
+              <ng-container matColumnDef="sequence">
+                  <th mat-header-cell *matHeaderCellDef> Sequence# </th>
+                  <td mat-cell *matCellDef="let element"> {{element.level}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Name </th>
+              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef> Amount </th>
+              <td mat-cell *matCellDef="let element"> {{element.ita}} </td>
+              </ng-container>
+          
+              <ng-container matColumnDef="type">
+              <th mat-header-cell *matHeaderCellDef> Purchased Type </th>
+              <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef> Date & Time </th>
+              <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+              </ng-container>
+          
+              <ng-container matColumnDef="profit">
+              <th mat-header-cell *matHeaderCellDef> Profit </th>
+              <td mat-cell *matCellDef="let element"> {{element.profit}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="remain">
+              <th mat-header-cell *matHeaderCellDef> Remaining Points </th>
+              <td mat-cell *matCellDef="let element"> {{element.remain}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          
+          <mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

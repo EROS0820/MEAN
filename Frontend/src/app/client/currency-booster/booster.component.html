@@ -1,0 +1,152 @@
+<div class="add-fund">
+	<div class="title-lg"><br/><b>Currency Booster</b><br/><br/></div>
+	<div class="row">
+		<div class="col-md-6 col-sm-12">
+			<div class="section" style="background: #7f7f7f;height:52px;color:white">
+				LC Balance : {{Lcbalance}}
+			</div><br/>
+			<div class="section" id="buyBooster" style="background: #000000;height:85px;color:white">
+				<div style="padding-right: 15px;">
+					Booster Price : {{booster}}<br/>
+					Booster LC Value Price : {{1000 / this.socket.btc_usd / this.socket.lc_btc / this.currencyValue.__zone_symbol__value}}
+					<div style="margin-top: -4%;" *ngIf="(Lcbalance-1000 / this.socket.btc_usd / this.socket.lc_btc / this.currencyValue.__zone_symbol__value)>=0; else elseBlock">
+						<button (click)="openWindowCustomClass(content)" style="background: #7f7f7f;float:right;color:white">Buy Booster</button>
+					</div>
+					<ng-template style="margin-top: -4%;" #elseBlock>
+						<button style="background: #7f7f7f;float:right;color:white" disabled>Buy Booster</button>
+					</ng-template>
+				</div>
+			</div><br/>
+			<div class="section" style="background: #0c0;height:115px;color:white">
+				Currency Booster Limit Supply : {{currencyBLS}}<br/>
+				Currency Booster Sold : {{currencyBS}}<br/>
+				Currency Booster Available In The Market : {{currencyBAITM}}
+			</div><br/>
+			<div class="section" style="background: #e46c0a;height:234px;color:white">
+				<div style="padding-right: 15px;">
+					Total Paid Currency Booster : {{totalpaidCB}}<br/>
+					Performing Currency Booster : {{performingCB}}<br/>
+					Market Value : {{marketvalue}}<br/>
+					My Total Market Profit : {{mytotalMP}}<br/>
+					My Booster Balance : {{myboosterbalance}}<br/>
+					My Market Profit Balance : {{mymarketPB}}<br/>
+					LC Value Profit Balance : {{lcvaluePB}}
+					<div style="margin-top: -4%;" *ngIf="mymarketPB>100; else elseTransfer">
+						<button (click)="openTransferCustomClass(content1)" style="background: #000000;float:right;color:white;margin-left: -10px;">Transfer to LC</button>
+					</div>
+					<ng-template style="margin-top: -4%;" #elseTransfer>
+						<button style="background: #000000;float:right;color:white;margin-left: -10px;" disabled>Transfer to LC</button>
+					</ng-template>
+				</div>
+			</div>
+			<div class="section">
+				<span class="title-md">Send Booster To:&nbsp; </span>
+				<input [(ngModel)]="textidvalue" type="text" placeholder="Enter receiver id number here..." class="input-item" />
+			</div>
+			<div class="section">
+				<span class="title-md" style="padding-right: 74px">Amount: </span>
+				<input [(ngModel)]="textvalue" type="number" placeholder="Enter desired booster amount here..." class="input-item" />
+			</div>
+			<div class="section" style="text-align: center;" *ngIf="totalpaidCB>=textvalue; else elsesendBlock">
+				<button mat-raised-button class="btn-add" (click)="sendBooster()">Send Booster</button>
+			</div>
+			<ng-template #elsesendBlock>
+				<div class="section" style="text-align: center;">
+					<button mat-raised-button class="btn-add" disabled>Send Booster</button>
+				</div>
+			</ng-template>
+		</div>
+		<div style="overflow: auto;" class="col-md-5 col-sm-10 blackboard">
+			<span class="spanclass textoverflow">List of Booster Holder</span><br/><br/>
+			<span class="spanclass">Search:&nbsp;&nbsp;&nbsp; </span>
+			<input [(ngModel)]="searchid" type="text" placeholder="Search is number here..." class="back" />
+			<table class="table table-responsive-xl">
+				<thead>
+					<th style="width: 30%">ID NUMBER</th>
+					<th>Amount</th>
+					<th style="width: 60%">&nbsp;&nbsp;&nbsp;Transaction Date & Time</th>
+				</thead>
+				<tbody *ngIf="sortData">
+					<!-- <tr *ngFor='let transaction of display'>
+						<td>{{ transaction._id }}</td>
+						<td>{{ transaction.date | date:'yyyy/MM/dd hh:mm:ss' }}</td>
+						<td>{{ transaction.amount | btc }}</td>
+						<td>{{ transaction.old | btc}}</td>
+						<td>{{ transaction.new | btc }}</td>
+						<td class="first">{{ transaction.type }}</td>
+					</tr> -->
+					<tr *ngFor="let boosterdata of sortData" style="background: white;">
+						<td *ngIf="boosterdata.userid == searchid || searchid == ''">{{boosterdata.userid}}</td>
+						<td *ngIf="boosterdata.userid == searchid || searchid == ''">{{boosterdata.amount}}</td>
+						<td *ngIf="boosterdata.userid == searchid || searchid == ''">{{boosterdata.transaction_time}}</td>
+					</tr>
+				</tbody>
+		
+			</table>
+			<span class="spanclass textoverflow">Booster Sent & Received Record</span><br/>
+			<span class="spanclass">Search:&nbsp;&nbsp;&nbsp; </span>
+			<input [(ngModel)]="searchidnum" type="text" placeholder="Search is number here..." class="back" />
+			<table class="table table-responsive-xl">
+				<thead>
+					<th>FROM</th>
+					<th>TO</th>
+					<th>Amount</th>
+					<th style="width: 60%">&nbsp;&nbsp;&nbsp;Transaction Date & Time</th>
+				</thead>
+				<tbody *ngIf="sentData">
+					<tr *ngFor="let sentrecord of sentData" style="background: white;padding-bottom: 5px;">
+						<td *ngIf="sentrecord.from == searchidnum || sentrecord.to == searchidnum || searchidnum == ''">{{sentrecord.from}}</td>
+						<td *ngIf="sentrecord.from == searchidnum || sentrecord.to == searchidnum || searchidnum == ''">{{sentrecord.to}}</td>						
+						<td *ngIf="sentrecord.from == searchidnum || sentrecord.to == searchidnum || searchidnum == ''">{{sentrecord.amount}}</td>
+						<td *ngIf="sentrecord.from == searchidnum || sentrecord.to == searchidnum || searchidnum == ''">{{sentrecord.transaction_time}}</td>
+					</tr>
+				</tbody>
+		
+			</table>
+			<span class="spanclass textoverflow">Booster To LC Transfer Record</span><br/>
+			<span class="spanclass">Total Transferred : 308.9384</span>
+			<table class="table table-responsive-xl">
+				<thead>
+					<th>Amount</th>
+					<th style="width: 30%">LC Value</th>
+					<th style="width: 60%">&nbsp;&nbsp;&nbsp;Transaction Date & Time</th>
+				</thead>
+				<tbody *ngIf="boostertransferrecords">
+					<tr *ngFor="let transferrecords of transferData " style="background: white;padding-bottom: 5px;">
+						<td>{{transferrecords.amount}}</td>
+						<td>{{transferrecords.LCValue}}</td>
+						<td>{{transferrecords.transaction_time}}</td>
+					</tr>
+					
+				</tbody>
+			</table>
+		</div>
+		<div class="col-md-1 col-sm-2">
+			
+		</div>
+	</div>
+	<ng-template #content let-modal>
+		<div class="modal-header">
+		  <h4 class="modal-title">Buy Booster</h4>
+		</div>
+		<div class="modal-body">
+		  <p>Are you sure to buy Currency Booster?</p>
+		</div>
+		<div class="modal-footer">
+		  <p (click)="modal.close('Close click')"><button type="button" class="btn btn-success" (click)="calculator()">YES</button></p>
+		  <button type="button" class="btn btn-danger" (click)="modal.close('Close click')">NO</button>
+		</div>
+	  </ng-template>
+	  <ng-template #content1 let-modal>
+		<div class="modal-header">
+		  <h4 class="modal-title">Transfer To LC</h4>
+		</div>
+		<div class="modal-body">
+		  <p>Are you sure you want to transfer booster profit to LC Balance?</p>
+		</div>
+		<div class="modal-footer">
+			<p (click)="modal.close('Close click')"><button type="button" class="btn btn-success" (click)="transfer()">YES</button></p>
+		  <button type="button" class="btn btn-danger" (click)="modal.close('Close click')">NO</button>
+		</div>
+	  </ng-template>
+</div>

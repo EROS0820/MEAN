@@ -1,0 +1,196 @@
+<div class="animated fadeIn">
+  <div class="row">
+      <div class="col-md-12 col-sm-12">
+          <div class="card">
+              <div class="card-header">
+                  <a [routerLink]="['/cryptobazaar']" style="cursor: pointer;">
+                      <strong>Bazaar / </strong>
+                  </a>
+                  <a class="active text-primary">
+                      <strong>Crypto Cheque Ledger</strong>
+                  </a>
+              </div>
+              <div class="card-body">
+                  <!-- <div class="row" id="search">
+                      <div class="search-hero col-md-12 col-sm-12">
+                          <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Search product name, bazaar name...">
+                      </div>
+                  </div> -->
+<div class="row mb-10" style="margin: auto;"></div>
+<div class="row  mb-10" >
+  <div offset="md-3" class="col-sm-6 col-md-6">
+      <h4> Ledger View </h4>
+  </div>
+  <div class="col-sm-6 col-md-6">
+    <!-- <h4> Barrower View </h4> -->
+</div>
+
+    <!-- Barrower View -->
+  <div class="col-sm-6 col-md-6">
+      <div class="card text-white bg-success text-center">
+          <div style="padding:0.75rem" class="card-body">
+              <strong>BTC Balance: {{ btc_balance | number:'0.8-8' }} BTC</strong>
+          </div>
+      </div>
+  </div>
+
+<!-- Lenders View -->
+  <div class="col-sm-6 col-md-6">
+    <div class="card text-white bg-success text-center">
+        <div style="padding:0.75rem" class="card-body">
+          <strong>LC Balance: {{ lc_balance | number:'0.2-2' }} LC</strong>
+        </div>
+    </div>
+</div>
+
+  <!-- Barrower View -->
+  <div class="col-sm-6 col-md-6">
+      <div class="card text-white bg-danger text-center">
+          <div style="padding:0.75rem" class="card-body">
+              <strong>Total Cheque Amount:{{chequesum}}</strong>
+          </div>
+      </div>
+  </div>
+
+<!-- Lenders View -->
+  <div class="col-sm-6 col-md-6">
+    <div class="card text-white bg-danger text-center">
+        <div style="padding:0.75rem" class="card-body">
+          <strong>Undue Cheque Amount:{{undueAmount}}</strong>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Barrower View -->
+<div class="row  mb-10">
+<div class="col-sm-6 col-md-6">
+    <div class="card text-white bg-dark text-center">
+        <div style="padding:0.75rem" class="card-body">
+            <strong>Number Of Undue Cheque: {{undueCheque}} Cheque</strong>
+        </div>
+    </div>
+</div>
+
+<!-- Lenders View -->
+<div class="col-sm-6 col-md-6">
+  <div class="card text-white bg-dark text-center">
+      <div style="padding:0.75rem" class="card-body">
+          <strong>Number Of Cheque: {{totalCheque}} Cheque</strong>
+      </div>
+  </div>
+</div>
+
+<!-- Barrower View -->
+<div class="col-sm-6 col-md-6">
+    <div class="card text-white bg-info text-center">
+        <div style="padding:0.75rem" class="card-body">
+            <strong>Number Of Due Cheque: {{dueCheque}} Cheque</strong>
+        </div>
+    </div>
+</div>
+<!-- Lenders View -->
+
+<div class="col-sm-6 col-md-6">
+  <div class="card text-white bg-info text-center">
+      <div style="padding:0.75rem" class="card-body">
+          <strong>Cheque Amount Due: {{dueAmount}} Cheque</strong>
+      </div>
+  </div>
+</div>
+</div>
+                <!-- <form class="form-horizontal"> -->
+                  <div class="form-group row">
+                      <div class="col-md-9">
+                          <input class="form-control" type="text" [(ngModel)]="search" (keyup)="searchcheque()"  placeholder="Search By Cheque No.">
+                      </div>
+                  </div>
+              <!-- </form> -->
+              <table *ngIf="!isLoading">
+                <tr>
+                  <th>Cheque Code</th>
+                  <th>Amount</th>
+                  <th>Agent Profit</th>
+                  <th>From</th>
+                  <th>Created Date</th>
+                  <th>Releasing Date</th>
+                  <th>SPTW</th>
+                  <th>APTW</th>
+                  <th>T-BTC-TW</th>
+                  <th>T-LC-TW</th>
+                  <th>BTC Balance</th>
+                  <th>LC Balance</th>
+                  <th>Undue Cheque</th>
+                  <th>Purpose</th>
+                  <th>Action</th>
+                </tr>
+                <tr *ngFor="let data of tabledata;">
+                  <td>{{data.cheque_code| slice:0:6}}</td>
+                  <td>{{data.amount}}</td>
+                  <td>{{data.agent_profit}}</td>
+                  <td>{{data.from}}</td>
+                  <td>{{data.create_time | date:'yyyy/MM/dd hh:mm:ss'}}</td>
+                  <td> {{data.releasing_time | date:'yyyy/MM/dd hh:mm:ss'}} </td>
+                  <td>--</td>
+                  <td>--</td>
+                  <td>{{data.T_BTC_TW ? 'data.T_BTC_TW' : '--'}}</td>
+                  <td>{{data.T_LC_TW ? 'data.T_LC_TW' : '--'}}</td>
+                  <td>{{data.btc_balance}}</td>
+                  <td>{{data.lc_balance}}</td>
+                  <td>--</td>
+                  <td>{{data.type == 'B' ? 'Brokerage' : 'Other Purpose'}}</td>
+                  <button style="margin: 15px 0px;" class="btn btn-success" type="button" data-toggle="modal" data-target="#accept" (click)="chequedetail(data._id)">Accept</button>
+                  <button style="margin: 15px 0px;" class="btn btn-danger" type="button" data-toggle="modal" data-target="#decline" (click)="chequedetail(data._id)">Reject</button>
+                </tr>
+              </table>
+              <div *ngIf="isLoading" class='loading'>
+                <img class='img-fluid' src='assets/loading.gif' alt="" />
+              </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<!--Accept Modal -->
+<div class="modal fade" id="accept" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Accept</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Click Next to Accept this cheque issuance
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="acceptCheque()">Next</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Decline Modal -->
+<div class="modal fade" id="decline" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Decline</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure to decline this cheque issuance
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="declineCheque()">Yes</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>

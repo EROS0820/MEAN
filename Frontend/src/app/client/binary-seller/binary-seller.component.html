@@ -1,0 +1,108 @@
+<div class="binary-seller">
+  <div class="title-lg p-lg-3"><b>Binary Seller</b></div>
+  <form [formGroup]="binaryForm" (ngSubmit)="submit()" id="binaryForm">
+
+    <div>
+      <div class="form-group">
+        <app-file-upload formControlName="image" [progress]="progress"></app-file-upload>
+        <br/>
+        <div class="invalid-feedback" style="display: block">
+          <ng-container *ngIf="hasError('image', 'required')">This field is required</ng-container>
+          <ng-container *ngIf="hasError('image', 'requiredFileType')">Only PNG or JPG 🤡</ng-container>
+        </div>
+      </div>
+
+      <div class="form-group flex-layout">
+        <label>Product Name</label>
+        <input type="text" class="form-control" formControlName="product_name" placeholder="Enter product name here...">
+        <br/>
+        <div class="invalid-feedback" style="display: block">
+          <ng-container *ngIf="hasError('product_name', 'required')">This field is required</ng-container>
+        </div>
+      </div>
+
+      <div class="form-group flex-layout">
+        <label>Seller Price</label>
+        <input type="number" class="form-control" formControlName="seller_price" placeholder="Enter your price here..." (change)="getMarketPrice($event)">
+        <br/>
+        <div class="invalid-feedback" style="display: block">
+          <ng-container *ngIf="hasError('seller_price', 'required')">This field is required</ng-container>
+        </div>
+      </div>
+
+      <div class="form-group flex-layout">
+        <label>Availability</label>
+        <input type="number" class="form-control" formControlName="availability" placeholder="Enter product availability here..." >
+        <br/>
+        <div class="invalid-feedback" style="display: block">
+          <ng-container *ngIf="hasError('availability', 'required')">This field is required</ng-container>
+        </div>
+      </div>
+
+      <div class="form-group flex-layout">
+        <label>Market Price</label>
+        <div>{{market_price}}</div>
+        <input type="hidden" class="form-control" formControlName="market_price">
+      </div>
+
+      <input type="hidden" class="form-control" formControlName="userid">
+
+      <div id="post_product">
+        <button type="submit" class="btn btn-primary bg-black">POST PRODUCT</button>
+      </div>
+    </div>
+
+  </form>
+
+  <ng-container class="product-group">
+    <div class="row product-container">
+     <ng-container *ngIf="products.length">
+       <ng-container *ngFor="let product of products">
+         <div class="col-3 p-t-15">
+           <mat-card>
+             <div class="product-item">
+               <div class="align-center">
+                 <img src="{{upload_url+product.image}}" />
+               </div>
+               <div class="item">
+                 <div class="col-6">Product Name:</div> <div class="col-6">{{product.product_name}}</div>
+               </div>
+               <div class="item">
+                 <div class="col-6">Price:</div> <div class="col-6">{{product.market_price}}</div>
+               </div>
+               <div class="item">
+                 <div class="col-6">Seller Price:</div> <div class="col-6">{{product.seller_price}}</div>
+               </div>
+               <div class="item">
+                 <div class="col-6">Seller ID#:</div> <div class="col-6">{{product.userid}}</div>
+               </div>
+               <div class="item">
+                 <div class="col-6">Availability:</div> <div class="col-6">{{product.availability}}</div>
+               </div>
+               <div class="item">
+                 <div class="col-6">Total Sold:</div> <div class="col-6">29</div>
+               </div>
+               <div class="item">
+                 <div class="col-6">Date Updated:</div> <div class="col-6"><p>{{product.upload_date}}</p></div>
+               </div>
+               <div class="item align-center">
+                 <button mat-flat-button class="btn btn-delete" (click)="deleteProduct(product._id, product.id)">
+                   Delete
+                 </button>
+               </div>
+               <div class="item align-center">
+                 <button mat-raised-button class="btn  btn-edit" (click)="editProduct(product._id)">
+                   Edit
+                 </button>
+               </div>
+             </div>
+           </mat-card>
+         </div>
+       </ng-container>
+     </ng-container>
+      <ng-container *ngIf="!products.length">
+        <h1>There is no available data.</h1>
+      </ng-container>
+    </div>
+  </ng-container>
+</div>

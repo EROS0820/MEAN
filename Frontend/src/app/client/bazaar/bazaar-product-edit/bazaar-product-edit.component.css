@@ -1,0 +1,12 @@
+.alert {
+    color: red;
+}
+
+.card-body {
+    padding: 0.75rem;
+}
+
+label {
+    font-weight: bold;
+    text-align: center;
+}

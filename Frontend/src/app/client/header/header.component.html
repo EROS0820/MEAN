@@ -1,0 +1,146 @@
+<div class="bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark container-fluid">
+        <button mat-icon-button class="no-outline" (click)="sidenav.toggle()" fxShow.sm="true" fxShow.gt-sm="false">
+          <mat-icon (click) = "menuBtn()">menu</mat-icon>
+        </button>
+        <a class="navbar-brand" href="#"><img class='img-fuild' src='assets/logo-sm.png' alt="" /></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link px-3" [routerLink]="['/home']">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-3" [routerLink]="['/how']">How It Works</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-3" [routerLink]="['/contact']">Contact Us</a>
+                </li>
+                <ng-container  *ngIf='!share.user'>
+                  <li class="nav-item">
+                    <a class="nav-link px-3" [routerLink]="['/login']">Login</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link px-3" [routerLink]="['/register']">Sign Up</a>
+                  </li>
+                </ng-container>
+                <ng-container *ngIf='share.user'>
+                  <li class="nav-item">
+                    <a class="nav-link px-3" [routerLink]="['/dashboard']" >Dashboard</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link px-3" [routerLink]="['/withdrawal']" >BTC Withdrawal</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link px-3" [routerLink]="['/convert-btc-to-lc']" >Currency Conversion</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link px-3" [routerLink]="['/currency-booster']" >Currency Booster</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link px-3" [routerLink]="['/txhistory']" >Tx History</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link px-3" [routerLink]="['/cryptobazaar']" >Crypto Bazaar</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link px-3" [routerLink]="['/add-fund']" >Add Fund</a>
+                  </li>
+                </ng-container>
+              <ng-container *ngIf='!share.user'>
+                <li class="nav-item">
+                  <a class="nav-link px-3" [routerLink]="['/about']" >About Us</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link px-3" [routerLink]="['/faq']">Faq</a>
+                </li>
+              </ng-container>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+              <ng-container *ngIf='share.user'>
+                <button class="btn btn-outline-info my-2 my-sm-0" type="button" (click)="logout()">Logout</button>
+              </ng-container>
+            </form>
+        </div>
+    </nav>
+</div>
+<div>
+  <div class="col-lg-3 col-md-3">
+    <mat-sidenav-container class="container" [ngStyle]="{'z-index':navFlag}">
+      <mat-sidenav #sidenav [(opened)]="opened" class="bottom-to-top">
+        <div class = "navbar-container">
+          <div >
+            <a class="row col-12 sidebar-group" [routerLink]="['/nav-dashboard']">
+              <div class=" sidebar-item"><img src="../../../assets/dashboard.png"/></div>
+              <div class=" sidebar-title"><b>Dashboard</b></div>
+            </a>
+          </div>
+          <div >
+            <a class="row col-12 sidebar-group" [routerLink]="['/genealogy-tree']">
+              <div class="sidebar-item"><img src="../../../assets/genealogy_tree.png"/> </div>
+              <div class="sidebar-title"><b>Genealogy Tree</b></div>
+            </a>
+          </div>
+          <div >
+            <a class="row col-12 sidebar-group" [routerLink]="['/pre-order']">
+              <div class="sidebar-item"><img src="../../../assets/pre-order.jpg"/> </div>
+              <div class=" sidebar-title"><b>Pre Order</b></div>
+            </a>
+          </div>
+          <div >
+            <a class="row col-12 sidebar-group" [routerLink]="['/binary-seller']">
+              <div class=" sidebar-item"><img src="../../../assets/binary_seller.png"/> </div>
+              <div class=" sidebar-title"><b>Binary Seller</b></div>
+            </a>
+          </div>
+          <div >
+            <a class="row col-12 sidebar-group" [routerLink]="['/product-purchasing']">
+              <div class="sidebar-item"><img src="../../../assets/product_purchasing.png"/> </div>
+              <div class=" sidebar-title"><b>Product Purchasing</b></div>
+            </a>
+          </div>
+          <div >
+            <a class="row col-12 sidebar-group" [routerLink]="['/encashment']">
+              <div class=" sidebar-item"><img src="../../../assets/encashment.png" /></div>
+              <div class=" sidebar-title"><b>Encashment</b></div>
+            </a>
+          </div>
+          <div >
+            <a class="row col-12 sidebar-group">
+              <div class=" sidebar-item"><img src="../../../assets/buyer.png"/> </div>
+              <div class=" sidebar-title"><b>Buyer</b></div>
+            </a>
+          </div>
+          <div >
+            <a class="row col-12 sidebar-group" [routerLink]="['/seller']">
+              <div class=" sidebar-item"><img src="../../../assets/seller.png"/> </div>
+              <div class=" sidebar-title"><b>Seller</b></div>
+            </a>
+          </div>
+          <div >
+            <a class="row col-12 sidebar-group" [routerLink]="['/unilevel']">
+              <div class=" sidebar-item"><img src="../../../assets/addictive_unilevel.png" /></div>
+              <div class=" sidebar-title"><b>Addictive Unilevel</b></div>
+            </a>
+          </div>
+          <div >
+            <a class="row col-12 sidebar-group" [routerLink]="['/referral']">
+              <div class=" sidebar-item"><img src="../../../assets/addictive_unilevel.png" /></div>
+              <div class=" sidebar-title"><b>Direct Referrals</b></div>
+            </a>
+          </div>
+          <div >
+            <a class="row col-12 sidebar-group" [routerLink]="['/capitalist-broker']">
+              <div class=" sidebar-item"><img src="../../../assets/addictive_unilevel.png" /></div>
+              <div class=" sidebar-title"><b>Capitalists & Brokers</b></div>
+            </a>
+          </div>
+        </div>
+      </mat-sidenav>
+    </mat-sidenav-container>
+  </div>
+</div>
+

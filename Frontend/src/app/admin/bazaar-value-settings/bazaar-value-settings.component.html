@@ -1,0 +1,43 @@
+<div class="row">
+    <form class="col-md-12 col-lg-12" (ngSubmit)="save()">
+        <div class="form-group row">
+            <div class="col-6">
+                <label>Target BTC Conversion</label>
+                <input class="form-control" type="number" name="btc_conversion_target" [(ngModel)]="btc_conversion_target" placeholder="Display Bazaar Signup After Reach This Value">
+            </div>
+            <div class="col-6">
+                <label>Refill Products Availability</label>
+                <input class="form-control" type="number" name="refill_product_availavility" [(ngModel)]="refill_product_availavility" placeholder="Refill Products If Availability Reach To">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-6">
+                <label>Bazaar LC Maintaining Balance</label>
+                <input class="form-control" type="number" name="lc_maintaining_balance" [(ngModel)]="lc_maintaining_balance" placeholder="Bazaar LC Maintaining Balance">
+            </div>
+            <div class="col-6">
+                <label>Time Runnig Limit (Hour : Require Server Restart)</label>
+                <input class="form-control" type="number" name="time_running_limit" [(ngModel)]="time_running_limit" placeholder="Time Runnig Limit (Mins)">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-6">
+                <label>Cycle Target BTC Conversion</label>
+                <input class="form-control" type="number" name="cycle_btc_conversion_target" [(ngModel)]="cycle_btc_conversion_target" placeholder="Cycle Target BTC Conversion">
+            </div>
+            <div class="col-6">
+                <label>Decimal Editing</label>
+                <input class="form-control" type="number" name="decimal_editing" [(ngModel)]="decimal_editing" placeholder="Decimal Editing">
+            </div>
+        </div>
+        <div class="alert alert-success text-center" *ngIf="showSuccess == true">
+            {{ success.message }}
+        </div>
+        <div class="alert alert-danger text-center" *ngIf="showError == true">
+            {{ error.message }}
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary btn-block" [disabled]="submit_flag" value="Save">
+        </div>
+    </form>
+</div>

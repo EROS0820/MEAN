@@ -1,0 +1,123 @@
+<div class="container">
+	<app-subheader action="php-btc"></app-subheader>
+	
+	<div class="php-btc">
+		<div class="title-lg"><b>Convert PHP to BTC</b></div>
+		<div class="row">
+			<div class="col-md-6 col-sm-12">
+				<div class="section">
+					<span class="title-md">PHP Balance: {{phpBalance}}</span>
+				</div>
+				<div class="section">
+					<span class="title-md">BTC Balaance: {{btcBalance.toFixed(8)}}</span>
+				</div>
+				<div class="section">
+					<span class="title-md">PHP: </span>
+					<input [(ngModel)]="phpValue" type="number" placeholder="Enter PHP amount here..." class="input-item" (input)="phpChange()"/>
+				</div>
+				<div class="section">
+					<span class="title-md">BTC: </span>
+					<input [(ngModel)]="btcValue" type="number" placeholder="Enter BTC amount here..." class="input-item" (input)="btcChange()" />
+				</div>
+				<div class="section">
+					<span class="title-md" style="padding-right: 13px">LC: </span>
+					<input [(ngModel)]="lcValue" type="number" placeholder="Enter LC amount here..." class="input-item" (input)="lcChange()" />
+				</div>
+				<div class="section">
+					<button mat-raised-button class="btn-add" (click)="sendRequest()" [disabled]="phpBalance != 0 && phpBalance <= phpValue ? 'true' : 'false'">Proceed To Conversion</button>
+				</div>
+			</div>
+			<div class="col-md-12 col-sm-12">
+				<div class="available_products">
+					<span class="col-md-2 offset-md-2 title-md" style="display: flex;"><b style="margin-left: auto; margin-top: auto; margin-bottom: auto;">Search: </b></span>
+					<ng-container>
+					  <input type="text" name="id_seller" class="col-md-8" (keyup)="applyFilter($event)" placeholder="Search Date here(yyyy-mm-dd)..." />
+					</ng-container>
+				</div>
+				<div style="display: flex; flex-direction: row;">
+					<div class="col-md-6 col-sm-12 convert-list">
+						<div class="convert-span">
+							<span class="title-md"><b>Total Fund Converted: </b></span>
+							<span class="title-md"><b>{{totalFund}}</b></span>
+						</div>
+					</div>
+					<div class="col-md-6 col-sm-12 convert-list">
+						<div class="convert-span">
+							<span class="title-md"><b>Search Result: </b></span>
+							<span class="title-md"><b>{{searchResult}}</b></span>
+						</div>
+					</div>
+				</div>
+				<div class="mat-elevation-z8" style="overflow: auto; background-color: white;">
+					<table mat-table [dataSource]="dataSource">
+
+						<ng-container matColumnDef="sequence">
+							<th mat-header-cell *matHeaderCellDef> Sequence# </th>
+							<td mat-cell *matCellDef="let element"> {{element.sequence}} 
+								<sup *ngIf="element.level == 1">st</sup> 
+								<sup *ngIf="element.level == 2">nd</sup> 
+								<sup *ngIf="element.level > 2">th</sup> 
+							</td>
+						</ng-container>
+	
+						<ng-container matColumnDef="btc-php">
+							<th mat-header-cell *matHeaderCellDef> 1 BTC TO PHP </th>
+							<td mat-cell *matCellDef="let element"> {{element.btcphp}} </td>
+						</ng-container>
+					
+						<ng-container matColumnDef="lc-php">
+							<th mat-header-cell *matHeaderCellDef> 1 LC TO PHP </th>
+							<td mat-cell *matCellDef="let element"> {{element.lcphp}} </td>
+						</ng-container>
+					
+						<ng-container matColumnDef="amount-php">
+							<th mat-header-cell *matHeaderCellDef> Amount PHP </th>
+							<td mat-cell *matCellDef="let element"> {{element.amountPHP}} </td>
+						</ng-container>
+	
+						<ng-container matColumnDef="receivable-btc">
+							<th mat-header-cell *matHeaderCellDef> Receivable BTC </th>
+							<td mat-cell *matCellDef="let element"> {{element.receivableBTC}} </td>
+						</ng-container>
+
+						<ng-container matColumnDef="previous-balance">
+							<th mat-header-cell *matHeaderCellDef> Previous Balance </th>
+							<td mat-cell *matCellDef="let element"> {{element.previousBalance}} </td>
+						</ng-container>
+
+						<ng-container matColumnDef="present-balance">
+							<th mat-header-cell *matHeaderCellDef> Present Balance </th>
+							<td mat-cell *matCellDef="let element"> {{element.presentBalance}} </td>
+						</ng-container>
+
+						<ng-container matColumnDef="btc-previous-balance">
+							<th mat-header-cell *matHeaderCellDef> BTC Previous Balance </th>
+							<td mat-cell *matCellDef="let element"> {{element.btcPreviousBalance}} </td>
+						</ng-container>
+
+						<ng-container matColumnDef="btc-current-balance">
+							<th mat-header-cell *matHeaderCellDef> BTC Current Balance </th>
+							<td mat-cell *matCellDef="let element"> {{element.btcCurrentBalance}} </td>
+						</ng-container>
+						
+						<ng-container matColumnDef="date">
+							<th mat-header-cell *matHeaderCellDef> Date & Time </th>
+							<td mat-cell *matCellDef="let element"> {{element.date}} </td>
+						</ng-container>
+						
+						<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+						<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+					</table>
+				
+				<mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+				</div>
+				<div class="col-md-6 offset-md-6 col-sm-12 convert-list">
+					<div class="convert-span">
+						<span class="title-md"><b>Today Fund Converted: </b></span>
+						<span class="title-md"><b>{{todayFund}}</b></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,88 @@
+<div class="alert alert-danger">
+    1 LC : {{ adminsocket.lc_btc | number:'0.0-15' }} BTC
+</div>
+<div class="alert alert-danger">
+    1 BTC : {{ adminsocket.btc_usd }} USD
+</div>
+<div class="row">
+    <div class="col-12 col-lg-6">
+        <div class="alert alert-secondary">
+            Default wallet address: {{ share.admin_user.wallet }}
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="alert alert-secondary">
+            Total BTC Received: {{ adminsocket.received_btc }} BTC
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="alert alert-secondary">
+            Total BTC Sent: {{ adminsocket.sent_btc }} BTC
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="alert alert-secondary">
+            Total BTC Converted To LC: {{ adminsocket.converted_btc }} BTC
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="alert alert-secondary">
+            Total Transfer Fee: {{ adminsocket.transfer_fee }} BTC
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="alert alert-secondary">
+            Total Remaining BTC: {{ adminsocket.remain_btc }} BTC
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="alert alert-secondary">
+            Total BTC Sent & Converted To LC: {{ adminsocket.sent_btc + adminsocket.converted_btc }} BTC
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="alert alert-secondary">
+            Total LC Converted to BTC: {{ adminsocket.converted_lc }} LC
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="alert alert-secondary">
+            Total Conversion Fee: {{ adminsocket.conversion_fee }} LC
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="alert alert-secondary">
+            Overall Total BTC To Receive: {{ adminsocket.receive_btc }} BTC
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="alert alert-secondary">
+            Convertible BTC: {{ adminsocket.converted_btc - adminsocket.receive_btc }} BTC
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="alert alert-secondary">
+            Overall Network Fee: {{ adminsocket.network_fee }} BTC
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="alert alert-secondary">
+            Overall Receivable BTC: {{ adminsocket.received_btc - adminsocket.network_fee }} BTC
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="alert alert-secondary">
+            LC Adder Recorded: {{ adminsocket.adder }} LC
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="alert alert-secondary">
+            LC Subtract Record: {{ adminsocket.subtracter }} LC
+        </div>
+    </div>
+    <div class="col-12 col-lg-6">
+        <div class="alert alert-secondary">
+            Gap Of Adder From Subtract: {{ adminsocket.adder - adminsocket.subtracter }} LC
+        </div>
+    </div>
+</div>

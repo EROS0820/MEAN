@@ -1,0 +1,205 @@
+<div class="card">
+    <div class="card-header">
+        <strong>Bazaar Product Edit</strong></div>
+    <div class="card-body">
+        <form class="form-horizontal" [formGroup]="bzp_angForm" (ngSubmit)="submitProd(total_indirect_savings.value)">
+            <div class="row">
+                <div class="col-sm-3 col-md-3">
+                    <div class="card text-white bg-danger text-center">
+                        <div class="card-body">
+                            <strong>1 LC : {{ socket.lc_btc | number:'0.0-15' }} BTC</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-md-3">
+                    <div class="card text-white bg-success text-center">
+                        <div class="card-body">
+                            <strong>1 LC : {{ socket.btc_usd * socket.lc_btc | number:'0.4-8' }}</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-md-3">
+                    <div class="card text-white bg-dark text-center">
+                        <div class="card-body">
+                            <strong>1 BTC : {{ socket.btc_usd | number:'0.4-8' }} USD</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-md-3">
+                    <div class="card text-white bg-primary text-center">
+                        <div class="card-body">
+                            <strong>LC Balance : {{ socket.lc_balance }} LC</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="bzp_photo">Add Photo</label>
+                <div class="col-md-10">
+                    <input #bzp_photo type="file" class="form-control" id="bzp_photo" formControlName="bzp_photo" accept="image/*" name="bzp_photo" hidden (change)="preview(bzp_photo.files);bzp_uploader.uploadAll();" ng2FileSelect [uploader]="bzp_uploader" />
+                    <img [src]="imgURL || 'http://placehold.it/100X70'" height="70px;" width="100px;" alt="Bazaar Product Image" />
+                    <label for="bzp_photo" style="margin-left: 30px;"><strong>Select Photo By Clicking Here</strong></label>
+                </div>
+            </div>
+            <div *ngIf="bzp_angForm.controls['bzp_photo'].invalid && (bzp_angForm.controls['bzp_photo'].dirty || bzp_angForm.controls['bzp_photo'].touched)" class="alert text-center">
+                <div *ngIf="bzp_angForm.controls['bzp_photo'].errors.required">
+                    * Bazaar Product Photo is required!
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="bp_name">Product Name</label>
+                <div class="col-md-4">
+                    <input class="form-control" type="text" formControlName="bp_name" #bp_name placeholder="Enter Product Name..">
+                </div>
+                <label class="col-md-2 col-form-label" for="availability">Availability</label>
+                <div class="col-md-4">
+                    <input class="form-control" type="text" [readonly]="original_availability >= socket.RefillProductAvailavility" formControlName="availability" #availability placeholder="Enter number of product stock 5 or above..">
+                </div>
+            </div>
+            <div *ngIf="bzp_angForm.controls['bp_name'].invalid && (bzp_angForm.controls['bp_name'].dirty || bzp_angForm.controls['bp_name'].touched)" class="alert text-center">
+                <div *ngIf="bzp_angForm.controls['bp_name'].errors.required">
+                    * Product Name is required!
+                </div>
+                <div *ngIf="bzp_angForm.controls['bp_name'].errors.minlength">
+                    * Please more type!
+                </div>
+            </div>
+            <div *ngIf="bzp_angForm.controls['availability'].invalid && (bzp_angForm.controls['availability'].dirty || bzp_angForm.controls['availability'].touched)" class="alert text-center">
+                <div *ngIf="bzp_angForm.controls['availability'].errors.required">
+                    * Availability is required!
+                </div>
+                <div *ngIf="bzp_angForm.controls['availability'].errors.min || bzp_angForm.controls['availability'].invalid">
+                    * Invalid Number. Availability value have to be over 5
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="initial_cc_price">Initial CC Price {{ curCode }}</label>
+                <div class="col-md-4">
+                    <input class="form-control" [readonly]="original_availability >= socket.RefillProductAvailavility" type="text" formControlName="initial_cc_price" #initial_cc_price (keyup)="cc_lc_Change(initial_cc_price.value)" placeholder="Enter Product price base on your country currency price..">
+                </div>
+                <label class="col-md-2 col-form-label" for="control_cc_price">Controlled CC Price ({{ curCode }})</label>
+                <div class="col-md-4">
+                    <input class="form-control" type="text" readonly #control_cc_price value="{{ auto_control_cc_price | number:'0.4-8' }}">
+                </div>
+            </div>
+            <div *ngIf="bzp_angForm.controls['initial_cc_price'].invalid && (bzp_angForm.controls['initial_cc_price'].dirty || bzp_angForm.controls['initial_cc_price'].touched)" class="alert text-center">
+                <div *ngIf="bzp_angForm.controls['initial_cc_price'].errors.required">
+                    * Initial CC Price is required!
+                </div>
+                <div *ngIf="bzp_angForm.controls['initial_cc_price'].errors.min || bzp_angForm.controls['initial_cc_price'].invalid">
+                    * Invalid Value. Initial CC Price must be over 0.
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="initial_lc_price">Initial LC Price (LC)</label>
+                <div class="col-md-4">
+                    <input class="form-control" type="text" readonly #initial_lc_price value="{{ (auto_initial_lc_price / (socket.btc_usd * socket.lc_btc * currencyValue)) | number:'0.4-8' }}">
+                </div>
+                <label class="col-md-2 col-form-label" for="control_lc_price">Controlled LC Price (LC)</label>
+                <div class="col-md-4">
+                    <input class="form-control" type="text" readonly #control_lc_price value="{{ (auto_control_lc_price / (socket.btc_usd * socket.lc_btc * currencyValue)) | number:'0.4-8' }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="lc_cc">1 LC To Country Currency</label>
+                <div class="col-md-4">
+                    <input class="form-control" type="text" readonly #lc_cc value="{{ (socket.btc_usd * socket.lc_btc * currencyValue) | number:'0.4-8' }}">
+                </div>
+                <label class="col-md-2 col-form-label" for="lc_btc">1 LC To BTC</label>
+                <div class="col-md-4">
+                    <input class="form-control" type="text" readonly value="{{ socket.lc_btc | number:'0.0-15' }}" #lc_btc>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="assigned_savings">Assigned Savings</label>
+                <div class="col-md-4">
+                    <input class="form-control" [readonly]="original_availability >= socket.RefillProductAvailavility" type="text" formControlName="assigned_savings" #assigned_savings value="{{ auto_assigned_savings}}" (keyup)="saving_Change(assigned_savings.value, 0)" placeholder="Enter number 18 - 36..">
+                </div>
+                <label class="col-md-2 col-form-label" for="agent_savings">Agent Savings</label>
+                <div class="col-md-4">
+                    <input class="form-control" [readonly]="original_availability >= socket.RefillProductAvailavility" type="text" formControlName="agent_savings" #agent_savings value="{{ auto_agent_savings }}" (keyup)="saving_Change(agent_savings.value, 1)" placeholder="Enter number 1 - 5..">
+                </div>
+            </div>
+            <div *ngIf="bzp_angForm.controls['assigned_savings'].invalid && (bzp_angForm.controls['assigned_savings'].dirty)" class="alert text-center">
+                <div *ngIf="bzp_angForm.controls['assigned_savings'].errors.required">
+                    * Assigned Savings is required!
+                </div>
+                <div *ngIf="bzp_angForm.controls['assigned_savings'].errors.min || bzp_angForm.controls['assigned_savings'].errors.max || bzp_angForm.controls['assigned_savings'].invalid">
+                    * Invalid Value. A ssigned Savings is 18 - 36
+                </div>
+            </div>
+            <div *ngIf="bzp_angForm.controls['agent_savings'].invalid && (bzp_angForm.controls['agent_savings'].dirty)" class="alert text-center">
+                <div *ngIf="bzp_angForm.controls['agent_savings'].errors.required">
+                    * Agent Savings is required!
+                </div>
+                <div *ngIf="bzp_angForm.controls['agent_savings'].errors.min || bzp_angForm.controls['agent_savings'].errors.max || bzp_angForm.controls['agent_savings'].invalid">
+                    * Invalid Value. A gent Savings is 1 -5
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="personal_savings">Personal Savings</label>
+                <div class="col-md-4">
+                    <input class="form-control" type="text" readonly value="{{ auto_personal_savings }}" #personal_savings>
+                </div>
+                <label class="col-md-2 col-form-label" for="indirect_savings">Indirect Savings</label>
+                <div class="col-md-4">
+                    <input class="form-control" type="text" readonly value="{{ auto_indirect_savings }}" #indirect_savings>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="total_product_costs">Total Product Costs</label>
+                <div class="col-md-4">
+                    <input class="form-control" type="text" readonly #total_product_costs value="{{ (availability.value * initial_cc_price.value) | number:'0.4-8' }}">
+                </div>
+                <label class="col-md-2 col-form-label" for="total_indirect_savings">Total Indirect Savings</label>
+                <div class="col-md-4">
+                    <input class="form-control" type="text" readonly #total_indirect_savings value="{{ (original_availability >= socket.RefillProductAvailavility ? availability.value * initial_cc_price.value * auto_assigned_savings / 100 / (socket.btc_usd * socket.lc_btc * currencyValue) : (availability.value - original_availability) * initial_cc_price.value * auto_assigned_savings / 100 / (socket.btc_usd * socket.lc_btc * currencyValue)) | number:'0.4-8' }}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="bzp_type">Regular Price</label>
+                <div class="col-md-4">
+                    <input class="form-control" type="radio" formControlName="bzp_type" #bzp_type value="regular" name="bzp_type">
+                </div>
+                <label class="col-md-2 col-form-label" for="bzp_type">Promo Price</label>
+                <div class="col-md-4">
+                    <input class="form-control" type="radio" formControlName="bzp_type" #bzp_type value="promo" name="bzp_type">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="product_description">Product Description</label>
+                <div class="col-md-10">
+                    <textarea class="form-control" rows="7" formControlName="product_description" #product_description placeholder="Enter Product Description.."></textarea>
+                </div>
+            </div>
+            <div *ngIf="bzp_angForm.controls['product_description'].invalid && (bzp_angForm.controls['product_description'].dirty || bzp_angForm.controls['product_description'].touched)" class="alert text-center">
+                <div *ngIf="bzp_angForm.controls['product_description'].errors.required">
+                    * Product Description is required!
+                </div>
+                <div *ngIf="bzp_angForm.controls['product_description'].errors.minlength">
+                    * Please more type!
+                </div>
+            </div>
+            <div *ngIf='loading' class='loading'>
+                <img class='img-fluid' src='assets/loading.gif' alt="" />
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <div *ngIf="total_indirect_savings.value > socket.lc_balance; else sub_enable">
+                        <button class="btn btn-primary mt-10" type="submit" disabled style="float:left;">
+                            Product Post
+                        </button>
+                        <div class="alert">
+                            * Your BTC Balance is not enough. Please charge.
+                        </div>
+                    </div>
+                    <ng-template #sub_enable>
+                        <button class="btn btn-primary mt-10" type="submit" [disabled]="bzp_angForm.pristine || !imgURL || bzp_angForm.controls['product_description'].invalid || bzp_angForm.controls['agent_savings'].invalid || bzp_angForm.controls['assigned_savings'].invalid || bzp_angForm.controls['initial_cc_price'].invalid || bzp_angForm.controls['availability'].invalid || bzp_angForm.controls['bp_name'].invalid">
+                            Update Product
+                        </button>
+                    </ng-template>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

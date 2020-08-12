@@ -1,0 +1,7 @@
+{
+    "network": "mainnet",
+    "server": {
+        "port": 8080,
+        "secret": "app"
+    }
+}

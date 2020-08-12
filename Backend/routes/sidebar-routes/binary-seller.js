@@ -1,0 +1,10 @@
+const { Router } = require('express');
+const binaryController = require('../controllers/sidebar-controller/binary.controller');
+const fileUpload = require('express-fileupload');
+const router = Router();
+router.use(fileUpload({createParentPath: true}));
+router.post('/fileUpload', binaryController.create);
+router.post('/getProducts', binaryController.read);
+router.post('/deleteProducts', binaryController.delete);
+router.post('/updateProduct', binaryController.update);
+module.exports = router;

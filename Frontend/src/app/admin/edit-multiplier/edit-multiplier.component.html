@@ -1,0 +1,22 @@
+
+<div class="row">
+	<form class="col-md-6 col-lg-3" (ngSubmit)="save()">	
+		<div class="form-group">
+			<label>Adder & Subtracter Multiplier</label>
+			<input class="form-control" name="ASmulti" [(ngModel)]="ASmulti">
+		</div>
+		<div class="form-group">
+			<label>Conversion Fee Multiplier</label>
+			<input class="form-control" name="CFmulti" [(ngModel)]="CFmulti">
+		</div>
+		<div class="alert alert-success" *ngIf="showSuccess == true"> 
+			{{ success.message }}
+		</div>
+		<div class="alert alert-danger" *ngIf="showError == true"> 
+			{{ error.message }}
+		</div>
+		<div class="form-group">
+			<input type="submit" class="btn btn-success" value="Save">
+		</div>
+	</form>	
+</div>

@@ -1,0 +1,128 @@
+<div class="row">
+  <div class="col-12 col-md-12">
+    <h2 class="text-center text-info">PEOPLE HELPING PEOPLE COIN SERVING PEOPLE THROUGHOUT THE WORLD!</h2>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-12 col-md-12">
+    <p>
+      <strong>
+        PEOPLE HELPING PEOPLE COIN USED TO CONTROL THE ABUSIVE & UNCONTROLABLE INFLATION RATE THROUGHOUT THE WORLD. THE
+        PRIMARY PURPOSE OF THIS COIN IS FOR CONSUMERISM. MASTER THE BASIC WORKING FLOW OF COIN PRICE INCREMENTAL VERSUS
+        PRODUCT PRICE DECREMENTAL. SPEND LESS FOR LEARNING PURPOSE IF YOUR NOT THAT WELL INFORMED ON HOW DOES IT WORKS.
+        SPEND MORE & ENJOY ONCE YOU’VE MASTERED THE FLOW OF EVERYTHING. ASK FOR ASSISTANCE FROM AGENT WHO REFERED THIS
+        WEB
+        APP.
+      </strong>
+    </p>
+  </div>
+</div>
+
+<div class="row" *ngIf="userInfo; else offline">
+  <div class="col-12 col-md-12">
+    <table class="table table-borderless table-success table-sm text-center rounded">
+      <thead>
+      <tr>
+        <th class="border-0" scope="col">Your Country : {{ userInfo?.country }}</th>
+        <th class="border-0" scope="col">Your City : {{ userInfo?.city }}</th>
+        <th class="border-0" scope="col">Your Country Code : {{ userInfo?.countryCode }}</th>
+        <th class="border-0" scope="col">Your Time Zone : {{ userInfo?.timezone }}</th>
+      </tr>
+      </thead>
+    </table>
+  </div>
+</div>
+<ng-template #offline>
+  <div class="row">
+    <div class="col-12 col-md-12 text-center">
+      <div class="alert alert-danger error-message" role="alert">
+        No internet or ip-api.com site down...
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<div class="row">
+  <div class="col-12 col-md-12">
+    <table class="table table-borderless table-primary table-sm text-center rounded">
+      <thead>
+      <tr>
+        <th class="border-0" scope="col">1 BTC : {{ socket.btc_usd | number:'0.4-4' }} USD</th>
+        <th class="border-0" scope="col">1 BTC : {{ socket.btc_usd * currencyValue | number:'0.4-4' }} {{ curCode }}</th>
+        <th class="border-0" scope="col">1 LC : {{ socket.lc_btc | number:'0.0-15' }} BTC</th>
+        <th class="border-0" scope="col">1 LC : {{ socket.btc_usd * socket.lc_btc * currencyValue | number:'0.4-4' }} {{ curCode }}</th>
+      </tr>
+      </thead>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 col-md-6">
+    <app-last-convert type="ltob" [status]="socket.status_ltob"></app-last-convert>
+  </div>
+  <div class="col-12 col-md-6">
+    <app-last-convert type="btol" [status]="socket.status_btol"></app-last-convert>
+  </div>
+</div>
+
+<div class="row" *ngIf="!share.user">
+  <div class="col-12 col-md-6 my-3">
+    <a [routerLink]="['/register']" class=" btn btn-outline-dark btn-lg btn-block">Free Signup</a>
+  </div>
+  <div class="col-12 col-md-6 my-3">
+    <a [routerLink]="['/login']" class="btn btn-outline-dark btn-lg btn-block">Login</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="text-center">Total Users:</h3>
+        <h4 class="text-center">{{ socket.total_user }}</h4>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="text-center">Online Now:</h3>
+        <h4 class="text-center">{{ socket.online_user }}</h4>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="text-center">Overall BTC Received:</h3>
+        <h4 class="text-center">{{ socket.btc_received_count }}</h4>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="text-center">Overall BTC Sent:</h3>
+        <h4 class="text-center">{{ socket.btc_sent_count }}</h4>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="text-center">BTC Received Today:</h3>
+        <h4 class="text-center">{{ socket.btc_received_today_count }}</h4>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="text-center">BTC Sent Today:</h3>
+        <h4 class="text-center">{{ socket.btc_sent_today_count }}</h4>
+      </div>
+    </div>
+  </div>
+</div>

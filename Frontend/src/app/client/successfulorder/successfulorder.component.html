@@ -1,0 +1,87 @@
+<div class="container">
+	<app-subheader action="successful-order"></app-subheader>
+	<!-- <p>LG Balance: {{socket.lc_balance | number:'0.0-4'}} LC</p> -->
+	<table class="table table-responsive-xl " >
+		<thead>
+			<th>Amount (LC)</th>
+			<th>Price</th>
+			<th>BTC Amount Paid</th>
+			<th>PHP Value</th>
+			<th>Total BTC Price To Received</th>
+			<th>Conversion Type</th>
+			<th>Date</th>
+			<th>Fee (LC)</th>
+			<th>LC After Conversion</th>
+			<th>Forecasted Fee(LC)</th>
+			<th>Live Profiting Or Loosing</th>
+			<th>%Profit or Loose</th>
+			<th>Performance Status</th>
+			<th>Previous LC Balance</th>
+			<th>Date&Time Ended</th>
+		</thead>
+		<tbody>
+			<tr *ngFor='let order of orders_again'>
+				<td>{{ order.lcamount }}</td>
+				<td>{{ order.rate ? (order.rate | number:'0.0-15') : "---"}}</td>
+				<td>{{ order.btc_paid ? order.btc_paid : "---" }}</td>
+				<td >{{order.phpvalue}}</td>
+				<td>{{ order.btc_receive ? order.btc_receive : "---" }}</td>
+				<td *ngIf="order.type == 'btol'">{{ order.type == 'btol' ? 'BTC To LC' : 'LC To BTC' }}</td>
+				<td *ngIf="order.type == 'bp'">Binary Profit</td>
+				<td>{{ order.date  | date:'yyyy/MM/dd hh:mm:ss'}}</td>
+				<td>{{ order.fee }}</td>
+				<td *ngIf="order.type == 'btol'">{{ order.lcafterconversion? (order.lcafterconversion| number:'0.0-4') : "---" }}</td>
+				<td *ngIf="order.type == 'btol'">{{ order.forecastedfee? (order.forecastedfee| number:'0.0-4') : "---" }}</td>
+				<td *ngIf="order.type == 'btol'"><p [ngStyle]="{'color': order.liveprofiting>0? 'green' : 'red'}">{{ order.liveprofiting? (order.liveprofiting | number:'0.0-4'): "---" }}</p></td>
+				<td *ngIf="order.type == 'btol'"><p [ngStyle]="{'color': order.profitpercent>0? 'green' : 'red'}">{{ order.profitpercent? (order.profitpercent | number:'0.0-4'): "---" }}</p></td>
+				<td><p [ngStyle]="{'color': order.performancestatus=='Computing Live'? 'green' : 'black'}">{{ order.performancestatus}}</p></td>
+				<td >{{ order.lcpreviousbalance | number:'0.0-4' }}</td>
+				<td>{{ order.date_end}}</td>
+				
+			</tr>
+		</tbody>
+	</table>
+
+
+
+	<!-- <table class="table table-responsive-xl " >
+		<thead>
+			<th>Amount (LC)</th>
+			<th>Price</th>
+			<th>BTC Amount Paid</th>
+			<th>PHP Value</th>
+			<th>Total BTC Price To Received</th>
+			<th>Conversion Type</th>
+			<th>Date</th>
+			<th>Fee (LC)</th>
+			<th>LC After Conversion</th>
+			<th>Forecasted Fee(LC)</th>
+			<th>Live Profiting Or Loosing</th>
+			<th>%Profit or Loose</th>
+			<th>Performance Status</th>
+			<th>Previous LC Balance</th>
+			<th>Date&Time Ended</th>
+		</thead>
+		<tbody>
+			<tr *ngFor='let order of orders_again'>
+				<td>{{ order.lcamount }}</td>
+				<td>{{ order.rate ? (order.rate | number:'0.0-15') : "---"}}</td>
+				<td>{{ order.btc_paid ? order.btc_paid : "---" }}</td>
+				<td >{{order.phpvalue}}</td>
+				<td>{{ order.btc_receive ? order.btc_receive : "---" }}</td>
+				<td *ngIf="order.type == 'btol'">{{ order.type == 'btol' ? 'BTC To LC' : 'LC To BTC' }}</td>
+				<td *ngIf="order.type == 'bp'">Binary Profit</td>
+				<td>{{ order.date  | date:'yyyy/MM/dd hh:mm:ss'}}</td>
+				<td>{{ order.fee }}</td>
+				<td *ngIf="order.type == 'btol'">{{ order.lcafterconversion? (order.lcafterconversion| number:'0.0-4') : "---" }}</td>
+				<td *ngIf="order.type == 'btol'">{{ order.forecastedfee? (order.forecastedfee| number:'0.0-4') : "---" }}</td>
+				<td *ngIf="order.type == 'btol'"><p [ngStyle]="{'color': order.liveprofiting>0? 'green' : 'red'}">{{ order.liveprofiting? (order.liveprofiting | number:'0.0-4'): "---" }}</p></td>
+				<td *ngIf="order.type == 'btol'"><p [ngStyle]="{'color': order.profitpercent>0? 'green' : 'red'}">{{ order.profitpercent? (order.profitpercent | number:'0.0-4'): "---" }}</p></td>
+				<td>{{ order.performancestatus}}</td>
+				<td >{{ order.lcpreviousbalance | number:'0.0-4' }}</td>
+				<td>{{ order.date_end}}</td>
+				
+			</tr>
+		</tbody>
+	</table> -->
+</div>

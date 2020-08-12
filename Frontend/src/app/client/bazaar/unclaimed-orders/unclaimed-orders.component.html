@@ -1,0 +1,132 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <a (click)="goToBazaarHome()" style="cursor: pointer;">
+                        <strong>Bazaar / </strong>
+                    </a>
+                    <a class="active text-primary">
+                        <strong>Unclaimed Orders</strong>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="search-hero col-md-12 col-sm-12">
+                            <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Enter claim code to search unclaimed orders...">
+                        </div>
+                    </div>
+                    <div class="row  mb-10">
+                        <div class="col-md-4 col-sm-4">
+                            <button class="btn btn-block btn-success" (click)="buyer()" [disabled]="!disable_flag">
+                                  <strong>Buyer</strong>
+                                </button>
+                        </div>
+                        <div class="col-md-4 col-sm-4">
+                            <button class="btn btn-block btn-danger" (click)="seller()" [disabled]="disable_flag">
+                                  <strong>Seller</strong>
+                                </button>
+                        </div>
+                        <div class="col-md-4 col-sm-4" *ngIf="disable_flag">
+                            <button class="btn btn-block btn-primary" disabled>
+                                    <strong>LC Balance : {{ socket.lc_balance }} LC</strong>
+                                  </button>
+                        </div>
+                        <div class="col-md-4 col-sm-4" *ngIf="!disable_flag">
+                            <button class="btn btn-block btn-primary" data-toggle="modal" data-target="#unclaimInfoViewModal">
+                                <strong>Claim Code & Bazaar Paired</strong>
+                              </button>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="unclaimInfoViewModal" tabindex="-1" role="dialog" aria-labelledby="BazaarUnclaimInfoViewModal" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-success" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Bazaar And Claim Information</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <strong>Bazaar Shop Id And Claim Code</strong>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div *ngIf="!unclaimOrders.length; else display">
+                                                        <div class="col-md-12 col-sm-12 text-center">
+                                                            <strong>* No unclaimed products yet. Go shop to bazaar & enjoy the most cheapest products & services offer!</strong>
+                                                        </div>
+                                                    </div>
+                                                    <ng-template #display>
+                                                        <div class="row col-md-12 col-sm-12 mb-10" *ngFor="let unclaimOrder of unclaimOrders">
+                                                            <div class="col-md-6 col-sm-6">
+                                                                <button class="btn btn-block btn-info">
+                                                                    <strong>Bazaar # {{ unclaimOrder.shop_id }} </strong>
+                                                                </button>
+                                                            </div>
+                                                            <div class="col-md-6 col-sm-6">
+                                                                <button class="btn btn-block btn-primary">
+                                                                    <strong>Claim code : {{ unclaimOrder.claim }} </strong>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </ng-template>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <h4 class="seller_title" *ngIf="disable_flag">
+                                <strong>Bazaar Unclaimed Orders</strong>
+                            </h4>
+                        </div>
+                        <div class="col-md-12 col-sm-12 text-center" *ngIf="!unclaimOrders.length; else display_products">
+                            <strong>* There is no unclaim order.</strong>
+                        </div>
+                        <ng-template #display_products>
+                            <div class="col-md-4" *ngFor="let bzp of unclaimOrders | keyvalue | filter:searchText">
+                                <div class="card mb-4 text-white bg-dark">
+                                    <img class="card-img-top" src="assets/{{ bzp.value.Pro_Info[0].bzp_photo }}" alt="bzp.value.Pro_Info[0].bp_name">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Order No : {{ bzp.value.orderid }}</h5>
+                                        <h5 class="card-title" *ngIf="disable_flag">Buyer ID : {{ bzp.value.userid }}</h5>
+                                        <h5 class="card-title">Bazaar # : {{ bzp.value.Pro_Info[0].userid }}</h5>
+                                        <h5 class="card-title">Product Name : {{ bzp.value.Pro_Info[0].bp_name }}</h5>
+                                        <h5 class="card-title">Availability : {{ bzp.value.Pro_Info[0].availability }}</h5>
+                                        <h5 class="card-title">Initial LC Price : {{ bzp.value.Pro_Info[0].initial_lc_price | number:'0.4-8' }} LC</h5>
+                                        <h5 class="card-title">Controlled LC Price : {{ (bzp.value.Pro_Info[0].initial_cc_price / (socket.btc_usd * socket.lc_btc * currencyValue)) | number:'0.4-8' }} LC</h5>
+                                        <h5 class="card-title">Initial CC Price : {{ bzp.value.Pro_Info[0].initial_cc_price }} {{ curCode }}</h5>
+                                        <h5 class="card-title">Controlled CC Price : {{ (bzp.value.Pro_Info[0].initial_cc_price / (socket.btc_usd * socket.lc_btc * currencyValue) * bzp.value.Pro_Info[0].lc_cc) | number:'0.4-8' }} {{ curCode }}</h5>
+                                        <h5 class="card-title">Personal Savings : {{ bzp.value.Pro_Info[0].personal_savings }} %</h5>
+                                        <h5 class="card-title">Agent Savings : {{ bzp.value.Pro_Info[0].agent_savings }} %</h5>
+                                        <h5 class="card-title">Present 1 LC to CC : {{ (socket.btc_usd * socket.lc_btc * currencyValue) | number:'0.4-8' }} {{ curCode }}</h5>
+                                        <h5 class="card-title">Present 1 LC to BTC : {{ socket.lc_btc | number:'0.0-15' }} BTC</h5>
+                                        <h5 class="card-title text-primary" *ngIf="!disable_flag">Claim Code : {{ bzp.value.claim }}</h5>
+                                        <h5 class="card-title text-primary">{{ disable_flag ? 'Sold' : 'Bought' }} @ Controlled LC : {{ bzp.value.buy_controlled_lc_price | number:'0.4-8' }} LC</h5>
+                                        <h5 class="card-title text-primary">{{ disable_flag ? 'Sold' : 'Bought' }} @ Controlled CC : {{ bzp.value.buy_controlled_cc_price | number:'0.4-8' }} {{ curCode }}</h5>
+                                        <h5 class="card-title text-primary">Quantity : {{ bzp.value.quantity }}</h5>
+                                        <h5 class="card-title text-primary">Total Paid CC Price : {{ bzp.value.total_payable_cc_price | number:'0.4-8' }} {{ curCode}} </h5>
+                                        <h5 class="card-title text-primary">Total Paid LC : {{ bzp.value.lcamount | number:'0.4-8' }} LC</h5>
+                                        <h5 class="card-title text-primary">TAS : {{ bzp.value.tas | number:'0.4-8' }} LC</h5>
+                                        <h5 class="card-title text-primary">TPS : {{ bzp.value.tps | number:'0.4-8' }} LC</h5>
+                                        <h5 class="card-title text-primary">Bid Placed Date : {{ bzp.value.date | date : 'medium' }}</h5>
+                                        <h5 class="card-title text-primary">{{ disable_flag ? 'Sold' : 'Bought' }} Date : {{ bzp.value.update_time | date : 'medium' }}</h5>
+                                        <button class="btn btn-block btn-danger" *ngIf="disable_flag" [disabled]="(searchText != bzp.value.claim) || release_click" (click)="releaseItem(bzp.value.lcamount, bzp.value.tps, bzp.value.userid, bzp.value.tas, bzp.value.orderid)">Release Item</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

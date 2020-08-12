@@ -1,0 +1,151 @@
+.dashboard{
+    padding-left: 15px;
+    margin-right: -60px;
+  }
+  .dashboard-list {
+    padding-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .img-wrap-xs img {
+    width: 60px;
+    height: 60px;
+  }
+  .dashboard-item {
+    margin-left: 20px;
+  }
+  .title-lg {
+    font-size: 2rem;
+  }
+  .title-md {
+    font-size: 1.2rem;
+  }
+  .p-l-100{
+    padding-left: 94px;
+  }
+  .section-2 {
+    padding-top: 50px;
+  }
+  .dashboard-tree{
+    width: 100%;
+  }
+  .first_name {
+    cursor: pointer;
+  }
+  .btn-back {
+    position: absolute;
+    margin-left: 70px;
+    cursor: pointer;
+  }
+  .layer-1, .layer-2, .layer-3, .layer-2-left, .layer-2-right, .layer-3-left, .layer-3-right, .layer-left-left, .layer-left-right, .layer-right-left, .layer-right-right {
+    display: flex;
+  }
+  .dashboard-tree img{
+    width: 80px;
+    height: 80px;
+  }
+  .line img {
+    width: 55%;
+  }
+  .dashboard-span {
+    background-color: black; 
+    color: white; 
+    padding:10px;
+    width: 80%;
+    text-align: center;
+  }
+  .mat-divider {
+    border-top-width: 3px;
+    margin: 10px;
+  }
+  .seller-info,.available_consumer, .available_products{
+    display: flex;
+    padding: 10px;
+  }
+  .seller-info {
+    display: flex;
+  }
+  .available_consumer {
+    width: 100%;
+    display: flex;
+    font-size: 0.8rem;
+  }
+  .available_consumer input {
+    width: 100%;
+  }
+  .available_products input{
+    padding: 8px;
+    font-size: 1.2rem;
+  }
+  .product-group {
+    display: flex;
+    padding-right: 20px;
+  }
+  .product-container {
+    padding: 20px 15px;
+  }
+  .product-item .item {
+    display: flex;
+    font-size: 15px;
+  }
+  .item div {
+    word-break: break-all;
+  }
+  .item button {
+    color: #ffffff;
+  }
+  .product-item img{
+    width: 90%;
+    height: 115px;
+  }
+  .btn-add {
+    width: 90%;
+    background: black;
+    padding: 8px;
+    margin-top: 10px;
+    color: black;
+  }
+  .btn-plus-minus {
+    padding: 20px;
+  }
+  button.btn-plus b, button.btn-minus b{
+    width: 10px;
+    margin-top: 10px;
+    color: black;
+    margin-bottom: 20px;
+  }
+  .order_count {
+    width: 80px;
+    margin: 0 auto;
+    color: #ffffff;
+  }
+  .order_count p {
+    position: absolute;
+  }
+  .btn-pay button{
+    width: 70%;
+    color: #ffffff;
+    padding: 7px;
+  }
+  .cursor {
+    cursor: pointer;
+  }
+  table {
+    width: 100%;
+  }
+  
+  @media (max-width: 576px){
+    .seller-info {
+        flex-direction: column;
+    }
+    .available_consumer {
+      flex-direction: column;;
+    }
+    .available_products {
+      flex-direction: column;
+    }
+  }
+  
+  
+  

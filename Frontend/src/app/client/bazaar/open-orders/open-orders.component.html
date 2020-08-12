@@ -1,0 +1,115 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <a (click)="goToBazaarHome()" style="cursor: pointer;">
+                        <strong>Bazaar / </strong>
+                    </a>
+                    <a class="active text-primary">
+                        <strong>Open Orders</strong>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="search-hero col-md-12 col-sm-12">
+                            <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Search product name or claim code here...">
+                        </div>
+                    </div>
+                    <div class="row mb-10">
+                        <div class="col-sm-6 col-md-6">
+                            <button class="btn btn-block btn-success" data-toggle="modal" data-target="#claimInfoViewModal">
+                              <strong>Claim Code & Bazaar Paired</strong>
+                            </button>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <button class="btn btn-block btn-primary" disabled>
+                              <strong>LC Balance : {{ socket.lc_balance }} LC</strong>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center" *ngIf="!openOders.length; else display_products">
+                            <strong>* There is no products. Please add product to cart.</strong>
+                        </div>
+                        <ng-template #display_products>
+                            <div class="col-md-4" *ngFor="let bzp of openOders | keyvalue | filter:searchText">
+                                <div class="card mb-4 text-white bg-dark">
+                                    <img class="card-img-top" src="assets/{{ bzp.value.Pro_Info[0].bzp_photo }}" alt="bzp.value.Pro_Info[0].bp_name">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Bazaar # : {{ bzp.value.Pro_Info[0].userid }}</h5>
+                                        <h5 class="card-title">Product Name : {{ bzp.value.Pro_Info[0].bp_name }}</h5>
+                                        <h5 class="card-title">Availability : {{ bzp.value.Pro_Info[0].availability }}</h5>
+                                        <h5 class="card-title">Initial LC Price : {{ bzp.value.Pro_Info[0].initial_lc_price | number:'0.4-8' }} LC</h5>
+                                        <h5 class="card-title">Controlled LC Price : {{ (bzp.value.Pro_Info[0].initial_cc_price / (socket.btc_usd * socket.lc_btc * currencyValue)) | number:'0.4-8' }} LC</h5>
+                                        <h5 class="card-title">Initial CC Price : {{ bzp.value.Pro_Info[0].initial_cc_price }} {{ curCode }}</h5>
+                                        <h5 class="card-title">Controlled CC Price : {{ (bzp.value.Pro_Info[0].initial_cc_price / (socket.btc_usd * socket.lc_btc * currencyValue) * bzp.value.Pro_Info[0].lc_cc) | number:'0.4-8' }} {{ curCode }}</h5>
+                                        <h5 class="card-title">Personal Savings : {{ bzp.value.Pro_Info[0].personal_savings }} %</h5>
+                                        <h5 class="card-title">Agent Savings : {{ bzp.value.Pro_Info[0].agent_savings }} %</h5>
+                                        <h5 class="card-title">Present 1 LC to CC : {{ (socket.btc_usd * socket.lc_btc * currencyValue) | number:'0.4-8' }} {{ curCode }}</h5>
+                                        <h5 class="card-title">Present 1 LC to BTC : {{ socket.lc_btc | number:'0.0-15' }} BTC</h5>
+                                        <h5 class="card-title text-danger">Claim Code : {{ bzp.value.claim }}</h5>
+                                        <h5 class="card-title text-danger">Buy @ Controlled LC Price : {{ bzp.value.buy_controlled_lc_price | number:'0.4-8' }} LC</h5>
+                                        <h5 class="card-title text-danger">Buy @ Controlled CC Price : {{ bzp.value.buy_controlled_cc_price | number:'0.4-8' }} {{ curCode }}</h5>
+                                        <h5 class="card-title text-danger">Quantity : {{ bzp.value.quantity }}</h5>
+                                        <h5 class="card-title text-danger">Total Payable CC Price : {{ bzp.value.total_payable_cc_price | number:'0.4-8' }} {{ curCode}} </h5>
+                                        <h5 class="card-title text-danger">Total Payable LC : {{ bzp.value.lcamount | number:'0.4-8' }} LC</h5>
+                                        <h5 class="card-title text-danger">TAS : {{ bzp.value.tas | number:'0.4-8' }} LC</h5>
+                                        <h5 class="card-title text-danger">TPS : {{ bzp.value.tps | number:'0.4-8' }} LC</h5>
+                                        <h5 class="card-title text-danger">Bid Placed Date : {{ bzp.value.date | date : 'medium' }}</h5>
+                                        <button class="btn btn-outline-light btn-block" appDebounceClick [debounceTime] (debounceClick)="cancelPrecheckout(bzp.value.userid, bzp.value.orderid, bzp.value.lcamount)">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="claimInfoViewModal" tabindex="-1" role="dialog" aria-labelledby="BazaarclaimInfoViewModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-success" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Bazaar And Claim Information</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>Bazaar Shop Id And Claim Code</strong>
+                            </div>
+                            <div class="card-body">
+                                <div *ngIf="!openOders.length; else display">
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <strong>* No data</strong>
+                                    </div>
+                                </div>
+                                <ng-template #display>
+                                    <div class="row col-md-12 col-sm-12 mb-10" *ngFor="let openOder of openOders">
+                                        <div class="col-md-6 col-sm-6">
+                                            <button class="btn btn-block btn-info">
+                                            <strong>Bazaar # {{ openOder.shop_id }} </strong>
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <button class="btn btn-block btn-primary">
+                                            <strong>Claim code : {{ openOder.claim }} </strong>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

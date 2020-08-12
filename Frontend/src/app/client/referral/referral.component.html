@@ -1,0 +1,148 @@
+<div class="triangle-left" (click)="openDialog()"></div>
+<div class="container">
+    <div class="referral">
+        <ng-container *ngIf="share.user">
+            <div class="title-lg"><b>Direct Referrals</b></div>
+            <div class="available_products">
+                <span class="col-md-2 title-md"><b>Search: </b></span>
+                <ng-container>
+                    <input type="text" name="id_seller" class="col-8" (keyup)="applyFilter($event)" placeholder="Search Date here(yyyy-mm-dd)..." />
+                </ng-container>
+            </div>
+            <div class="row section-1">
+
+                <div class="col-md-6 col-sm-12 referral-list">
+                    <div class="referral-span">
+                        <span class="title-md"><b>Referral Current Balance: </b></span>
+                        <span class="title-md"><b>{{referral_current}}</b></span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 referral-list">
+                    <div class="referral-span">
+                        <span class="title-md"><b>Total Referrals: </b></span>
+                        <span class="title-md"><b>{{total_referral}}</b></span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 referral-list">
+                    <div class="referral-span">
+                        <span class="title-md"><b>PHP To BTC Value: </b></span>
+                        <span class="title-md"><b>{{referral_current/(socket.btc_usd * currencyValue )}}</b></span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 referral-list">
+                    <div class="referral-span">
+                        <span class="title-md"><b>Search Result: </b></span>
+                        <span class="title-md"><b>{{search_result}}</b></span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 referral-list">
+                    <div class="img-wrap-xs">
+                        <img src="../../../assets/image/genealogy/lc_balance.png">
+                    </div>
+                    <div class="referral-item">
+                        <div>
+                        <span class="title-md"><b>BTC Balance: </b></span>
+                        <span class="title-md">{{total_btc_balance}}</span>
+                        </div>
+                        <div>
+                        <span class="title-md"><b>BTC To PHP Value:</b></span>
+                        <span class="title-md">{{total_btc_balance * socket.btc_usd * currencyValue}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 referral-list"></div>
+                <div class="col-md-6 col-sm-12 referral-list">
+                    <div class="title-md" style="padding-left: 80px">
+                        <span><b>Amount: <span *ngIf="referral_current > 2000">2,000.00 PHP</span></b></span><br>
+                        <span style="color:#3333"><b>Receivable BTC Value: <span *ngIf="referral_current > 2000" class="title-md">{{2000/(socket.btc_usd * currencyValue )}}BTC</span></b></span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 referral-list"></div>
+                <div class="col-md-6 col-sm-12 referral-list">
+                    <div class="title-md" style="padding-left: 80px">
+                        <button 
+                            mat-raised-button 
+                            (click)="submitBtn()"
+                            [style.background-color]="referral_current < 2000 ? '' : 'black'" 
+                            [style.color]="referral_current < 2000 ? '' : 'white'" 
+                            [disabled]="referral_current < 2000 ? 'true' : 'false'" >
+                            Submit Withdrawal
+                        </button>
+                    </div>
+                </div>
+            </div><hr>
+            <div class="mat-elevation-z8" style="overflow: auto; background-color: white;">
+                <!-- <mat-form-field>
+                    <mat-label>Filter</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium">
+                </mat-form-field> -->
+                <table mat-table [dataSource]="dataSource">
+                
+                    <!-- Position Column -->
+                    <!-- <ng-container matColumnDef="position" sticky>
+                    <th mat-header-cell *matHeaderCellDef> Sequence# </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                    </ng-container> -->
+                
+                    <ng-container matColumnDef="referraledId">
+                        <th mat-header-cell *matHeaderCellDef> ID # </th>
+                        <td mat-cell *matCellDef="let element"> {{element.referraledId}} 
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+                
+                    <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef> Referral Type </th>
+                    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="amount">
+                    <th mat-header-cell *matHeaderCellDef> Amount </th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <ng-container *ngIf="element.amount != 0">{{element.amount}}</ng-container>
+                        <ng-container *ngIf="element.amount == 0">-------</ng-container>
+                    </td>
+                    </ng-container>
+                
+                    <ng-container matColumnDef="ita">
+                    <th mat-header-cell *matHeaderCellDef> ITA </th>
+                    <td mat-cell *matCellDef="let element">
+                        <ng-container *ngIf="element.ita != 0">{{element.ita}}</ng-container>
+                        <ng-container *ngIf="element.ita == 0">-------</ng-container>
+                    </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="profit">
+                    <th mat-header-cell *matHeaderCellDef> Profit </th>
+                    <td mat-cell *matCellDef="let element"> {{element.profit}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef> Date & Time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+                    </ng-container>
+                
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                
+                <mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+            </div>
+            <div class="col-md-6 col-sm-12 referral-list" style="margin-left: auto;">
+                <div class="referral-span">
+                    <span class="title-md"><b>Today Referral Profit: </b></span>
+                    <span class="title-md"><b>{{today_profit}}</b></span>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="!share.user">
+            <div class="title-lg">
+                You are not allowed to access to this page.
+            </div>
+            </ng-container>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+::ng-deep .mat-radio-label {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+::ng-deep .mat-radio-button {
+    padding-right: 10px;
+}

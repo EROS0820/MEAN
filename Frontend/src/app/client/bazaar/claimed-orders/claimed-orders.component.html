@@ -1,0 +1,160 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <a (click)="goToOtherPage('cryptobazaar')" style="cursor: pointer;">
+                        <strong>Bazaar / </strong>
+                    </a>
+                    <a class="active text-primary">
+                        <strong>Claimed Orders</strong>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="row" id="search">
+                        <div class="search-hero col-md-12 col-sm-12">
+                            <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Search product name, bazaar name...">
+                        </div>
+                    </div>
+
+                    <div class="row mb-10">
+                        <div class="col-sm-12 col-md-12">
+                            <button class="btn btn-outline-primary btn-lg btn-block" (click)="buyer_seller(disable_flag)">
+                                <strong>{{ !disable_flag ? 'Seller View' : 'Buyer View' }}</strong>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row  mb-10" *ngIf="!disable_flag">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="card text-white bg-success text-center">
+                                <div class="card-body">
+                                    <strong>1 LC: {{ socket.lc_btc | number:'0.0-15' }} BTC</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="card text-white bg-primary text-center">
+                                <div class="card-body">
+                                    <strong>Overall Product Purchased: {{ overallProductPurchased }} LC</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="!disable_flag">
+                        <div class="col-md-12 text-center" *ngIf="!claimOrders.length; else display_products">
+                            <strong>* There is no claim order.</strong>
+                        </div>
+                        <ng-template #display_products>
+                            <div class="col-md-3" *ngFor="let bzp of claimOrders | keyvalue | filter:searchText">
+                                <div class="card mb-3 text-white bg-dark">
+                                    <img class="card-img-top" src="assets/{{ bzp.value.Pro_Info[0].bzp_photo }}" alt="bzp.value.Pro_Info[0].bp_name">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-success">Order No: {{ bzp.value.orderid }}</h5>
+                                        <h5 class="card-title text-success">Bazaar #: {{ bzp.value.Pro_Info[0].userid }}</h5>
+                                        <h5 class="card-title text-success">Bazaar Name: {{ bzp.value.Baz_Info[0].bz_name }}</h5>
+                                        <h5 class="card-title text-success">Product Name: {{ bzp.value.Pro_Info[0].bp_name }}</h5>
+                                        <h5 class="card-title text-success">Claim Code: {{ bzp.value.claim }}</h5>
+                                        <h5 class="card-title text-success">Bought @ Controlled LC: {{ bzp.value.buy_controlled_lc_price | number:'0.0-8' }} LC</h5>
+                                        <h5 class="card-title text-success">Bought @ Controlled CC: {{ bzp.value.buy_controlled_cc_price }} {{ curCode }}</h5>
+                                        <h5 class="card-title text-success">Quantity: {{ bzp.value.quantity }}</h5>
+                                        <h5 class="card-title text-success">Total Paid CC Price: {{ bzp.value.total_payable_cc_price }} {{ curCode}} </h5>
+                                        <h5 class="card-title text-success">Total Paid LC: {{ bzp.value.lcamount }} LC</h5>
+                                        <h5 class="card-title text-success">TAS: {{ bzp.value.tas }} LC</h5>
+                                        <h5 class="card-title text-success">TPS: {{ bzp.value.tps }} LC</h5>
+                                        <h5 class="card-title text-success">Bid Placed Date: {{ bzp.value.date | date: 'medium' }}</h5>
+                                        <h5 class="card-title text-success">Claimed Date: {{ bzp.value.update_time | date: 'medium' }}</h5>
+                                        <h5 class="card-title">Availability: {{ bzp.value.Pro_Info[0].availability }}</h5>
+                                        <h5 class="card-title">Initial LC Price: {{ bzp.value.Pro_Info[0].initial_lc_price }} LC</h5>
+                                        <h5 class="card-title">Controlled LC Price: {{ bzp.value.Pro_Info[0].initial_cc_price / (socket.btc_usd * socket.lc_btc * currencyValue | number:'0.4-4') }} LC</h5>
+                                        <h5 class="card-title">Initial CC Price: {{ bzp.value.Pro_Info[0].initial_cc_price }} {{ curCode }}</h5>
+                                        <h5 class="card-title">Controlled CC Price: {{ bzp.value.Pro_Info[0].initial_cc_price / (socket.btc_usd * socket.lc_btc * currencyValue | number:'0.4-4') * bzp.value.Pro_Info[0].lc_cc }} {{ curCode }}</h5>
+                                        <h5 class="card-title">Personal Savings: {{ bzp.value.Pro_Info[0].personal_savings }} %</h5>
+                                        <h5 class="card-title">Agent Savings: {{ bzp.value.Pro_Info[0].agent_savings }} %</h5>
+                                        <h5 class="card-title">Present 1 LC to CC: {{ socket.btc_usd * socket.lc_btc * currencyValue | number:'0.4-4' }} {{ curCode }}</h5>
+                                        <h5 class="card-title">Present 1 LC to BTC: {{ socket.lc_btc | number:'0.0-15' }} BTC</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </div>
+
+                    <div class="row" *ngIf="disable_flag">
+                        <div class="search-hero col-md-6 col-sm-6">
+                            <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [(ngModel)]="bsRangeValue" [bsConfig]="{ rangeInputFormat: 'YYYY-MM-DD', containerClass: 'theme-dark-blue' }" (bsValueChange)="onDateValueChange($event)">
+                        </div>
+                        <div class="col-md-3 col-sm-3 mb-3">
+                            <button class="btn btn-secondary btn-block" (click)="printComponent()">Print Record</button>
+                        </div>
+                        <div class="col-md-3 col-sm-3 mb-3">
+                            <button class="btn btn-secondary btn-block" (click)="goToOtherPage('cryptobazaar/refillable')">Refillable Products</button>
+                        </div>
+                    </div>
+                    <div class="row mb-10" *ngIf="disable_flag">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="card text-white bg-danger text-center">
+                                <div class="card-body">
+                                    <strong>Highest Price Sold @: {{ max_lctobtc | number:'0.8-8' }} LC</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="card text-white bg-success text-center">
+                                <div class="card-body">
+                                    <strong>Lowest Price Sold @: {{ min_lctobtc | number:'0.8-8' }} LC</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="card text-white bg-dark text-center">
+                                <div class="card-body">
+                                    <strong>Search Result Sold @: {{ total_purchase | number:'0.8-8' }} LC</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="card text-white bg-primary text-center">
+                                <div class="card-body">
+                                    <strong>Overall Sold Amount @: {{ total_purchase | number:'0.8-8' }} LC</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="disable_flag">
+                        <div class="col-md-12 text-center" *ngIf="!getSalesInventory.length; else sales_inventory_data">
+                            <strong>* There is no sales inventory.</strong>
+                        </div>
+                        <ng-template #sales_inventory_data>
+                            <div class="col-md-3" *ngFor="let bzp of getSalesInventory | keyvalue | filter:searchText">
+                                <div class="card mb-4 text-white bg-dark">
+                                    <img class="card-img-top" src="assets/{{ bzp.value.Pro_Info[0].bzp_photo }}" alt="bzp.value.Pro_Info[0].bp_name">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-success">Order No: {{ bzp.value.orderid }}</h5>
+                                        <h5 class="card-title text-success">Buyer ID: {{ bzp.value.userid }}</h5>
+                                        <h5 class="card-title text-success">Bazaar #: {{ bzp.value.Pro_Info[0].userid }}</h5>
+                                        <h5 class="card-title text-success">Product Name: {{ bzp.value.Pro_Info[0].bp_name }}</h5>
+                                        <h5 class="card-title text-success">Claim Code: {{ bzp.value.claim }}</h5>
+                                        <h5 class="card-title text-success">Sold @ Controlled LC: {{ bzp.value.buy_controlled_lc_price | number:'0.8-8' }} LC</h5>
+                                        <h5 class="card-title text-success">Sold @ Controlled CC: {{ bzp.value.buy_controlled_cc_price }} {{ curCode }}</h5>
+                                        <h5 class="card-title text-success">Number Item Sold: {{ bzp.value.quantity }}</h5>
+                                        <h5 class="card-title text-success">Total Paid CC Price: {{ bzp.value.total_payable_cc_price }} {{ curCode}} </h5>
+                                        <h5 class="card-title text-success">Total Paid LC: {{ bzp.value.lcamount | number:'0.8-8' }} LC</h5>
+                                        <h5 class="card-title text-success">TAS: {{ bzp.value.tas }} LC</h5>
+                                        <h5 class="card-title text-success">TPS: {{ bzp.value.tps }} LC</h5>
+                                        <h5 class="card-title text-success">Qualifier Bonus: {{ (bzp.value.lcamount >= socket.CycleBtcConversionTarget ? ((bzp.value.lcamount * 0.04) | number:'0.8-8') : 0) }} LC</h5>
+                                        <h5 class="card-title text-success">Bid Placed Date: {{ bzp.value.date | date: 'medium' }}</h5>
+                                        <h5 class="card-title text-success">Claimed Date: {{ bzp.value.update_time | date: 'medium' }}</h5>
+                                        <h5 class="card-title">Current Availability: {{ bzp.value.Pro_Info[0].availability }}</h5>
+                                        <h5 class="card-title">Initial LC Price: {{ bzp.value.Pro_Info[0].initial_lc_price }} LC</h5>
+                                        <h5 class="card-title">Initial CC Price: {{ bzp.value.Pro_Info[0].initial_cc_price }} {{ curCode }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

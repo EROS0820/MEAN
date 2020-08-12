@@ -1,0 +1,25 @@
+const {Router} = require('express');
+const genealogyController = require('../controllers/sidebar-controller/genealogy.controller');
+const router = Router();
+router.get('/getUsers', genealogyController.getUsers);
+router.post('/createOrder', genealogyController.createOrder);
+router.post('/initTree', genealogyController.initTree);
+router.get('/getUsersFromTree', genealogyController.getUsersFromTree);
+router.get('/getUsersFromTreeByStarter', genealogyController.getUsersFromTreeByStarter);
+router.get('/getUserByReferral/:id', genealogyController.getUserByReferral);
+router.post('/createTree', genealogyController.createTree);
+router.put('/updateLCBalance', genealogyController.updateLCBalance);
+router.put('/updateBTCBalance', genealogyController.updateBTCBalance);
+router.get('/getPrevTotalIta', genealogyController.getPrevTotalIta);
+router.get('/getTotalEarningBalance', genealogyController.getTotalEarningBalance);
+router.put('/updateTotalEarningBalance', genealogyController.updateTotalEarningBalance);
+router.put('/updateCurrentBalance', genealogyController.updateCurrentBalance);
+router.put('/updateAvailability', genealogyController.updateAvailability);
+router.put('/updateSellerLCBalance', genealogyController.updateSellerLCBalance);
+router.put('/updateBalancePlus', genealogyController.updateBalancePlus);
+router.get('/getBalancePlus', genealogyController.getBalancePlus);
+router.post('/addProfit', genealogyController.addProfit);
+router.post('/addReferralProfit', genealogyController.addReferralProfit);
+router.post('/positionExist', genealogyController.positionExist);
+
+module.exports = router;

@@ -1,0 +1,18 @@
+<table class="table table-responsive-md">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Date</th>
+			<th>User ID</th>
+			<th>Amount</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let transaction of adminsocket.btc_received">
+			<td>{{transaction._id}}</td>
+			<td style="min-width: 160px">{{transaction.date | date:'yyyy/MM/dd hh:mm:ss'}}</td>
+			<td style="min-width: 80px">{{transaction.userid}}</td>
+			<td>{{transaction.amount | number:'0.8-8'}}</td>
+		</tr>
+	</tbody>
+</table>

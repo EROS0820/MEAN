@@ -1,0 +1,180 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <a (click)="goToBazaarHome()" style="cursor: pointer;">
+                        <strong>Bazaar / </strong>
+                    </a>
+                    <a class="active text-primary">
+                        <strong>Precheckout</strong>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3 col-md-3">
+                            <div class="card text-white bg-primary text-center">
+                                <div class="card-body">
+                                    <strong>LC Maintaining Balance : {{ socket.LcMaintainingBalance }} LC</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3">
+                            <div class="card text-white bg-danger text-center">
+                                <div class="card-body">
+                                    <strong>1 LC : {{ socket.lc_btc | number:'0.0-15' }} BTC</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3">
+                            <div class="card text-white bg-success text-center">
+                                <div class="card-body">
+                                    <strong>1 LC : {{ socket.btc_usd * socket.lc_btc * currencyValue | number:'0.4-4' }} {{ curCode }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3">
+                            <div class="card text-white bg-dark text-center">
+                                <div class="card-body">
+                                    <strong>LC Balance : {{ socket.lc_balance }} LC</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10 col-sm-10">
+                            <h4 class="checkout_title">
+                                <strong>
+                                            Pre Checkout Orders
+                                      </strong>
+                            </h4>
+                        </div>
+                        <div class="col-md-2 col-sm-2">
+                            <button class="btn btn-block btn-primary mb-15">
+                                      <em class="icon-basket"></em>
+                                      <strong> ({{ cart_count }})</strong>
+                                    </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12">
+                            <div *ngIf='loading' class='loading'>
+                                <img class='img-fluid' src='assets/loading.gif' alt="" />
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="alert alert-success text-center" style="color:white" *ngIf="showSuccess == true">
+                                <strong>* {{ success.message }}</strong>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12" *ngIf="claim && cart_count > 0">
+                            <div class="card bg-secondary text-center">
+                                <div class="card-body">
+                                    <strong>Bazaar # : {{ bazaar_shop_id }} | Claim Code : {{ claim }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-center" *ngIf="!pre_check_out_info.length; else display_products">
+                            <strong>* There is no products. Please add product to cart.</strong>
+                        </div>
+                        <ng-template #display_products>
+                            <div class="col-md-12 row" *ngFor="let bzp of pre_check_out_info | keyvalue">
+                                <div class="col-md-3">
+                                    <div class="card mb-4 text-white bg-dark">
+                                        <img class="card-img-top" src="assets/{{ bzp.value.Pro_Info[0].bzp_photo }}" alt="bzp.value.Pro_Info[0].bp_name">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Bazaar # : {{ bzp.value.Pro_Info[0].userid }}</h5>
+                                            <h5 class="card-title">Product Name : {{ bzp.value.Pro_Info[0].bp_name }}</h5>
+                                            <h5 class="card-title">Availability : {{ bzp.value.Pro_Info[0].availability }}</h5>
+                                            <h5 class="card-title">Initial LC Price : {{ bzp.value.Pro_Info[0].initial_lc_price }} LC</h5>
+                                            <h5 class="card-title">Controlled LC Price : {{ (bzp.value.Pro_Info[0].initial_cc_price / (socket.btc_usd * socket.lc_btc * currencyValue)) | number:'0.4-4' }} LC</h5>
+                                            <h5 class="card-title">Initial CC Price : {{ bzp.value.Pro_Info[0].initial_cc_price }} {{ curCode }}</h5>
+                                            <h5 class="card-title">Controlled CC Price : {{ (bzp.value.Pro_Info[0].initial_cc_price / (socket.btc_usd * socket.lc_btc * currencyValue) * bzp.value.Pro_Info[0].lc_cc) | number:'0.4-4' }} {{ curCode }}</h5>
+                                            <h5 class="card-title">1 LC To CC @ Post Priced : {{ bzp.value.Pro_Info[0].lc_cc }} {{ curCode }}</h5>
+                                            <h5 class="card-title">Personal Savings : {{ bzp.value.Pro_Info[0].personal_savings }} %</h5>
+                                            <h5 class="card-title">Agent Savings : {{ bzp.value.Pro_Info[0].agent_savings }} %</h5>
+                                            <h5 class="card-title">Present 1 LC to CC : {{ socket.btc_usd * socket.lc_btc * currencyValue | number:'0.4-4' }} {{ curCode }}</h5>
+                                            <h5 class="card-title">Present 1 LC to BTC : {{ socket.lc_btc | number:'0.0-15' }} BTC</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <strong>Order Details</strong>
+                                        </div>
+                                        <div class="card-body">
+                                            <form class="form-horizontal">
+                                                <div class="alert alert-danger text-center" *ngIf="total_payable_lc * bzp.value.Pro_Info[0].lc_cc > socket.lc_balance">
+                                                    Insufficient LC Balance
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-5 col-form-label" for="buy_controlled_cc_price{{bzp.value.bz_pro_id}}">Buy @ Controlled CC Price</label>
+                                                    <div class="col-sm-6">
+                                                        <input class="form-control" name="buy_controlled_cc_price{{bzp.value.bz_pro_id}}" (keyup)="buy_controlled_cc_price_change($event, bzp.value.Pro_Info[0].lc_cc)" required placeholder="Please type controll cc value..." type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="alert alert-danger text-center" *ngIf="0 > buy_controlled_cc_price">
+                                                    Invalid value
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-5 col-form-label" for="quantity{{bzp.value.bz_pro_id}}">Quantity</label>
+                                                    <div class="col-sm-6">
+                                                        <input class="form-control" name="quantity{{bzp.value.bz_pro_id}}" (keyup)="quantity_change($event)" placeholder="Please type quantity..." required type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="alert alert-danger text-center" *ngIf="quantity > bzp.value.Pro_Info[0].availability || 0 > quantity">
+                                                    Insufficient stocks or invalid value
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-5 col-form-label" for="totoal_payable_cc_value{{bzp.value.bz_pro_id}}">Total Payable CC Value</label>
+                                                    <div class="col-sm-6">
+                                                        <input class="form-control" #totoal_payable_cc_value{{bzp.value.bz_pro_id}} type="number" readonly [value]="total_payable_cc">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-5 col-form-label" for="total_payable_lc{{bzp.value.bz_pro_id}}">Total Payable LC</label>
+                                                    <div class="col-sm-6">
+                                                        <input class="form-control" #total_payable_lc{{bzp.value.bz_pro_id}} type="number" readonly [value]="total_payable_lc | number:'0.4-8'">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-5 col-form-label" for="buy_controlled_lc_price{{bzp.value.bz_pro_id}}">Buy @ Controlled LC Price</label>
+                                                    <div class="col-sm-6">
+                                                        <input class="form-control" #buy_controlled_lc_price{{bzp.value.bz_pro_id}} readonly type="number" [value]="buy_controlled_lc_price | number:'0.4-8'">
+                                                    </div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-5 col-form-label" for="traditional_level{{bzp.value.bz_pro_id}}">Traditional Unilevel</label>
+							<div class="col-sm-6">
+							    <input class="form-control" #traditional_level{{bzp.value.bz_pro_id}} readonly type="number" [value]="traditional_unilevel">
+							</div>
+						    </div>
+                                                <!-- <div class="form-group row">
+                                                    <label class="col-sm-5 col-form-label" for="tps">TPS</label>
+                                                    <div class="col-sm-6">
+                                                        <input class="form-control" #tps readonly type="number" [value]="(total_payable_lc * bzp.value.Pro_Info[0].personal_savings / 100) | number:'0.4-8'">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-sm-5 col-form-label" for="tas">TAS</label>
+                                                    <div class="col-sm-6">
+                                                        <input class="form-control" #tas readonly type="number" [value]="(total_payable_lc * bzp.value.Pro_Info[0].agent_savings / 100) | number:'0.4-8'">
+                                                    </div>
+                                                </div> -->
+                                            </form>
+                                        </div>
+                                        <div class="card-footer text-center">
+                                            <button class="btn btn-danger" type="submit" (click)="submitPay(bzp.value.Pro_Info[0].userid, bzp.value.bz_pro_id, tps.value, tas.value, bzp.value.cart_id)" [disabled]="total_payable_lc * bzp.value.Pro_Info[0].lc_cc > socket.lc_balance || quantity > bzp.value.Pro_Info[0].availability  || !buy_controlled_cc_price || 0 >= buy_controlled_cc_price || !quantity || 0 >= quantity">Pay Item</button>
+                                            <button class="btn btn-dark ml-10" type="button" (click)="cancelProduct(bzp.value.cart_id)">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

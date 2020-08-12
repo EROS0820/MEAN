@@ -1,0 +1,77 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <a (click)="goToBazaarHome()" style="cursor: pointer;">
+                        <strong>Bazaar / </strong>
+                    </a>
+                    <a class="active text-primary">
+                        <strong>Refillable Products</strong>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3 col-md-3">
+                            <div class="card text-white bg-primary text-center">
+                                <div class="card-body">
+                                    <strong>LC Maintaining Balance : {{ socket.LcMaintainingBalance }} LC</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3">
+                            <div class="card text-white bg-danger text-center">
+                                <div class="card-body">
+                                    <strong>1 LC : {{ socket.lc_btc | number:'0.0-15' }} BTC</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3">
+                            <div class="card text-white bg-success text-center">
+                                <div class="card-body">
+                                    <strong>1 LC : {{ socket.btc_usd * socket.lc_btc * currencyValue | number:'0.4-4' }} {{ curCode }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-3">
+                            <div class="card text-white bg-dark text-center">
+                                <div class="card-body">
+                                    <strong>LC Balance : {{ socket.lc_balance }} LC</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center" *ngIf="!refillableProducts.length; else display_products">
+                            <strong>* There is no refillable products.</strong>
+                        </div>
+                        <ng-template #display_products>
+                            <div class="col-md-12 row" *ngFor="let bzp of refillableProducts | keyvalue">
+                                <div class="col-md-3">
+                                    <div class="card mb-4 text-white bg-dark">
+                                        <img class="card-img-top" src="assets/{{ bzp.value.bzp_photo }}" alt="bzp.value.bp_name">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Product Name : {{ bzp.value.bp_name }}</h5>
+                                            <h5 class="card-title">Initial LC Price : {{ bzp.value.initial_lc_price }} LC</h5>
+                                            <h5 class="card-title">Controlled LC Price : {{ (bzp.value.initial_cc_price / (socket.btc_usd * socket.lc_btc * currencyValue)) | number:'0.4-4' }} LC</h5>
+                                            <h5 class="card-title">Initial CC Price : {{ bzp.value.initial_cc_price }} {{ curCode }}</h5>
+                                            <h5 class="card-title">Controlled CC Price : {{ (bzp.value.initial_cc_price / (socket.btc_usd * socket.lc_btc * currencyValue) * bzp.value.lc_cc) | number:'0.4-4' }} {{ curCode }}</h5>
+                                            <h5 class="card-title">Personal Savings : {{ bzp.value.personal_savings }} %</h5>
+                                            <h5 class="card-title">Agent Savings : {{ bzp.value.agent_savings }} %</h5>
+                                            <h5 class="card-title">Availability : {{ bzp.value.availability }}</h5>
+                                            <h5 class="card-title">1 LC To CC @ Post Priced : {{ bzp.value.lc_cc }} {{ curCode }}</h5>
+                                            <h5 class="card-title">Present 1 LC to CC : {{ socket.btc_usd * socket.lc_btc * currencyValue | number:'0.4-4' }} {{ curCode }}</h5>
+                                            <h5 class="card-title">Present 1 LC to BTC : {{ socket.lc_btc | number:'0.0-15' }} BTC</h5>
+                                            <h5 class="card-title">Product Description : {{ bzp.value.product_description | slice:0:20 }} ...</h5>
+                                            <button class="btn btn-block btn-primary" [routerLink]="['product/edit/', bzp.value.bz_pro_id]">Edit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

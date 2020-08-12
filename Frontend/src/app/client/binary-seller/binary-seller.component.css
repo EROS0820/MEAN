@@ -1,0 +1,73 @@
+.binary-seller {
+  border: 4px solid gray;
+  margin-right: -75px;
+}
+
+#binaryForm {
+  display: flex;
+  justify-content: center;
+  border-bottom: 4px solid gray;
+  padding-bottom: 60px;
+}
+.flex-layout label{
+  display: flex;
+  align-items: center;
+  width: 200px;
+}
+.title-lg {
+  font-size: 2rem;
+}
+#post_product button{
+  margin-left: 150px;
+}
+#binaryForm .form-group {
+  padding: 5px;
+}
+#binaryForm .form-group input {
+  width: 450px;
+  margin-left: 15px;
+}
+.product-group {
+  display: flex;
+  padding-right: 20px;
+}
+.product-container {
+  width: 100%;
+  padding: 20px 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.product-item .item {
+  display: flex;
+  font-size: 15px;
+}
+.item div {
+  word-break: break-all;
+}
+.product-item img{
+  width: 90%;
+  height: 150px;
+}
+.bg {
+  width: 400px;
+  height: 200%;
+  -webkit-background-size: 100% 100%;
+  background-size: 100% 100%;
+}
+.btn-delete {
+  width: 90%;
+  background: red;
+  padding: 8px;
+  margin-top: 10px;
+  color: white;
+}
+.btn-edit {
+  width: 90%;
+  background: #000;
+  padding: 8px;
+  margin-top: 10px;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+

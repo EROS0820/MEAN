@@ -1,0 +1,52 @@
+<nav class="site-header py-1 app-header navbar">
+    <div class="container-fluid d-flex flex-row justify-content-between">
+        <div class="d-flex flex-row">
+            <a class="py-2 mr-4" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block mx-auto">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="14.31" y1="8" x2="20.05" y2="17.94"></line>
+                  <line x1="9.69" y1="8" x2="21.17" y2="8"></line>
+                  <line x1="7.38" y1="12" x2="13.12" y2="2.06"></line>
+                  <line x1="9.69" y1="16" x2="3.95" y2="6.06"></line>
+                  <line x1="14.31" y1="16" x2="2.83" y2="16"></line>
+                  <line x1="16.62" y1="12" x2="10.88" y2="21.94"></line>
+                </svg>
+            </a>
+            <div class="btn-group">
+                <a class="py-2 btn btn-dark" [routerLink]="['/admin/dashboard']">Dashboard</a>
+                <button type="button" class="btn btn-dark dropdown-toggle dropdown-toggle-split d-block d-lg-none" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" [routerLink]="['/admin/users-list']">Users List</a>
+                    <a class="dropdown-item" [routerLink]="['/admin/btc-received']">BTC Received</a>
+                    <a class="dropdown-item" [routerLink]="['/admin/btc-sent']">BTC Sent</a>
+                    <a class="dropdown-item" [routerLink]="['/admin/btc-to-lc-success']">BTC To LC Successful</a>
+                    <a class="dropdown-item" [routerLink]="['/admin/lc-to-btc-success']">LC To BTC Successful</a>
+                    <a class="dropdown-item" [routerLink]="['/admin/all-conversion']">All Conversion Tx</a>
+                    <a class="dropdown-item" [routerLink]="['/admin/cancelled-conversion']">Cancelled Conversion</a>
+                    <a class="dropdown-item" [routerLink]="['/admin/open-orders']">Open Orders</a>
+                    <a class="dropdown-item" [routerLink]="['/admin/edit-multiplier']">Edit Multiplier</a>
+                    <a class="dropdown-item" [routerLink]="['/admin/bazaar-value-settings']">Bazaar Value Settings</a>
+                    <a class="dropdown-item" [routerLink]="['/admin/logout']">Logout</a>
+                </div>
+            </div>
+        </div>
+        <form class="form-inline my-0">
+            <a [routerLink]="['/admin/logout']">
+                <button class="btn btn-outline-info my-0" type="button">Logout</button>
+            </a>
+        </form>
+    </div>
+</nav>
+<div class="app-body">
+    <app-sidebar [fixed]="true" [display]="'lg'">
+        <app-sidebar-nav [navItems]="navItems"></app-sidebar-nav>
+        <app-sidebar-minimizer></app-sidebar-minimizer>
+    </app-sidebar>
+    <main class="main my-3">
+        <div class="container-fluid">
+            <router-outlet></router-outlet>
+        </div>
+    </main>
+</div>

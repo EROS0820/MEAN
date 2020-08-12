@@ -1,0 +1,19 @@
+img {
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 3px;
+    min-height: 150px;
+    max-height: 150px;
+}
+
+.search-hero {
+    padding-bottom: 20px;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+h5 {
+    font-size: 0.75rem;
+}

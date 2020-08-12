@@ -1,0 +1,17 @@
+<div class="container">
+	<app-subheader action="convert-lc-to-btc"></app-subheader>
+	<div class="row">
+		<div class="col-md-6">
+			<app-convert2form 
+				[btc_balance]="socket.btc_balance"
+				[lc_balance]="socket.lc_balance"
+				[lc_btc]="socket.lc_btc">
+				
+			</app-convert2form>
+		</div>
+		<div class="col-md-6">
+			<app-last-convert type="ltob" [status]="socket.status_ltob"></app-last-convert>
+			<app-last-convert type="btol" [status]="socket.status_btol"></app-last-convert>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,18 @@
+table tbody tr td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+table thead th {
+    text-align: center;
+}
+
+img {
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 3px;
+}
+
+.ml-50 {
+    margin-left: 50px;
+}

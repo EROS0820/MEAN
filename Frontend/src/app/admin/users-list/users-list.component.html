@@ -1,0 +1,50 @@
+<div class="row">
+	<div class="col-12 col-md-6">
+
+
+		<div class='form-group m-auto'>
+
+		    <label for="user_id">User ID</label>
+		    <div class="input-group mb-3">
+			  <input type="text" 
+			  		 class="form-control" 
+			  		 placeholder="Search first name, last name, or user ID here..."
+			  		 [(ngModel)]="search_text"
+			  		 name="search_text"
+			  		 (keyup.enter)="find()">
+			  <div class="input-group-append">
+			    <button class="btn btn-outline-secondary" 
+			    		type="button" 
+			    		id="button-addon2"
+			    		(click)="find()">
+			    	Find</button>
+			  </div>
+			</div>
+		</div>
+		<table class="table table-responsive-sm">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Email</th>
+					<th>Agent ID</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let user of find_users" 
+					[ngClass]="{'table-success': user.userid==selectID}" 
+					(click)="doSelect(user.userid)">
+					<td>{{user.userid}}</td>
+					<td>{{user.first_name}}</td>
+					<td>{{user.last_name}}</td>
+					<td>{{user.email}}</td>
+					<td>{{user.agent_id}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-12 col-md-6">
+		<app-user-detail [userid]="selectID"></app-user-detail>
+	</div>
+</div>

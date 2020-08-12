@@ -1,0 +1,59 @@
+.pre-order{
+  padding-left: 15px;
+  margin-right: -60px;
+}
+.pre-order-container {
+  padding: 8px;
+  margin-top: 20px;
+}
+.search-claim {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin-top: 50px;
+}
+.search-claim div {
+  width: 100px;
+}
+.search-claim input {
+  width: 60%;
+  padding: 8px;
+}
+.title-lg {
+  font-size: 2rem;
+}
+.title-md {
+  font-size: 1.2rem;
+}
+.tbl_pre_order {
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+}
+.tbl_pre_order table {
+  width: 100%;
+}
+th.mat-header-cell {
+  text-align: center;
+  padding: 6px;
+  font-size: 18px;
+}
+.place-order {
+  width: 100%;
+}
+.place-order button {
+  width: 60%;
+}
+.p-20 {
+  padding: 20px;
+}
+.result {
+  width: 60%;
+  padding-top: 30px;
+  display: flex;
+  justify-content: flex-end;
+}
+.result div {
+  text-align: left;
+}

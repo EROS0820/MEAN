@@ -1,0 +1,18 @@
+<div class="add-fund">
+	<div class="title-lg"><b>Request Payment</b></div>
+	<div class="row">
+		<div class="col-md-6 col-sm-12">
+			<div class="section">
+				<span class="title-md">Request method: </span>
+				<input [(ngModel)]="userInfo" type="text" placeholder="Enter email or cell number here..." class="input-item" />
+			</div>
+			<div class="section">
+				<span class="title-md" style="padding-right: 74px">Amount: </span>
+				<input [(ngModel)]="amount" type="number" placeholder="Enter amount here..." class="input-item" />
+			</div>
+			<div class="section">
+				<button mat-raised-button class="btn-add" (click)="sendRequest()">Send Request</button>
+			</div>
+		</div>
+	</div>
+</div>

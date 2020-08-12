@@ -1,0 +1,273 @@
+<div class="capitalist">
+    <ng-container *ngIf="share.user">
+      <div class="row section-1" *ngIf="capitalFlag">
+        <div class="col-md-12 col-sm-12 title-lg"><b>Capitalists View</b></div>
+        <div class="col-md-6 col-sm-12 dashboard-list">
+          <div class="img-wrap-xs">
+            <img src="../../../assets/image/genealogy/lc_balance.png">
+          </div>
+          <div class="dashboard-item">
+            <div>
+              <span class="title-md"><b>PHP Balance: </b></span>
+              <span class="title-md">{{phpBalance}}</span>
+            </div>
+            <div>
+              <span class="title-md"><b>BTC Balance:</b></span>
+              <span class="title-md">{{btcBalance.toFixed(8)}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6"></div>
+        <div class="col-md-3 col-sm-12" style="padding: 20px 20px;">
+          <div style="display: flex;justify-content: center;">
+            <div style="width: 50px; height:40px; background-color: chocolate; display: flex;justify-content: center;align-items: center;">
+              <mat-icon (click)="minusProfit()">remove</mat-icon>
+            </div>
+            <div style="width: 100px; height:40px; background-color: #3333; display: flex;justify-content: center;align-items: center;">
+              <span>{{profit}}</span>
+            </div>
+            <div style="width: 50px; height:40px; background-color: chocolate; display: flex;justify-content: center;align-items: center;">
+              <mat-icon (click)="addProfit()">add</mat-icon>
+            </div>
+          </div>
+          <div style="font-size: 17px; font-weight: 600; padding: 10px 0px; text-align: center;">
+            1% Maximum Daily Profit
+          </div>
+          <div style="font-size: 17px; font-weight: 600; padding: 10px 0px; text-align: center;font-size: 17px;color: #333333a8;font-weight: 500;font-style: italic;">
+            {{profit}} in {{days}} days
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-12" style="padding: 20px 20px;">
+          <div style="display: flex;justify-content: center;">
+            <div style="width: 50px; height:40px; background-color: chocolate; display: flex;justify-content: center;align-items: center;">
+              <mat-icon (click)="minusDays()">remove</mat-icon>
+            </div>
+            <div style="width: 100px; height:40px; background-color: #3333; display: flex;justify-content: center;align-items: center;">
+              <span>{{days}}</span>
+            </div>
+            <div style="width: 50px; height:40px; background-color: chocolate; display: flex;justify-content: center;align-items: center;">
+              <mat-icon (click)="addDays()">add</mat-icon>
+            </div>
+          </div>
+          <div style="font-size: 17px; font-weight: 600; padding: 10px 0px; text-align: center;">
+            60 Days Maximum
+          </div>
+          <div style="font-size: 17px; font-weight: 600; padding: 10px 0px; text-align: center;font-size: 17px;color: #333333a8;font-weight: 500;font-style: italic;">
+            Maturity Date : {{month}} {{day}}, {{year}} / {{hour}}:{{minutes}}:{{seconds}}
+          </div>
+        </div>
+        <div class="col-md-4"></div>
+        <div class="col-md-8 col-sm-12 res-values">
+          <div style="padding: 0px 30px; font-size: 20px; font-weight: 600;">
+            <label style="padding-right: 20px;">PHP: </label>
+            <input [(ngModel)]="inputAmount" type="number" placeholder="Minimum amount 1000..." style="width: 250px" />
+          </div>
+          <div class="values" style="padding: 10px 96px;font-size: 17px;color: #333333a8;font-weight: 500;font-style: italic;">
+            <span>Actual Growth: </span>
+            <span>{{profit * days * inputAmount}}</span>
+          </div>
+          <div class="values" style="padding: 10px 96px;font-size: 17px;color: #333333a8;font-weight: 500;font-style: italic;">
+            <span>Total Maturity Fund: </span>
+            <span>{{inputAmount + profit * days * inputAmount}}</span>
+          </div>
+          <div class="values" style="padding: 10px 96px;font-size: 17px;color: #333333a8;font-weight: 500;font-style: italic;">
+            <span>BTC Maturity Fund: </span>
+            <span>{{((inputAmount + profit * days * inputAmount)/(socket.btc_usd * currencyValue)).toFixed(8)}} {{ curCode }}</span>
+          </div>
+          <div class="values" style="padding: 10px 96px;font-size: 17px;color: #333333a8;font-weight: 500;font-style: italic;">
+            <span>BTC Price @ Tranction Time: </span>
+            <span>{{ socket.btc_usd * currencyValue | number:'0.4-4' }} {{ curCode }}</span>
+          </div>
+          <button 
+              mat-raised-button
+              class="values"
+              style="color: white; background-color: black;margin: 10px 96px;"
+              (click)="submitBtn()"
+              [style.background-color]="inputAmount > phpBalance ? '' : 'black'" 
+              [style.color]="inputAmount > phpBalance ? '' : 'white'" 
+              [disabled]="inputAmount > phpBalance ? 'true' : 'false'" >
+              Offer Fund To Broker Market Place
+          </button>
+        </div>
+        <div class="col-md-4 col-sm-12"></div>
+      </div>
+      <div class="row section-1" *ngIf="!capitalFlag">
+        <div class="col-md-12 col-sm-12 title-lg"><b>Broker View</b></div>
+        <div class="col-md-6 col-sm-12 dashboard-list">
+          <div class="img-wrap-xs">
+            <img src="../../../assets/image/genealogy/lc_balance.png">
+          </div>
+          <div class="dashboard-item">
+            <div>
+              <span class="title-md"><b>PHP Balance: </b></span>
+              <span class="title-md">{{phpBalance}}</span>
+            </div>
+            <div>
+              <span class="title-md"><b>BTC Balance:</b></span>
+              <span class="title-md">{{btcBalance.toFixed(8)}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6"></div>
+        <div class="col-md-12">
+          <div id="page-wrap" class="csstransforms">
+            <aside>
+              <h3 style="background-color: slateblue;" *ngIf="total_earning > 20000">Level 4 - Elite Archiever</h3>
+              <h3 style="background-color: orange;" *ngIf="total_earning > 10001 && total_earning <= 20000">Level 3 - Dream Maker</h3>
+              <h3 style="background-color: green;" *ngIf="total_earning > 1501 && total_earning <= 10000">Level 2 - Builder</h3>
+              <h3 style="background-color: silver;" *ngIf="total_earning > 100 && total_earning <= 1500">Level 1 - Contributor</h3>
+              <div>
+                <span class="title-sm">Total Binary Earning: </span>
+                <span class="title-sm">{{total_earning}}</span>
+              </div>
+              <div>
+                <span class="title-sm">Max. Bookable Fund: </span>
+                <span class="title-sm">{{maxFund}}</span>
+              </div>
+              <div>
+                <span class="title-sm">Existing Booked Fund: </span>
+                <span class="title-sm">{{bookedFund}}</span>
+              </div>
+              <div>
+                <span class="title-sm">Remaining Fund To Book: </span>
+                <span class="title-sm">{{maxFund - bookedFund}}</span>
+              </div>
+              <div>
+                <span class="title-sm">Transactions Handling: </span>
+                <span class="title-sm">{{tHandle}}</span>
+              </div>
+            </aside>
+          </div>
+          <div class="levels" style="position: absolute; top: 40px; left: 500px">
+            <span class="title-md"><b>Max. 500,000</b></span>
+            <div style="display:flex; align-items: center;">
+              <div style="background-color: slateblue;width: 260px; text-align: center; padding: 10px 0px;">
+                <span class="title-md" style="color: black; font-size: 20px; font-weight: 600;">Level 4 - Elite Achiever</span><br>
+                <span class="title-md" style="color:white; font-size: 17px; font-weight: 600;">(20,001 Above Binary Earner)</span>
+              </div>
+              <span style="padding-left: 5px; font-size: 18px; font-weight: 600;">3% - 21% Payable Interest Monthly</span>
+            </div>
+          </div>
+          <div class="levels" style="position: absolute; top: 120px; left: 350px">
+            <span class="title-md"><b>Max. 100,000</b></span>
+            <div style="display:flex; align-items: center;">
+              <div style="background-color: orange;width: 260px; text-align: center; padding: 10px 0px;">
+                <span class="title-md" style="color: black; font-size: 20px; font-weight: 600;">Level 3 - Dream Maker</span><br>
+                <span class="title-md" style="color:white; font-size: 17px; font-weight: 600;">(10,001 - 20,000 Binary Earner)</span>
+              </div>
+              <span style="padding-left: 5px; font-size: 18px; font-weight: 600;">3% - 15% Payable Interest Monthly</span>
+            </div>
+          </div>
+          <div class="levels" style="position: absolute; top: 200px; left: 200px">
+            <span class="title-md"><b>Max. 15,000</b></span>
+            <div style="display:flex; align-items: center;">
+              <div style="background-color: green;width: 260px; text-align: center; padding: 10px 0px;">
+                <span class="title-md" style="color: black; font-size: 20px; font-weight: 600;">Level 2 - Builder</span><br>
+                <span class="title-md" style="color:white; font-size: 17px; font-weight: 600;">(1,501 - 10,000 Binary Earner)</span>
+              </div>
+              <span style="padding-left: 5px; font-size: 18px; font-weight: 600;">3% - 9% Payable Interest Monthly</span>
+            </div>
+          </div>
+          <div class="levels" style="position: absolute; top: 280px; left: 50px">
+            <span class="title-md"><b>Max. 3,000</b></span>
+            <div style="display:flex; align-items: center;">
+              <div style="background-color: silver;width: 260px; text-align: center; padding: 10px 0px;">
+                <span class="title-md" style="color: black; font-size: 20px; font-weight: 600;">Level 1 - Contributor</span><br>
+                <span class="title-md" style="color:white; font-size: 17px; font-weight: 600;">(100 - 1,500 Binary Earner)</span>
+              </div>
+              <span style="padding-left: 5px; font-size: 18px; font-weight: 600;">3% - 6% Payable Interest Monthly</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <button 
+            mat-raised-button
+            style="color: white; background-color: black;margin: 10px 96px;"
+            (click)="capitalBtn()">
+            Capitalist View
+          </button>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <button 
+            mat-raised-button
+            style="color: white; background-color: black;margin: 10px 96px;"
+            (click)="brokerBtn()">
+            Broker View
+          </button>
+        </div>
+      </div>
+      <div class="row section-2">
+        <div class="col-md-12 col-sm-12">
+          <div class="mat-elevation-z8" style="overflow: auto; background-color: white;">
+            <!-- <mat-form-field>
+                <mat-label>Filter</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium">
+            </mat-form-field> -->
+            <table mat-table [dataSource]="dataSource">
+
+                <ng-container matColumnDef="userid">
+                <th mat-header-cell *matHeaderCellDef> ID# </th>
+                <td mat-cell *matCellDef="let element"> {{element.userid}} </td>
+                </ng-container>
+  
+                <ng-container matColumnDef="amount">
+                <th mat-header-cell *matHeaderCellDef> Amount </th>
+                <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="profit">
+                <th mat-header-cell *matHeaderCellDef> Daily Profit </th>
+                <td mat-cell *matCellDef="let element"> {{element.profit}} </td>
+                </ng-container>
+            
+                <ng-container matColumnDef="days">
+                <th mat-header-cell *matHeaderCellDef> Number Of Days </th>
+                <td mat-cell *matCellDef="let element"> {{element.days}} </td>
+                </ng-container>
+  
+                <ng-container matColumnDef="total_fund">
+                <th mat-header-cell *matHeaderCellDef> Total Maturity Fund </th>
+                <td mat-cell *matCellDef="let element"> {{element.total_fund}} </td>
+                </ng-container>
+  
+                <ng-container matColumnDef="btc_price">
+                <th mat-header-cell *matHeaderCellDef> BTC Price @Transaction Time </th>
+                <td mat-cell *matCellDef="let element"> {{element.btc_price}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="btc_fund">
+                <th mat-header-cell *matHeaderCellDef> BTC Maturity Fund </th>
+                <td mat-cell *matCellDef="let element"> {{element.btc_fund}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="create_time">
+                <th mat-header-cell *matHeaderCellDef> Date & Time Created </th>
+                <td mat-cell *matCellDef="let element"> {{element.create_time}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="maturity_time">
+                <th mat-header-cell *matHeaderCellDef> Maturity Date & Time </th>
+                <td mat-cell *matCellDef="let element"> {{element.maturity_time}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let element">
+                  <span *ngIf="!capitalFlag && !element.pending" style="cursor: pointer; color: green" (click)="acceptBtn(element)">Accept</span>
+                  <span *ngIf="!capitalFlag && element.pending" style="cursor: pointer; color: blue" (click)="pendingBtn(element)">Pending</span>
+                  <span *ngIf="capitalFlag" style="cursor: pointer; color: red" (click)="cancelBtn(element)">Cancel</span>
+                </td>
+                </ng-container>
+  
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            
+            <mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+</div>

@@ -1,0 +1,21 @@
+<table class="table table-borderless table-dark  table-sm text-center rounded">
+  <caption class="text-center" style="caption-side: top">
+    {{ this.type == 'ltob' ? 'Local To BTC' : 'BTC To Local' }} Conversion
+  </caption>
+  <thead>
+    <tr>
+      <th class="border-0" scope="col">Price(BTC)</th>
+      <th class="border-0" scope="col">Amount(LC)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor='let conversion of conversions'>
+      <td class="{{ this.type == 'ltob' ? 'text-danger' : 'text-success'}}">
+        {{ conversion.rate | number:'0.8-8' }}
+      </td>
+      <td>
+        {{ conversion.lcamount }}
+      </td>
+    </tr>
+  </tbody>
+</table>
